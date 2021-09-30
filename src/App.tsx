@@ -174,9 +174,9 @@ function App() {
             }
           </Route>
           <Route exact path="/register">
-            <PageLayOut>
+            //<PageLayOut>
               <Register />
-            </PageLayOut>
+            //</PageLayOut>
           </Route>
 
           <Route>
