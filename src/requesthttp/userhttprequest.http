@@ -1,0 +1,18 @@
+
+
+@baseUrl = http://localhost:9000/api
+
+# @name GetProduct
+
+GET {{baseUrl}}/products
+
+###
+
+# @name ViewAllUser
+GET {{baseUrl}}/user/all
+
+###
+
+# @name GetPagination
+
+GET {{baseUrl}}/products?_page=1&_limit=10

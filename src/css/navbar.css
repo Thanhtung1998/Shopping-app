@@ -1,0 +1,87 @@
+
+.header{
+    --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    background: white;
+    /* background: linear-gradient(-45deg, #EE7752 , #E73C7E , #23A6D5 , #c023d5 );
+    background-size: 400% 400%; */
+    animation: changeBg ease 10s;
+    opacity: 1;
+}
+
+@keyframes changeBg{
+    0%{
+        background-position: 0 50%;
+    }
+    50%{
+        background-position: 100% 50%;
+
+    }
+    100%{
+        background-position: 0% 50%;
+        
+    }
+}
+
+.inputAnimationScroll{
+    z-index: 1;
+    position: absolute; 
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    left:0;
+    right: 0;
+    height: 3.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    animation: inputAnimation ease 1s ;
+}
+
+.inputAnimationScrollDefalut{
+    top: 4rem;
+    position: absolute;
+    margin: auto;
+    left:0;
+    right: 0;
+    height: 3.5rem; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 1;
+    animation: inputAnimation2 ease 1s ;
+}
+
+
+@keyframes inputAnimation{
+    0%{
+        transform: translateY(4rem) ;
+        /* transform: translateX(10rem); */
+        transform: scale(1.2 , 1.4);
+        width: 30%;
+    }
+    100%{
+        transform: translateY(0rem) ;
+        transform: scale(1 , 1);
+        width: 100%;
+    }
+
+}
+
+@keyframes inputAnimation2{
+    0%{
+        transform: translateY(-4rem) ;
+        /* transform: scale(1); */
+    }
+    100%{
+        transform: translateY(0rem) ;
+        /* transform: scale(1.2); */
+    }
+
+}
+
+.activeS{
+    color: blue !important;
+}

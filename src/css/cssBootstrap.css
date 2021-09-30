@@ -1,0 +1,43 @@
+
+.bootstrapSpinner{
+    display: inline-block;
+    width: 1.3rem;
+    height: 1.3rem;
+    vertical-align: text-bottom;
+    border: .2em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: spinner-border .75s linear infinite;
+    animation: spinner-border .75s linear infinite;
+}
+
+@keyframes spinner-border {
+    100% {
+        -webkit-transform: rotate(
+    360deg
+    );
+        transform: rotate(
+    360deg
+    );
+    }
+}
+
+.btnBootstrap{
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* background-color: transparent;
+    border: 1px solid transparent; */
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

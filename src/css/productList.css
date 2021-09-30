@@ -1,0 +1,33 @@
+.images__product{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.viewMore-img{
+    height:100%;
+    width: 100%;
+    
+}
+
+.images__product:nth-child(1){
+    transform: translateX(-50%) scale(1);
+    transition: transform .5s ease; 
+}
+
+.images__product:nth-child(2){
+    transform: translateX(-50%) scale(0);
+}
+
+.images-animation:hover .images__product:nth-child(1){
+        transform: translateX(-50%) scale(0);
+}
+
+.images-animation:hover .images__product:nth-child(2){
+    transform: translateX(-50%) scale(1);
+    transition: transform .5s ease; 
+}
+
+
+

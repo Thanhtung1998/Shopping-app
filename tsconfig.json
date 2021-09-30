@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true, // open all strict options
+    // option strict 
+    /*
+    All options below are FALSE by default
+    BUT recommend to use TRUE 🤣
+    */
+    // "noImplicitAny": true,
+    // "strictNullChecks": true,
+    // "strictFunctionTypes": true,
+    // "strictBindCallApply": true,
+    // "strictPropertyInitialization": true,
+    // "noImplicitThis": true,
+    // "alwaysStrict": true,
+    // typescript v4.4
+    // "useUnknownInCatchVariables": true,
+    /*
+      -- "noImplicitAny": true 
+      // ts: error  Parameter '...' implicitly has an 'any' type
+      -- "strictNullChecks": true
+      // check value === null or undefined
+      // ts : type error "... is possibly 'undefined'"
+      -- "alwaysStrict" : true,
+      //-- " use strict "  ==> compile js  
+    */
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
+}
