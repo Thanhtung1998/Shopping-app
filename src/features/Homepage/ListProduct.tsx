@@ -46,6 +46,8 @@ const ListGrid = styled.div`
         gap-x-8 gap-y-4
         grid-cols-1
         md:grid-cols-2
+        lg:gap-x-0 
+        lg:gap-y-0
         lg:grid-cols-3
         xl:grid-cols-4
     `}
@@ -139,9 +141,9 @@ export function ListProduct(props: IActiveModal) {
 
     const [filters, setFilter] = useState({
         _page: 1,
-        _limit: 16,
+        _limit: 8,
     })
-    const Emtydata = !product || product.length === 0;
+    const emptyData = !product || product.length === 0;
 
     useEffect(() => {
 
@@ -224,7 +226,7 @@ export function ListProduct(props: IActiveModal) {
                     <MoonLoader loading size={30} />
                 </LoadingContainer>
             )}
-            {!Emtydata && (
+            {!emptyData && (
                 <ListGrid>
                     {product &&
                         product.map((product) => (

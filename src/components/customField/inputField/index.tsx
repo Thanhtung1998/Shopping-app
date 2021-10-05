@@ -19,6 +19,7 @@ InputFieldLogin.propTypes = {
     placeholder: PropTypes.string,
     disabled: PropTypes.bool,
     icon: PropTypes.func,
+    checkCss: PropTypes.bool
 }
 
 InputFieldLogin.defaultProps = {
@@ -27,6 +28,7 @@ InputFieldLogin.defaultProps = {
     placeholder: "",
     disabled: false,
     icon: "",
+    checkCss: false,
 }
 
 const BoxInput = styled.div`
@@ -62,9 +64,8 @@ const BoxInput = styled.div`
 
 export function InputFieldLogin(props: any) {
 
-    const { field, form, type, label, placeholder, disabled, icon } = props
+    const { field, form, type, label, placeholder, disabled, icon, checkCss } = props
     const { value, name, onChange, onBlur } = field
-
 
 
 
@@ -76,65 +77,29 @@ export function InputFieldLogin(props: any) {
 
     const [StatusLogin, setStatusLogin] = useState(false)
 
-
-
     const handleStatus = async (values: any) => {
 
-        const params = {
-            email: values.email,
-            password: values.password,
-        }
-
-        // console.log(params);
-
-        try {
-            const res = await axios.post('/user/login', params).then(function (response) {
-                return response;
-
-            }).catch(function (error) {
-                return error.response;
-            });
-
-            console.log(res);
-
-            if (res.status === 200) {
-                setStatusLogin(false);
-            } else {
-                setStatusLogin(true);
-                setTimeout(() => {
-                    setStatusLogin(false);
-                }, 5000)
-            }
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    // console.log(form);
-
-    // console.log(form);
-
-    const handleSummitForm = () => {
-        // && form.status === "Login"
-        if (form.isSubmitting) {
-            const values = {
-                email: form.values.Email,
-                password: form.values.Password
-            }
-            // console.log(values);
-            handleStatus(values);
+        if (values) {
+            setStatusLogin(false);
         } else {
-            // setStatusLogin(false);
+            setStatusLogin(true);
+            setTimeout(() => {
+                setStatusLogin(false);
+            }, 5000)
         }
     }
+
+    // console.log(form);
+
+    // console.log(form);
 
     useEffect(() => {
         let isCancelled = false;
         if (form.isSubmitting) {
-            handleSummitForm();
-        }
 
+            // console.log(values);
+            handleStatus(checkCss);
+        }
         return () => {
             isCancelled = true
         }

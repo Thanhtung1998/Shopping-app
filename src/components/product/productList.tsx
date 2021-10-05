@@ -26,12 +26,13 @@ const ProductContainer = styled.div`
     min-height: 27em;
     max-height: 27em;
     box-shadow: 0 1.3px 17px -2px rgba(0, 0, 0, 0.4);
+    background: var(--dark);
     ${tw`
         flex
         flex-col
         items-center
         p-3
-        bg-white
+       
         rounded-md
         m-1
         sm:m-3
@@ -100,8 +101,13 @@ const ViewMoreBtnS = styled.div`
 `
 
 const ProductName = styled.h3`
+    color: var(--light);
     ${tw`
-        text-base font-bold text-black mt-1 mb-1 cursor-default
+        text-base 
+        font-bold 
+        
+        mt-1 mb-1 
+        cursor-default
     `};
 `;
 
@@ -210,6 +216,7 @@ const ProductDescSpan = styled.span`
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    color: var(--light);
     ${tw`
         text-justify
         w-full

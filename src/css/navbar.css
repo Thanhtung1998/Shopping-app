@@ -36,10 +36,10 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    animation: inputAnimation ease 1s ;
+    animation: inputAnimation ease 1s ; 
 }
 
-.inputAnimationScrollDefalut{
+.inputAnimationScrollDefault{
     top: 4rem;
     position: absolute;
     margin: auto;
@@ -51,7 +51,6 @@
     align-items: center;
     width: 100%;
     z-index: 1;
-    animation: inputAnimation2 ease 1s ;
 }
 
 
@@ -59,13 +58,13 @@
     0%{
         transform: translateY(4rem) ;
         /* transform: translateX(10rem); */
-        transform: scale(1.2 , 1.4);
-        width: 30%;
+        /* transform: scale(1.2 , 1.4);
+        width: 30%; */
     }
     100%{
         transform: translateY(0rem) ;
-        transform: scale(1 , 1);
-        width: 100%;
+        /* transform: scale(1 , 1);
+        width: 100%; */
     }
 
 }

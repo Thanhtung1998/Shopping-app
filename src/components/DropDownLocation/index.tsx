@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react"
 import styled from 'styled-components'
 import tw from 'twin.macro'
-import { SelectCityDropDown } from './selectCity'
-import { SelectDistrictDropDown } from "./selectDistrict"
-import { SelectWardDropDown } from "./selectStreet"
+// import { SelectCityDropDown } from './selectCity'
+// import { SelectDistrictDropDown } from "./selectDistrict"
+// import { SelectWardDropDown } from "./selectStreet"
 import { SCREEN } from '../responsive'
+import { SelectDropDown } from "../DropDownData"
+import Map from '../../assets/fake-data/mapVietNam'
 
 const SelectDropDownContainer = styled.div`
     height: 100%;
@@ -16,8 +18,7 @@ const SelectDropDownContainer = styled.div`
     items-center
     justify-between
     `}
-
-    
+    // background: var(--light);
 
 `
 const SelectHeader = styled.div`
@@ -83,7 +84,7 @@ interface ISelectLocation {
     setCityS: any;
     setDistrictS: any;
     setWardS: any;
-
+    darkMode: any;
 
 }
 
@@ -92,19 +93,70 @@ export function DropDownLocation(props: ISelectLocation) {
 
     // console.log(props);
 
-    const { setCityS, setDistrictS, setWardS, } = props;
+    const { setCityS, setDistrictS, setWardS, darkMode } = props;
 
     const [city, setCity] = useState("")
-
     const [district, setDistrict] = useState("")
-
     const [ward, setWard] = useState("")
+    const nameCity = Map.map((city) => { return city.name })
+    const [nameDistrict, setNameDistrict] = useState([""])
+    const [nameWard, setNameWard] = useState([""])
+
+
+    useEffect(() => {
+
+        const handleDistrict = () => {
+
+            const cityName = Map.map(city => city.name)
+
+            for (var i = 0; i < cityName.length; ++i) {
+                // console.log(cityName[i]);
+                if (city === cityName[i]) {
+                    const District = Map[i].district
+                    // console.log(District);
+                    const nameDistricts = District.map(name => name.name)
+                    setNameDistrict(nameDistricts)
+                }
+            }
+
+        }
+
+        handleDistrict();
+
+        setDistrict("");
+
+    }, [city, setDistrict])
+
+
+    useEffect(() => {
+        const handleStreet = () => {
+
+            const cityName = Map.map(city => city.name)
+
+            for (var i = 0; i < cityName.length; ++i) {
+                if (city === cityName[i]) {
+                    const District = Map[i].district
+                    const nameDistricts = District.map(name => name.name)
+                    for (var j = 0; j < nameDistricts.length; j++)
+                        if (district === nameDistricts[j]) {
+                            const Ward = District[j].ward
+                            const nameWard = Ward.map(name => name.name)
+
+                            setNameWard(nameWard);
+                        }
+
+                }
+            }
+        }
+        handleStreet();
+        setWard("");
+    }, [city, district, setWard])
 
     useEffect(() => {
         setCityS(city);
         setDistrictS(district);
         setWardS(ward);
-    }, [city, district, ward]);
+    }, [setWardS, setDistrictS, setCityS, city, district, ward]);
 
 
 
@@ -119,21 +171,42 @@ export function DropDownLocation(props: ISelectLocation) {
                     <SelectTitle>
                         Select City
                     </SelectTitle>
-                    <SelectCityDropDown city={city} setCity={setCity} />
+                    <SelectDropDown
+                        text={city}
+                        dataRequired={"true"}
+                        defaultText={"Select City"}
+                        setValue={setCity}
+                        dataArray={nameCity}
+                        darkMode={darkMode}
+                    />
                 </SelectCity>
 
                 <SelectDistrict>
                     <SelectTitle>
                         Select District
                     </SelectTitle>
-                    <SelectDistrictDropDown city={city} district={district} setDistrict={setDistrict} />
+                    <SelectDropDown
+                        text={district}
+                        dataRequired={city}
+                        defaultText={"Select District"}
+                        setValue={setDistrict}
+                        dataArray={nameDistrict}
+                        darkMode={darkMode}
+                    />
                 </SelectDistrict>
 
                 <SelectStreet>
                     <SelectTitle>
                         Select Ward
                     </SelectTitle>
-                    <SelectWardDropDown city={city} district={district} ward={ward} setWard={setWard} />
+                    <SelectDropDown
+                        text={ward}
+                        dataRequired={district}
+                        defaultText={"Select Ward"}
+                        setValue={setWard}
+                        dataArray={nameWard}
+                        darkMode={darkMode}
+                    />
                 </SelectStreet>
             </SelectDropDownContainer>
         </ >

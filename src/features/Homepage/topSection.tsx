@@ -17,10 +17,33 @@ interface TopSectionInputProps {
 }
 
 
+const TopSectionBody = styled.section`
+    ${tw`
+        flex
+        items-center
+        justify-center  
+    `}
+
+    width: 100vw;
+    height: 100vh;
+
+    @media (max-width: ${SCREEN.sm}){
+        margin-top: 0;
+    }
+
+    @media (min-width: ${SCREEN['2xl']}){
+        margin-top: calc(40px);
+    }
+
+    @media (min-width: ${SCREEN.xl}) and (max-width: ${SCREEN['2xl']}){
+        margin-top: calc(58px + 58px);
+    }
+
+`
 
 const TopSectionContainer = styled.div`
     min-height: calc(100vh - 58px - 58px);
-    margin-top: 3em;
+    margin-top: 0em;
     ${tw`
         w-full
         max-w-screen-2xl
@@ -32,15 +55,6 @@ const TopSectionContainer = styled.div`
         lg:pl-12
         lg:pr-12
     `};
-
-
-    @media (min-width: ${SCREEN.md}){
-        margin-top: 5em;
-    }
-
-    @media (min-width: ${SCREEN['2xl']}){
-        margin-top: 0em;
-    }
 
 `;
 
@@ -70,7 +84,7 @@ ${tw`
 `;
 
 const Slogan = styled.h1`
-
+    color: var(--dark);
     ${tw`
     font-bold
     text-2xl
@@ -79,7 +93,7 @@ const Slogan = styled.h1`
     md:text-5xl
     lg:font-black
     md:font-extrabold
-    text-black
+    
     mb-4
     sm: leading-snug
     lg: leading-normal
@@ -97,7 +111,7 @@ const Description = styled.span`
         -webkit-line-clamp: 3;
     }
    
-
+    color: var(--dark);
     ${tw`
         text-xs
         lg: text-sm
@@ -105,7 +119,7 @@ const Description = styled.span`
         sm: max-h-full
         overflow-hidden
         max-h-20
-        text-gray-800
+        // text-gray-800
     `}
 `
 
@@ -115,7 +129,7 @@ const BlobContainer = styled.div`
     position: absolute;
     right: -5em;
     top: -8em;
-    z-index: -1;
+    z-index: 1;
     img{
         width: 100%;
         height: auto;
@@ -135,10 +149,10 @@ const BlobContainer = styled.div`
         top: -10em;
     }
     @media (min-width: ${SCREEN.xl}){
-        width: 40em;
+        width: 35em;
         max-height: 30em;
-        right: 3em;
-        top: -6em;
+        right: 7em;
+        top: -16em;
     }
     
 
@@ -147,13 +161,13 @@ const BlobContainer = styled.div`
     `}
 `
 
-const StandaloneCar = styled.div`
+const StandaloneImg = styled.div`
     width: auto;
     height: 30em;
     right: -5em;
     top: -8em;
     position: absolute;
-
+    z-index: 2;
     img{
         width: auto;
         height: 100%;
@@ -174,13 +188,13 @@ const StandaloneCar = styled.div`
     
     @media (min-width: ${SCREEN.xl}){
         height: 45em;
-        right: 1em;
-        top: -9em;
+        right: 5em;
+        top: -16em;
     }
     @media (min-width: ${SCREEN["2xl"]}){
-        height: 125%;
+        height: 58em;
         right: 2em;
-        top: -9em;
+        top: -12em;
     }
 
 `
@@ -196,7 +210,7 @@ flex-wrap
 `
 
 const MiddleContainer = styled.div`
-    top: 3em;
+    height: 20px;
     ${tw`
     w-full
     max-w-screen-2xl
@@ -204,8 +218,24 @@ const MiddleContainer = styled.div`
     justify-center
     relative
     `}
+
+    @media (max-width: ${SCREEN.sm}) and (max-width: ${SCREEN.md}){
+        top: 1.5em;
+        z-index: 3;
+    }
+
     @media (min-width: ${SCREEN.md}){
-        top: 0;
+        top: 1.5em;
+        z-index: 3;
+    }
+
+    @media (min-width: ${SCREEN.xl}) {
+        top: 4em;
+        z-index: 3;
+    }
+    
+    @media (min-width: ${SCREEN['2xl']}){
+        top: 14em;
     }
 `
 const NextPrevBox = styled.div`
@@ -248,12 +278,14 @@ const BoxColorBlob = styled.div`
     }
     
     @media (min-width: ${SCREEN.xl}){
-        height: 450px;
-        width: 450px;
+        height: 400px;
+        width: 400px;
     }
     @media (min-width: ${SCREEN["2xl"]}){
-        height: 550px;
-        width: 550px;
+        height: 450px;
+        width: 450px;
+        top: 140px;
+        right: 50px;
     }
 `
 
@@ -275,7 +307,7 @@ w-3/4
 }
 
 @media (min-width: ${SCREEN.xl}){
-    width: 30%;
+    width: 25%;
 }
 
 `
@@ -330,48 +362,49 @@ export function TopSection(props: TopSectionInputProps) {
 
 
     return (
-        <TopSectionContainer>
-            <LeftContainer>
-                <Slogan>
-                    {data[activeSlide].title}
-                </Slogan>
-                <Description>
-                    {data[activeSlide].description}
-                </Description>
-                <ButtonContainer>
-                    <BookKingButton style={{ "color": `${data[activeSlide].color}` }} icons={true} text="Book Now" />
-                </ButtonContainer>
-            </LeftContainer>
+        <TopSectionBody>
+            <TopSectionContainer>
+                <LeftContainer>
+                    <Slogan>
+                        {data[activeSlide].title}
+                    </Slogan>
+                    <Description>
+                        {data[activeSlide].description}
+                    </Description>
+                    <ButtonContainer>
+                        <BookKingButton style={{ "color": `${data[activeSlide].color}` }} icons={true} text="Book Now" />
+                    </ButtonContainer>
+                </LeftContainer>
 
-            <RightContainer>
-                <BlobContainer>
-                    <BoxColorBlob style={{ background: `${data[activeSlide].color}` }}></BoxColorBlob>
-                </BlobContainer>
-                <StandaloneCar>
-                    <img src={data[activeSlide].img} alt="" className={`animation__top__section--img ${active ? "active" : ""}`} />
-                </StandaloneCar>
-            </RightContainer>
-            <MiddleContainer>
-                {
-                    data ? (
-                        <NextPrevBox>
-                            <div onClick={prevSlide}>
-                                <ChevronLeftIcon height="24px" />
-                            </div>
-                            <div >
-                                <div>
-                                    {activeSlide + 1}/{data.length}
+                <RightContainer>
+                    <BlobContainer >
+                        <BoxColorBlob style={{ background: `${data[activeSlide].color}` }}></BoxColorBlob>
+                    </BlobContainer>
+                    <StandaloneImg>
+                        <img src={data[activeSlide].img} alt="" className={`animation__top__section--img ${active ? "active" : ""}`} />
+                    </StandaloneImg>
+                </RightContainer>
+                <MiddleContainer>
+                    {
+                        data ? (
+                            <NextPrevBox>
+                                <div onClick={prevSlide}>
+                                    <ChevronLeftIcon height="24px" />
                                 </div>
-                            </div>
-                            <div onClick={nextSlide}>
-                                <ChevronRightIcon height="24px" />
-                            </div>
-                        </NextPrevBox>
-                    ) : null
-                }
-            </MiddleContainer>
-        </TopSectionContainer >
-
+                                <div >
+                                    <div>
+                                        {activeSlide + 1}/{data.length}
+                                    </div>
+                                </div>
+                                <div onClick={nextSlide}>
+                                    <ChevronRightIcon height="24px" />
+                                </div>
+                            </NextPrevBox>
+                        ) : null
+                    }
+                </MiddleContainer>
+            </TopSectionContainer >
+        </TopSectionBody>
     )
 
 

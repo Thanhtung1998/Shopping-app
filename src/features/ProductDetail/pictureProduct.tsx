@@ -31,8 +31,7 @@ const ModalImgThumbnail = styled.div`
 
 const BoxImg = styled.div`
     width: 100%;
-    min-height: 28em;
-    max-height: 28em;
+   
     box-shadow: 0 1.3px 17px -2px rgba(0, 0, 0, 0.4);
     ${tw`
         flex
@@ -48,43 +47,70 @@ const BoxImg = styled.div`
         overflow-hidden
     `};
 
-    
-    @media (max-width: ${SCREEN.sm}){
-        min-height: 12.4em;
-        max-height: 12.4em;
+    @media (min-width: ${SCREEN['2xl']}){
+        min-height: 26.5em;
+        max-height: 26.5em;
     }
 
+    @media (max-width: ${SCREEN.xl}) and (max-height: ${SCREEN['2xl']}){
+        min-height: 24em;
+        max-height: 24em;
+    }
     
-    @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.lg}){
+    @media (min-width: ${SCREEN.lg}) and (max-width: ${SCREEN.xl}){
+        min-height: 17.5em;
+        max-height: 17.5em;
+    }
+
+
+    @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.lg}){
+        min-height: 25em;
+        max-height: 25em;
+    }
+    
+    @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.md}){
         min-height: 25em;
         max-height: 25em;
     }
 
-    @media (min-width: ${SCREEN.lg}) and (max-width: 1200px){
-        min-height: 17em;
-        max-height: 17em;
+    @media (max-width: ${SCREEN.sm}){
+        min-height: 14em;
+        max-height: 14em;
     }
+   
 
- 
 `
 const ImgProduct = styled.div`
-    width: 100%;
-    height: 400px;
-
-    @media (max-width: ${SCREEN.lg}){
+    
+    @media (min-width: ${SCREEN['2xl']}){
         width: 100%;
-        height: 240px;
+        height: 25rem;
+    }
+
+    @media (min-width: ${SCREEN.xl}) and (max-width: ${SCREEN['2xl']}){
+        width: 100%;
+        height: 22.5rem;
+    }
+
+    @media (min-width: ${SCREEN.lg}) and (max-width: ${SCREEN.xl}){
+        width: 100%;
+        height: 16rem;
     }
     
 
-    @media (max-width: ${SCREEN.md}){
+    @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.lg}){
         width: 100%;
-        height: 370px;
+        height: 23.5rem;
     }
     
+    @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.md}){
+        width: 100%;
+        height: 23.5rem;
+    }
+
     @media (max-width: ${SCREEN.sm}){
         width: 100%;
-        height: 170px;
+        height: 12.5rem;
     }
  
 `

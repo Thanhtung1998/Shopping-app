@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { RootStateOrAny, useSelector, useDispatch } from "react-redux";
-import { updateFilters, clearFilters, selectFilteredProducts, selectProducts } from "../../redux/Slice/product/productSlice"
+import { useSelector, useDispatch } from "react-redux";
+import { updateFilters, clearFilters, selectProducts } from "../../redux/Slice/product/productSlice"
 import { getUniqueValues } from "../../utils/getValue"
 import styles from "../../css/Product.module.css"
 import InputRange from 'react-input-range';
@@ -98,6 +98,7 @@ export function Filter(props: any) {
             } else if (item !== 'colors' && item !== 'category' && activeCompany !== 'all') {
                 filtered = items.filter(product => product[item] === activeCompany)
             }
+            return null;
         })
         return filtered
     }
@@ -135,7 +136,7 @@ export function Filter(props: any) {
                 filtered = all_products.filter((product: any) => product[lastChange] === hello[lastChange])
             } else {
                 items.forEach((x: string) => {
-                    filtered = (x == lastChange && hello[x] !== 'all') ? filtered.filter((product: any) => product[x] === hello[x]) : filtered
+                    filtered = (x === lastChange && hello[x] !== 'all') ? filtered.filter((product: any) => product[x] === hello[x]) : filtered
                 })
 
             }
@@ -154,7 +155,7 @@ export function Filter(props: any) {
 
         }
 
-    }, [activeCategory, activeCompany, lastChange])
+    }, [all_products, activeCategory, activeCompany, lastChange, dispatch])
 
     useEffect(() => {
         if (!all_products) return false || undefined
@@ -194,7 +195,7 @@ export function Filter(props: any) {
                         {brandList && brandList.map(value => (
                             <label key={value} className="flex items-center justify-start" >
                                 <input className="mb-2 mr-4" type="checkbox" value={value} name={`${value}`} onClick={() => filterCategory(value, 'brand')} checked={value === activeCategory} onChange={() => setActiveCategory(value)} />
-                                <p key={value} className={`${value == activeCategory && styles.active_filter} text-gray-500 cursor-pointer mb-2`} >{value}</p>
+                                <p key={value} className={`${value === activeCategory && styles.active_filter} text-gray-500 cursor-pointer mb-2`} >{value}</p>
                             </label>
                         ))}
                     </div>
@@ -208,7 +209,7 @@ export function Filter(props: any) {
                         {nameList && nameList.map(value => (
                             <label key={value} className="flex items-center justify-start" >
                                 <input className="mb-2 mr-4" type="checkbox" value={value} name={`${value}`} onClick={() => filterCategory(value, 'name')} checked={value === activeCompany} onChange={() => setActiveCompany(value)} />
-                                <span key={value} className={`${value == activeCompany && styles.active_filter} text-gray-500 cursor-pointer mb-2 text-base font-semibold`}> {value}</span>
+                                <span key={value} className={`${value === activeCompany && styles.active_filter} text-gray-500 cursor-pointer mb-2 text-base font-semibold`}> {value}</span>
                             </label>
                         ))}
                     </div>
@@ -250,7 +251,7 @@ export function Filter(props: any) {
                     </h2>
                     <div className="flex justify-around my-5">
                         {colors && colors.map((value: any) => (
-                            <div onClick={() => filterCategory(value, 'ColorProduct')} key={value} className={`w-7 h-7 cursor-pointer border-4  shadow-sm ${value == activeColor ? 'border-red-500' : 'border-gray-500'} rounded-full mx-1`} style={value === "all" ? { background: "conic-gradient(#FF0000 0deg 120deg,  #008000 120deg 240deg, #FFA500 240deg 360deg)" } : { background: value.split('all') }} >
+                            <div onClick={() => filterCategory(value, 'ColorProduct')} key={value} className={`w-7 h-7 cursor-pointer border-4  shadow-sm ${value === activeColor ? 'border-red-500' : 'border-gray-500'} rounded-full mx-1`} style={value === "all" ? { background: "conic-gradient(#FF0000 0deg 120deg,  #008000 120deg 240deg, #FFA500 240deg 360deg)" } : { background: value.split('all') }} >
                             </div>
                         ))}
                     </div>

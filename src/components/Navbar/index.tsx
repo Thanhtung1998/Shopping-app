@@ -1,5 +1,5 @@
 import { SearchIcon } from "@heroicons/react/outline";
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components";
 import tw from "twin.macro"
 import { Logo } from "../Logo";
@@ -8,11 +8,12 @@ import { SCREEN } from "../responsive";
 import "../../css/navbar.css";
 import { NavUser } from './NavUser'
 import { useMediaQuery } from 'react-responsive'
-
+import { Search, Menu } from "react-feather";
+import ThemeToggle from "./ThemeToggle";
+import { LaptopAndTabletNav } from './LaptopAndTabletNav'
 
 const NavbarContainer = styled.div`
     min-height: 58px;
-    // background: linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(238,142,162,1) 100%);
     z-index: 1000;
     ${tw`
     w-full
@@ -25,256 +26,492 @@ const NavbarContainer = styled.div`
     top-0
     left-0
     `}
-`
-
-const NavbarContent = styled.div`
-    height: 100%;
-${tw`
-    w-full
-    flex
-    flex-row
-    items-center
-    lg:pl-12
-    lg:pr-12
-    justify-between
-`}
-`
-
-const NavbarSearch = styled.div`
-    height: 100%;
-    width: 60%;
-    ${tw`
-    flex
-    items-center
-    justify-center
-    bg-transparent
+    .mobile-css{
+        ${tw`
+        h-full
+        w-full
+        flex
+        items-center
+        justify-between
     `}
-
-    @media (min-width: ${SCREEN.sm} ){
-        width: 48%;
-    }
-    @media (min-width: ${SCREEN.md} ){
-        width: 38%;
-    }
-    @media (min-width: ${SCREEN.lg} ){
-        width: 40%;
-    }
-    @media (min-width: ${SCREEN.xl} ){
-        width: 25%;
-    }
-    @media (min-width: ${SCREEN["2xl"]} ){
-        width: 30%;
-    }
-
-`
-
-const NavbarSearchBox = styled.div`
-    height: 100%;
-    width: 100%;
-    border-radius: 50px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    --tw-shadow: 4px 4px 6px -1px rgba(0, 0, 0, 0.1), 4px 2px 4px -1px rgba(0, 0, 0, 0.06);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-    // background: white;
-    ${tw`
-        flex
-        items-center
-        justify-center
-        bg-white
-        h-5/6
-        overflow-hidden
-    `};
-    @media (max-width: ${SCREEN.md}) {
-        display: none;
-        }
-`
-
-const NavbarSearchInput = styled.input`
-
-    ${tw`
-        w-full
-        outline-none
-        h-full
-        flex
-        items-center
-        `
+    z-index: 1000;
     }
 `
 
-const NavbarSearchMobile = styled.div`
-height: 58px;
-${tw`
+const HeaderSection = styled.header`
+  position: fixed;
+  top: 0;
+  color: gray;
+  ${tw`
     w-full
-    relative
-    top-0
-    block
-    md:hidden
-    `
+  `}
+  height: 58px;
+  z-index: 10;
+  transition: background 0.2s, border-bottom 0.2s;
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--light);
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    left: 0;
+    top: 0;
+    transition: all 0.2s;
+
+    label,
+    input,
+    .guestNumber {
+      background: none;
+      font-size: 14px;
+      border: none;
+      line-height: 1.5;
+      display: block;
+      color: var(--dark);
+      outline: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-`
+    input {
+      width: 100%;
+      font-weight: 700;
 
-const NavbarSearchMobileBox = styled.div`
-    height: 40px;
-    top: 30px;
-    // transform: translateY(-50%);
-    right: 0px;
-    left: 0px;
-    margin: auto;    
-    width: 94%;
-    animation: top-to-bottom 1s linear forwards;
+      &::placeholder {
+        color: var(--dark);
+        font-weight: 400;
+        opacity: 0.5;
+      }
+    }
+    .guestNumber {
+      font-weight: 700;
+      .empty {
+        color: var(--dark);
+        font-weight: 400;
+        opacity: 0.5;
+      }
+    }
+    .field {
+      width: 100%;
+      padding: 0.5rem 1.5rem;
+      border-radius: 99px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: background 0.2s;
+      position: relative;
+
+      & + .field::before {
+        position: absolute;
+        content: "";
+        width: 2px;
+        height: 2rem;
+        background: var(--gray);
+        border-radius: 2px;
+        left: 0;
+        transition: transform 0.2s;
+      }
+      &:hover,
+      &:focus-within {
+        background: var(--gray);
+      }
+
+      &:last-of-type {
+        padding-right: 10rem;
+      }
+    }
+  }
+  .overlay:hover .field::before,
+  .overlay:focus-within .field::before {
+    transform: scale(0);
+  }
+
+  .user,
+  .profile,
+  .logo,
+  .globe,
+  nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .headerInner {
+    // max-width: var(--containerWidth);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
     ${tw`
-        absolute
-        hidden
-        sm:hidden
-        rounded-full
-        `
-    };
+    h-full
+    flex
+    justify-between
+    max-w-screen-2xl
+    `}
+  }
 
-    @keyframes top-to-bottom{
-        0%{
-            transform: translateY(-25);
-            width: 0%;
-            opacity: 0;
-        }
-        25%{
-            transform: translateY(0%);
-            width: 25%;
-            opacity: 0;
-        }
-        50%{
-            transform: translateY(25%);
-            width: 50%;
-            opacity: 0;
-        }
-        75%{
-            transform: translateY(65%);
-            width: 75%;
-            opacity: 0.5;
-        }
-        100%{
-            transform: translateY(100%);
-            width: 100%;
-            opacity: 1;
-        }
+  & > div {
+    flex: 0 0 20%;
+  }
+  .profile {
+    justify-content: flex-end;
+    white-space: nowrap;
+    svg {
+      height: 1.15rem;
+    }
+    a,
+    .themeToggle {
+      margin-right: 0.4rem;
+    }
+    .userIcon {
+      background: #2e2e48;
+      border-radius: 99px;
+      height: 30px;
+      width: 30px;
+      color: #fafafc;
+    }
+    .user {
+      background: #fafafc;
+      border-radius: 99px;
+      padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+    }
+    .menu {
+      color: #2e2e48;
+      margin-right: 0.5rem;
+    }
+  }
+
+  form {
+    position: absolute;
+    transform: translate(-50%, 100%);
+    left: 50%;
+    margin: auto;
+    background: var(--light);
+    padding: 0.5rem;
+    border-radius: 99px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 720px;
+    // margin: 1.5rem 0;
+    width: 60vw;
+    box-shadow: 0 1rem 3rem -1rem #1e1e38;
+    transition: all 0.2s;
+    transform-origin: center;
+    height: 58px;
+    & * {
+      transition: all 0.2s;
     }
 
-`
+    input:focus > form {
+        background: red;
+    }
 
+    & > input {
+        height: 100%;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      flex: 1;
+      padding: 0 1.5rem;
+      color: var(--dark);
+      outline: none;
+    
+      &::placeholder {
+        color: var(--dark);
+        opacity: 0.6;
+      }
+    }
+    & > button {
+      background: var(--red);
+      color: #fafafc;
+      border: none;
+      padding: 0.5rem calc(1.75rem / 2);
+      height: 100%;
+      max-width: 300px;
+      display: flex;
+      align-items: center;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 1rem;
+      overflow: hidden;
+      z-index: 2;
 
-const NavbarSearchMobileInput = styled.input`
-    padding-left: 5px;
-    ${tw`
-        h-full
-        w-full
-        rounded-full
-        outline-none
-        flex
-        items-center
-        justify-center
-        text-center
-        border-2
-        // opacity-80
-        focus:border-blue-500
-        // focus:opacity-50
-        overflow-hidden
-        bg-gray-400
-        text-white
-    `};
+      &:hover:not(:disabled) {
+        box-shadow: 0 0 0 2px var(--white), 0 0 0 4px var(--red);
+      }
 
-    ::-webkit-input-placeholder{
-        // line-height: 18px;
-        font-size: 16px;
-        color: #0097ff;
-        flex
-        items-center
-        justify-center
-        text-center
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+    & > button svg {
+      height: 1.25rem;
+      margin-right: 0.75rem;
+      flex: 0 0 1.25rem;
+    }
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  @media (max-width: 36rem) {
+    .profile,
+    .logo,
+    nav,
+    form > button span {
+      display: none;
+    }
+    .overlay {
+      display: none;
+    }
+    .headerInner {
+      grid-template-columns: 1fr;
+    }
+    form {
+      position: relative;
+      transform: none !important;
+      width: 100% !important;
+      left: unset;
+      top: 0;
+      margin: 0;
+      & > input {
+        padding: 0 1rem;
+        font-size: 1rem;
+      }
+      & > button {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0 0.6rem;
+      }
+      & > button svg {
+        height: 1rem;
+        width: 1rem;
+      }
+    }
+  }
+
+  @media (min-width: 36rem) and (max-width: 62.5rem) {
+    nav {
+      display: none;
+    }
+    .headerInner {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.md}){
+
+    background: var(--light);
+   
+    
+    form {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        width: 40%;
+        height: 58px;
+        transform: translate(-50%, 0%);
        
+        & > input {
+            width:80%;
+            height: 100%;
+            padding: 0 1rem;
+            font-size: 1rem;
+        }
+        & > button {
+            width: 2.5rem;
+            height: 2.5rem;
+            padding: 0 0.6rem;
+        }
+        & > button svg {
+            height: 1rem;
+            width: 1rem;
+        }
+    }
+    
+    .profile {
+      .active__icon{
+        z-index: 10;
+      }
+    } 
+
+}
+
+  &.scrolled:not(.inputFocus) {
+    background: var(--light);
+    color: var(--dark);
+    border-bottom: 2px solid var(--gray);
+
+    .overlay {
+      opacity: 0;
+      pointer-events: none;
     }
 
-`
+    nav {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .logo svg {
+      color: var(--red);
+    }
+    .user {
+      box-shadow: 0 0 0 2px var(--gray);
+    }
+    form {
+      box-shadow: 0 0 0 2px var(--gray);
+      transform: translate(-50%,-1%) scale(0.83);
+      width: 480px;
+      & > button {
+        max-width: 3rem;
+      }
+      & > button span {
+        opacity: 0;
+      }
+    }
+    
+    @media (max-width: 36rem) {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
 
-const LogoContainer = styled.div`
+      form {
+        padding: 0;
+        box-shadow: none;
+        background: var(--gray);
+      }
+    }
 
-    `
+    @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.lg}) {
+        .profile {
+          opacity: 1;
+          pointer-events: none;
+        }
+        form {
+          // display: none;
+          left: 0;
+          margin: auto;
+          right: 0;
+          transform: translate(0 , -1%) scale(0.83);
+          width: 50%;
+        }
+    }
+  }
 
+  &.inputFocus {
+    color: var(--dark);
 
+    .logo svg {
+      color: var(--red);
+    }
+
+    form {
+      background: var(--light);
+      width: 100%;
+      box-shadow: 0 1rem 1.5rem -0.5rem #0001;
+    }
+  }
+`;
 
 export function Navbar(props: any) {
 
-
-    const [open, setOpen] = useState(0);
-
-    const handleMobileOpenInput = () => {
-
-        const MobileSearchOpen = document.querySelector(NavbarSearchMobileBox);
-        if (open === 0) {
-            MobileSearchOpen?.setAttribute('style', 'display:block');
-            setOpen(1);
-        }
-        // console.log(MobileSearchOpen);
-        else {
-            MobileSearchOpen?.setAttribute('style', 'display:none');
-            setOpen(0);
-        }
-    }
-    const isMobile = useMediaQuery({ maxWidth: SCREEN.md })
-
-    const [navbar, setNavbar] = useState(false)
-
-    const changeBackground = () => {
-        // console.log(window.scrollY)
-        if (window.scrollY >= 80) {
-            setNavbar(true);
-        }
-        else {
-            setNavbar(false);
-        }
-    }
-
-    useEffect(() => {
-        window.addEventListener('scroll', changeBackground)
-        return () => {
-            window.removeEventListener('scroll', changeBackground)
-        }
-    }, [])
+  const Mode = (localStorage.getItem("ShoppingAppTheme")) === "dark";
+  // const [open, setOpen] = useState(0);
+  const headerRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeUser, setActiveUser] = useState(false)
+  const [isDark, setIsDark] = useState(Mode);
+  const isTablet = useMediaQuery({ maxWidth: SCREEN.md })
+  const isLaptop = useMediaQuery({ maxWidth: SCREEN.lg })
+  const isMobile = useMediaQuery({ maxWidth: SCREEN.sm });
 
 
-    return (
-        <NavbarContainer className={navbar ? "header" : ""} >
-            <div className="w-full absolute top-0 bottom-0 left-0 right-0 m-auto flex items-center justify-center">
-                <NavbarContent>
-                    <LogoContainer>
-                        <Logo />
-                    </LogoContainer>
+  useEffect(() => {
 
-                    <div className="flex space-x-12 lg:space-x-3 justify-around">
-                        {isMobile && (
-                            <div className="flex items-center absolute justify-center" style={{ top: "50%" }}>
-                                <SearchIcon style={{ zIndex: 10, height: "25px", cursor: "pointer", position: "absolute", top: "-50%", transform: "translateY(-50%)", right: "24px", color: "gray" }} onClick={handleMobileOpenInput} />
-                            </div>
-                        )}
-                        <NavUser />
-                        <NavItems />
-                    </div>
-                </NavbarContent>
+    const onScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <NavbarContainer>
+
+      {isMobile && (
+        <>
+          <div className="mobile-css">
+            <Logo />
+            <div className="flex items-center justify-center mr-12">
+              <SearchIcon style={{ width: "30px", marginRight: "10px" }} onClick={() => console.log("hello")} />
+              <NavUser activeUser={activeUser} setActiveUser={setActiveUser} />
+              <NavItems isDark={isDark} setIsDark={setIsDark} />
             </div>
-            <div className={navbar ? "inputAnimationScroll" : isMobile ? "inputAnimationScroll" : "inputAnimationScrollDefalut"}>
-                <NavbarSearch>
-                    <NavbarSearchBox>
-                        <div className="searchIcon">
-                            <SearchIcon style={{ height: "18px" }} />
-                        </div>
-                        <NavbarSearchInput placeholder="Tìm kiếm trong shop" />
-                    </NavbarSearchBox>
-                    <NavbarSearchMobile>
-                        <NavbarSearchMobileBox>
-                            <NavbarSearchMobileInput placeholder="Tìm kiếm trong shop" />
-                        </NavbarSearchMobileBox>
-                    </NavbarSearchMobile>
-                </NavbarSearch>
-            </div>
-        </NavbarContainer>
 
-    );
+          </div>
+        </>
+
+      )}
+      <HeaderSection ref={headerRef} className={scrolled && !isMobile && !isTablet ? "scrolled" : ""}>
+
+        <div className="headerInner">
+
+          <div className="logo">
+            <Logo></Logo>
+          </div>
+
+          {/* <MobileNav /> */}
+          {!isMobile && (
+            <form className="search">
+              <input
+                type="text"
+                placeholder={props.placeholder ? props.placeholder : "Where are you going?"}
+                required
+              />
+              <button
+                type="submit"
+                aria-label="search places"
+              >
+                <Search />
+                <span>Search</span>
+              </button>
+            </form>
+          )}
+
+          <LaptopAndTabletNav isDark={isDark} setIsDark={setIsDark} />
+
+          <div className="flex items-center justify-center">
+
+            {!isLaptop && (
+              <>
+                <NavItems />
+              </>
+            )}
+            <div className="profile cursor-pointer">
+              <ThemeToggle icon isDark={isDark} setIsDark={setIsDark} className="active__icon" />
+              <div onClick={() => setActiveUser(!activeUser)} className="user">
+                <Menu className="menu" />
+                <div className="userIcon">
+                  <NavUser activeUser={activeUser} setActiveUser={setActiveUser} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </HeaderSection>
+    </NavbarContainer>
+  );
 }
+

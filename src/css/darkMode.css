@@ -1,0 +1,17 @@
+.lightMode{
+    background: var(--light) ;
+    color: var(--dark) ;
+}
+
+.darkMode{
+    background: var(--dark) ;
+    color: var(--light) ;
+}
+
+.BgDarkMode{
+    background: var(--dark) ;
+}
+
+.BgLightMode{
+    background: var(--light) ;
+}

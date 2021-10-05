@@ -26,8 +26,12 @@ import "swiper/components/navigation/navigation.min.css";
 // } from "swiper/core";
 
 import '../../css/carousel.css';
+import topProductApi from '../../api/topProductApi';
 
-
+interface IActiveModalOpen {
+    activeModalOpen?: boolean;
+    setActiveModalOpen?: any;
+}
 
 const TopProductsContainer = styled.div`
     ${tw`
@@ -54,16 +58,12 @@ const TitleTopProduct = styled.h2`
   `};
 `;
 
-// const ProductsContainer = styled.div`
-//   ${tw`
-//     w-full
-//     flex
-//     flex-wrap
-//     justify-around
-//     mt-7
-//     md:mt-10
-//   `};
-// `;
+const ProductsContainer = styled.div`
+  ${tw`
+    w-full
+    mt-6
+  `};
+`;
 
 // const EmptyProducts = styled.div`
 //   ${tw`
@@ -87,11 +87,6 @@ const LoadingContainer = styled.div`
     text-black
   `};
 `;
-
-interface IActiveModalOpen {
-    activeModalOpen?: boolean;
-    setActiveModalOpen?: any;
-}
 
 
 export function TopProducts(props: IActiveModalOpen) {
@@ -118,12 +113,20 @@ export function TopProducts(props: IActiveModalOpen) {
     // const [data, setData] = useState([<Product {...testProduct}></Product>]);
     // const [numberOfDots, setNumberOfDots] = useState(1);
     // const [numberOfDotTablet, setNumberOfDotTablet] = useState(1);
-    const fetchTopProduct = async () => {
+
+    const fetchTopProductHeroku = async () => {
         setLoading(true);
-        const res = await axios.get("TopProduct")
-        setTopProduct(res.data);
-        setProduct(res.data);
+        try {
+            const res = await topProductApi.getAllProduct();
+            setTopProduct(res.data.product);
+            setProduct(res.data.product);
+        } catch (error: any) {
+            const res = await axios.get("TopProduct");
+            setTopProduct(res.data);
+            setProduct(res.data);
+        }
         setLoading(false);
+
     }
 
     const [isQuickView, setQuickView] = useState(false)
@@ -136,15 +139,7 @@ export function TopProducts(props: IActiveModalOpen) {
     // }
 
     useEffect(() => {
-
-        // let isCancelled = false;
-
-        fetchTopProduct();
-
-        // return () => {
-        //     isCancelled = true;
-        // }
-
+        fetchTopProductHeroku();
     }, []);
 
 
@@ -153,12 +148,11 @@ export function TopProducts(props: IActiveModalOpen) {
     function handleOpenQuickView(open: boolean, id: string) {
         setQuickView(open)
         setCurrentID(id)
-        // console.log(id)
     }
 
-    const Emtydata = !topProduct || topProduct.length === 0;
+    const emptyData = !topProduct || topProduct.length === 0;
 
-    const products = (!Emtydata && (topProduct.map((topProduct: IProduct) => <Product {...topProduct} setActiveModalOpen={props.setActiveModalOpen} onOpenChange={handleOpenQuickView} />)) || [])
+    const products = (!emptyData && (topProduct.map((topProduct: IProduct) => <Product {...topProduct} setActiveModalOpen={props.setActiveModalOpen} onOpenChange={handleOpenQuickView} />)) || [])
 
     // console.log(products);
 
@@ -169,10 +163,7 @@ export function TopProducts(props: IActiveModalOpen) {
 
     const numberShow = isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4;
 
-
     // console.log(Emtydata);
-
-
 
     // const testProduct2: IProduct = {
     //     name: "Quần áo mùa đông",
@@ -196,103 +187,105 @@ export function TopProducts(props: IActiveModalOpen) {
         <>
             <TopProductsContainer>
                 <TitleTopProduct >Top Products In Month</TitleTopProduct>
-                {isLoading && (
-                    <LoadingContainer>
-                        <MoonLoader size={30} />
-                    </LoadingContainer>
-                )}
-                {!Emtydata && (
-                    // <ProductsContainer>
+                <ProductsContainer>
+                    {isLoading && (
+                        <LoadingContainer>
+                            <MoonLoader size={30} />
+                        </LoadingContainer>
+                    )}
+                    {!emptyData && (
+                        // <ProductsContainer>
 
 
-                    //     {/* {
-                    //         (
-                    //             topProduct && topProduct.map((product) => (
-                    //                 <Product {...product} setActiveModalOpen={props.setActiveModalOpen} onOpenChange={handleOpenQuickView} />
-                    //             ))
-                    //         )
-                    //     } */}
+                        //     {/* {
+                        //         (
+                        //             topProduct && topProduct.map((product) => (
+                        //                 <Product {...product} setActiveModalOpen={props.setActiveModalOpen} onOpenChange={handleOpenQuickView} />
+                        //             ))
+                        //         )
+                        //     } */}
 
-                    //     <Carousel value={current}
-                    //         onChange={setCurrent}
-                    //         // set up point
-
-
-                    //         plugins={[
-                    //             // 'clickToChange',
-                    //             // 'infinite',
-                    //             // 'arrows',
-                    //             {
-                    //                 resolve: slidesToShowPlugin,
-                    //                 options: {
-                    //                     numberOfSlides: 4,
-                    //                 },
-                    //             },
-                    //         ]}
-                    //         // responesive
-                    //         breakpoints={{
-                    //             640: {
-                    //                 plugins: [
-                    //                     // 'infinite',
-                    //                     {
-                    //                         resolve: slidesToShowPlugin,
-                    //                         options: {
-                    //                             numberOfSlides: 1,
-                    //                         },
-                    //                     },
-                    //                 ],
-                    //             },
-                    //             900: {
-                    //                 plugins: [
-                    //                     // 'infinite',
-                    //                     {
-                    //                         resolve: slidesToShowPlugin,
-                    //                         options: {
-                    //                             numberOfSlides: 2,
-                    //                         },
-                    //                     },
-                    //                 ],
-                    //             },
-                    //             1024: {
-                    //                 plugins: [
-                    //                     // 'infinite',
-                    //                     {
-                    //                         resolve: slidesToShowPlugin,
-                    //                         options: {
-                    //                             numberOfSlides: 3,
-                    //                         },
-                    //                     },
-                    //                 ],
-                    //             },
-                    //         }}
-
-                    //         slides={products} />
-                    //     <Dots value={current} onChange={setCurrent} number={isTablet ? numberOfDotTablet : numberOfDots} />
-                    // </ProductsContainer>
-                    <></>
-                )}
+                        //     <Carousel value={current}
+                        //         onChange={setCurrent}
+                        //         // set up point
 
 
-                <Swiper
-                    // navigation={true}
-                    // effect={"coverflow"}
-                    // centeredSlides={true}
-                    slidesPerView={numberShow}
-                    spaceBetween={0}
-                    // loop={true}
-                    pagination={{
-                        // clickable: true
-                    }}
-                    className="mySwiper w-full"
-                >
+                        //         plugins={[
+                        //             // 'clickToChange',
+                        //             // 'infinite',
+                        //             // 'arrows',
+                        //             {
+                        //                 resolve: slidesToShowPlugin,
+                        //                 options: {
+                        //                     numberOfSlides: 4,
+                        //                 },
+                        //             },
+                        //         ]}
+                        //         // responesive
+                        //         breakpoints={{
+                        //             640: {
+                        //                 plugins: [
+                        //                     // 'infinite',
+                        //                     {
+                        //                         resolve: slidesToShowPlugin,
+                        //                         options: {
+                        //                             numberOfSlides: 1,
+                        //                         },
+                        //                     },
+                        //                 ],
+                        //             },
+                        //             900: {
+                        //                 plugins: [
+                        //                     // 'infinite',
+                        //                     {
+                        //                         resolve: slidesToShowPlugin,
+                        //                         options: {
+                        //                             numberOfSlides: 2,
+                        //                         },
+                        //                     },
+                        //                 ],
+                        //             },
+                        //             1024: {
+                        //                 plugins: [
+                        //                     // 'infinite',
+                        //                     {
+                        //                         resolve: slidesToShowPlugin,
+                        //                         options: {
+                        //                             numberOfSlides: 3,
+                        //                         },
+                        //                     },
+                        //                 ],
+                        //             },
+                        //         }}
 
-                    {products && products.map(product => (
-                        <SwiperSlide key={Math.random()} className="">
-                            {product}
-                        </SwiperSlide>
-                    ))}
+                        //         slides={products} />
+                        //     <Dots value={current} onChange={setCurrent} number={isTablet ? numberOfDotTablet : numberOfDots} />
+                        // </ProductsContainer>
+                        <></>
+                    )}
 
-                </Swiper>
+
+                    <Swiper
+                        // navigation={true}
+                        // effect={"coverflow"}
+                        // centeredSlides={true}
+                        slidesPerView={numberShow}
+                        spaceBetween={0}
+                        // loop={true}
+                        pagination={{
+                            // clickable: true
+                        }}
+                        className="mySwiper w-full"
+                    >
+
+                        {products && products.map(product => (
+                            <SwiperSlide key={Math.random()} className="">
+                                {product}
+                            </SwiperSlide>
+                        ))}
+
+                    </Swiper>
+                </ProductsContainer>
 
             </TopProductsContainer>
 

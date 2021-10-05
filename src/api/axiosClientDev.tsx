@@ -23,15 +23,15 @@ const getFirebaseToken = async () => {
 const API = process.env.REACT_APP_API_URL
 const API_PRODUCT = process.env.REACT_APP_API_PRODUCTION
 // console.log(API)
-const axiosClient = axios.create({
-    baseURL: API_PRODUCT || API,
+const axiosClientDev = axios.create({
+    baseURL: API,
     headers: {
         'content-type': 'application/json',
     },
     paramsSerializer: params => queryString.stringify(params),
 });
 
-axiosClient.interceptors.request.use(async (config) => {
+axiosClientDev.interceptors.request.use(async (config) => {
     // Handle token here ... (Xử lý khi có token trả về)
 
     // const currentUser = firebase.auth().currentUser;
@@ -52,7 +52,7 @@ axiosClient.interceptors.request.use(async (config) => {
     return Promise.reject(err);
 })
 
-axiosClient.interceptors.response.use((response: AxiosResponse) => {
+axiosClientDev.interceptors.response.use((response: AxiosResponse) => {
     // Xử lý khi có response trả về
     if (response && response.data) {
         return response.data;
@@ -63,4 +63,4 @@ axiosClient.interceptors.response.use((response: AxiosResponse) => {
     throw error;
 });
 
-export default axiosClient;
+export default axiosClientDev;

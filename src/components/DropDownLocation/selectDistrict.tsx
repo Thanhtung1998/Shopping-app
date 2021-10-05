@@ -4,16 +4,20 @@ import tw from 'twin.macro'
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import '../../css/animation.css'
 import Map from '../../assets/fake-data/mapVietNam'
+import '../../css/darkMode.css'
 
 const SelectCityDropDownContainer = styled.div`
     ${tw`
     w-full
     relative
     `}
+    background: var(--dark);
+    color: var(--light);
 `
 
 const BoxSelect = styled.div`
     width: 100%;
+    
     padding: 10px;
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     border-radius: 10px;
@@ -39,13 +43,15 @@ const BoxDropDown = styled.div`
     padding: 10px;
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     border-radius: 10px;
-    background: white;
+    background: var(--dark);
     z-index: 100;
 
     ${tw`
         overflow-hidden
         overflow-y-auto
     `}
+
+   
     
 `
 
@@ -64,10 +70,15 @@ const BoxDropDownItem = styled.div`
     height: 1.75rem;
     transition: all 0.2s;
     span{
+        color: var(--light);
         display: block;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
+    }
+
+    .modeText{
+        color: var(--dark);
     }
     
     
@@ -77,7 +88,8 @@ const BoxDropDownItem = styled.div`
 interface IDistrict {
     city?: string;
     district?: string;
-    setDistrict?: any
+    setDistrict?: any;
+    darkMode?: boolean;
 }
 
 
@@ -85,12 +97,9 @@ export function SelectDistrictDropDown(props: IDistrict) {
 
 
 
-    const { city, district, setDistrict } = props;
+    const { city, district, setDistrict, darkMode } = props;
     const [isActiveSelectCity, setIsActiveSelectCity] = useState(false)
     const [nameDistrict, setNameDistrict] = useState([""])
-
-
-
 
     useEffect(() => {
 
@@ -114,7 +123,6 @@ export function SelectDistrictDropDown(props: IDistrict) {
                 }
             }
 
-
         }
 
         handleDistrict();
@@ -126,21 +134,19 @@ export function SelectDistrictDropDown(props: IDistrict) {
 
     }, [city, setDistrict])
 
-
     // console.log(district, city);
 
-
     return (
-        <SelectCityDropDownContainer>
+        <SelectCityDropDownContainer className={!darkMode ? "lightMode" : ""}>
             <BoxSelect onClick={(e) => setIsActiveSelectCity(!isActiveSelectCity)}>
                 <BoxText>{district ? district : "Select District"}</BoxText>
                 <ChevronDownIcon className="h-6" />
             </BoxSelect>
             {isActiveSelectCity && city && (
-                <BoxDropDown className="hidden-animation">
+                <BoxDropDown className={!darkMode ? "hidden-animation BgLightMode" : "hidden-animation"}>
                     {nameDistrict && nameDistrict.map((name) => (
                         <BoxDropDownItem key={name} onClick={(e) => { setDistrict(name); setIsActiveSelectCity(false) }} >
-                            <span>{name}</span>
+                            <span className={!darkMode ? "modeText" : ""} >{name}</span>
                         </BoxDropDownItem>
                     ))}
                 </BoxDropDown>

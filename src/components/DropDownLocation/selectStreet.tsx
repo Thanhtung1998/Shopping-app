@@ -4,8 +4,11 @@ import tw from 'twin.macro'
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import '../../css/animation.css'
 import Map from '../../assets/fake-data/mapVietNam'
+import '../../css/darkMode.css'
 
 const SelectCityDropDownContainer = styled.div`
+    background: var(--dark);
+    color: var(--light);
     ${tw`
     w-full
     relative
@@ -39,7 +42,7 @@ const BoxDropDown = styled.div`
     padding: 10px;
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     border-radius: 10px;
-    background: white;
+    background: var(--dark);
     z-index: 100;
 
     ${tw`
@@ -64,10 +67,15 @@ const BoxDropDownItem = styled.div`
     height: 1.75rem;
     transition: all 0.2s;
     span{
+        color: var(--light);
         display: block;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
+    }
+    
+    .modeText{
+        color: var(--dark);
     }
     
     
@@ -79,6 +87,7 @@ interface IStreet {
     district?: string;
     ward?: string;
     setWard?: any;
+    darkMode?: boolean;
 }
 
 
@@ -86,7 +95,7 @@ export function SelectWardDropDown(props: IStreet) {
 
 
 
-    const { city, district, ward, setWard } = props;
+    const { city, district, ward, setWard, darkMode } = props;
     const [isActiveSelectCity, setIsActiveSelectCity] = useState(false)
     // const [nameDistrict, setNameDistrict] = useState([""])
     const [nameStreet, setNameStreet] = useState([""])
@@ -125,16 +134,16 @@ export function SelectWardDropDown(props: IStreet) {
     }, [city, district, setWard])
 
     return (
-        <SelectCityDropDownContainer>
+        <SelectCityDropDownContainer className={!darkMode ? "lightMode" : ""}>
             <BoxSelect onClick={(e) => setIsActiveSelectCity(!isActiveSelectCity)}>
                 <BoxText>{ward ? ward : "Select Ward"}</BoxText>
                 <ChevronDownIcon className="h-6" />
             </BoxSelect>
             {isActiveSelectCity && city && district && (
-                <BoxDropDown className="hidden-animation">
+                <BoxDropDown className={!darkMode ? "hidden-animation BgLightMode" : "hidden-animation"}>
                     {nameStreet && nameStreet.map((name) => (
                         <BoxDropDownItem key={name} onClick={(e) => { setWard(name); setIsActiveSelectCity(false) }} >
-                            <span>{name}</span>
+                            <span className={!darkMode ? "modeText" : ""}>{name}</span>
                         </BoxDropDownItem>
                     ))}
                 </BoxDropDown>

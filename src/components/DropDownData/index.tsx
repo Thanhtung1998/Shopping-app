@@ -1,14 +1,20 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from 'styled-components'
 import tw from 'twin.macro'
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import '../../css/animation.css'
-import Map from '../../assets/fake-data/mapVietNam'
 import '../../css/darkMode.css'
 
-const SelectCityDropDownContainer = styled.div`
-    background: var(--dark);
-    color: var(--light);
+export interface SelectDataProps {
+    text?: string;
+    defaultText?: string;
+    setValue?: any;
+    darkMode?: boolean;
+    dataArray?: string[];
+    dataRequired?: string;
+}
+
+const SelectDropDownContainer = styled.div`
     ${tw`
     w-full
     relative
@@ -42,7 +48,6 @@ const BoxDropDown = styled.div`
     padding: 10px;
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     border-radius: 10px;
-    background: var(--dark);
     z-index: 100;
 
     ${tw`
@@ -83,44 +88,43 @@ const BoxDropDownItem = styled.div`
    
 `
 
-interface ICity {
-    city?: string;
-    setCity?: any;
-    darkMode?: boolean;
-}
+export function SelectDropDown(props: SelectDataProps) {
 
-
-export function SelectCityDropDown(props: ICity) {
-
-    const { city, setCity, darkMode } = props
+    const { text, defaultText, setValue, darkMode, dataArray, dataRequired } = props
     // const [city, setCity] = useState("")
     const [isActiveSelectCity, setIsActiveSelectCity] = useState(false)
 
     // console.log(isActiveSelectCity);
 
-    const nameCity = Map.map((city) => { return city.name })
+    const values: string[] = [""]
 
-    // console.log(city)
+    const [arrayData, setArrayData] = useState(values)
 
-
-
+    useEffect(() => {
+        const FetchData = () => {
+            if (dataArray) {
+                setArrayData(dataArray);
+            }
+        };
+        FetchData();
+    }, [dataArray])
 
     return (
-        <SelectCityDropDownContainer className={!darkMode ? "lightMode" : ""}>
+        <SelectDropDownContainer className={!darkMode ? "lightMode" : "darkMode"}>
             <BoxSelect onClick={(e) => setIsActiveSelectCity(!isActiveSelectCity)}>
-                <BoxText>{city ? city : "Select City"}</BoxText>
+                <BoxText>{text ? text : defaultText}</BoxText>
                 <ChevronDownIcon className="h-6" />
             </BoxSelect>
-            {isActiveSelectCity && (
-                <BoxDropDown className={!darkMode ? "hidden-animation BgLightMode" : "hidden-animation"}>
-                    {nameCity && nameCity.map((city) => (
-                        <BoxDropDownItem key={city} onClick={(e) => { setCity(city); setIsActiveSelectCity(false) }} >
-                            <span className={!darkMode ? "modeText" : ""}>{city}</span>
+            {isActiveSelectCity && dataRequired && (
+                <BoxDropDown className={!darkMode ? "hidden-animation BgLightMode" : "hidden-animation BgDarkMode"}>
+                    {arrayData && dataRequired && arrayData.map((data) => (
+                        <BoxDropDownItem key={data} onClick={(e) => { setValue(data); setIsActiveSelectCity(false) }} >
+                            <span className={!darkMode ? "modeText" : ""}>{data}</span>
                         </BoxDropDownItem>
                     ))}
                 </BoxDropDown>
             )}
-        </SelectCityDropDownContainer>
+        </SelectDropDownContainer>
     )
 
 }

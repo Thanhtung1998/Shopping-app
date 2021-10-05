@@ -1,4 +1,4 @@
-export default {
+const menuStyles = {
     bmBurgerButton: {
         // display: "flex",
         // alignItems: "center",
@@ -29,7 +29,7 @@ export default {
     },
     bmMenu: {
         background: "#373a47",
-        padding: "2.5em 1.5em 0",
+        padding: "1.5em 0.5em 0",
         fontSize: "2em",
         display: 'flex',
         width: "100%",
@@ -41,8 +41,9 @@ export default {
 
     },
     bmItemList: {
+        width: "80%",
         color: "#b8b7ad",
-        padding: "0.8em",
+        padding: "0em",
         textAlign: "center",
     },
     bmItem: {
@@ -53,3 +54,5 @@ export default {
         background: "rgba(0, 0, 0, 0.3)",
     },
 };
+
+export default menuStyles

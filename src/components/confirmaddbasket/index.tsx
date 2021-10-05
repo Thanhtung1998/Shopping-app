@@ -78,7 +78,7 @@ const BoxAddClickClose = styled.div`
 const BoxAddBasketContainer = styled.div`
     height: 100vh;
     width: 100vw;
-    background: white;
+    background: var(--dark);
     z-index: 1;
     top: 58px;
     right: 0;
@@ -600,7 +600,7 @@ export function ConfirmAddBasket(props: IConfirmAddBasket) {
                                     <BoxLocationDeliver>
                                         {city && (city && district) && (city && district && ward) ?
                                             <>
-                                                <h2 className="text-xs font-bold xl:text-base xl:font-semibold ">Vui lòng điền thêm thông tin </h2>
+                                                <h2 className="text-xs font-bold xl:text-base xl:font-semibold ">Please fill in more information </h2>
                                                 <BoxAnimationInput>
                                                     <BoxInput required>
                                                     </BoxInput>
@@ -609,14 +609,14 @@ export function ConfirmAddBasket(props: IConfirmAddBasket) {
                                             </>
                                             :
                                             <>
-                                                <h2 className="text-xs font-bold xl:text-base xl:font-semibold ">Vui lòng điền thêm thông tin </h2>
+                                                <h2 className="text-xs font-bold xl:text-base xl:font-semibold ">Please fill in more information </h2>
                                                 <SelectCityDropDown city={city} setCity={props.setCityS} />
                                                 <Marginer direction="vertical" margin="1em" />
                                                 <SelectDistrictDropDown city={city} district={district} setDistrict={props.setDistrictS} />
                                                 <Marginer direction="vertical" margin="1em" />
                                                 <SelectWardDropDown city={city} district={district} ward={ward} setWard={props.setWardS} />
                                                 <Marginer direction="vertical" margin="1em" />
-                                                <BoxInputBefore placeholder={`Địa chỉ: ${city ? `City: ${city}` : "City ?"} - ${city ? `${district ? `District: ${district}` : "district ?"}` : ""} - ${district ? `${ward ? `ward ${ward}` : " ward ?"}` : ""} `} disabled >
+                                                <BoxInputBefore placeholder={`Address : ${city ? `City: ${city}` : "City ?"} - ${city ? `${district ? `District: ${district}` : "district ?"}` : ""} - ${district ? `${ward ? `ward ${ward}` : " ward ?"}` : ""} `} disabled >
                                                 </BoxInputBefore>
                                             </>
                                         }

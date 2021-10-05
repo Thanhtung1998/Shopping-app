@@ -8,21 +8,25 @@ import MoonLoader from "react-spinners/MoonLoader";
 import productApi from '../../api/productApi';
 import { PictureProduct } from './pictureProduct';
 import { InfoProduct } from './infoProduct'
+import commentApi from '../../api/commentApi';
 
 
 const MainContent = styled.div`
+    min-height: 100vh;
     ${tw`
         flex
         flex-col
         w-full
         items-center
         relative
+        mb-20
     `}
 
 `
 const Content = styled.div`
     ${tw`
         w-full
+        h-full
         max-w-screen-2xl
         flex
         flex-wrap
@@ -120,7 +124,7 @@ const Information = styled.div`
         w-full
         h-full
         flex 
-        flex-col 
+        // flex-col 
         md:flex-row
         items-center
         justify-center
@@ -128,30 +132,28 @@ const Information = styled.div`
     `}
 `
 
-const RightContent = styled.div`
+const LeftContent = styled.div`
     ${tw`
         w-full
-        // bg-red-500
-        w-full 
         lg:w-1/2
+        md:h-full
         mb-5 
-        px-5
+        px-2
+        md:px-5
     `}
 
 `
 
 
-const LeftContent = styled.div`
+const RightContent = styled.div`
     ${tw`
         w-full
         md:h-full 
         lg:w-1/2
-        mb-5 
-        px-5
+        mb-5
+        px-2
+        md:px-5
         flex-col
-        // items-center
-        // justify-center
-        // items-start
     `}
 `
 
@@ -186,8 +188,21 @@ export default function ProductDetail(props: any) {
 
     }
 
+    const FetchComment = async () => {
+        try {
+            const comment = await commentApi.getAllComment();
+            console.log(comment)
+            const comment2 = await commentApi.getCommentByProductId(id);
+            console.log(comment2)
+        } catch (error: any) {
+            console.log(error)
+            // throw new Error(error)
+        }
+    }
+
     useEffect(() => {
-        FetchProduct()
+        FetchProduct();
+        FetchComment();
     }, [])
 
 
@@ -203,15 +218,14 @@ export default function ProductDetail(props: any) {
                 )}
                 {!isLoading && (
                     <Information>
-                        <RightContent>
-                            <PictureProduct picture={product.ImgUrlProduct} />
-                        </RightContent>
                         <LeftContent>
-                            <InfoProduct {...product} _id={product._id} />
+                            <PictureProduct picture={product.ImgUrlProduct} />
                         </LeftContent>
+                        <RightContent>
+                            <InfoProduct {...product} _id={product._id} />
+                        </RightContent>
                     </Information>
                 )}
-
             </Content>
         </MainContent>
     )

@@ -14,18 +14,19 @@ interface IProductProps extends IProduct {
     onOpenChange?: any;
 }
 
+
 const ProductContainer = styled.div`
-    width: 16.5em;
+    width: 18em;
     min-height: 27em;
     max-height: 27em;
     box-shadow: 0 1.3px 17px -2px rgba(0, 0, 0, 0.4);
+    background: var(--dark);
     ${tw`
         flex
         flex-col
         items-center
         p-3
-        pb-4
-        bg-white
+       
         rounded-md
         m-1
         sm:m-3
@@ -36,12 +37,13 @@ const ProductContainer = styled.div`
 
 const ProductThumbnailPicture = styled.div`
     width: 100%;
-    height: 180px;
+    height: 200px;
 `
 
 const ProductThumbnail = styled.div`
     width: 100%;
     height: 100%;
+    position: relative;
     img{
         width: 100%;
         height: 100%;
@@ -50,9 +52,56 @@ const ProductThumbnail = styled.div`
     ${tw``};
 `;
 
-const ProductName = styled.h3`
+const ProductViewMore = styled.div`
+    width: 100%;
+    height: 100%;
+    position: relative;
+    img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.8;
+    }
+`
+
+const ViewMoreBox = styled.div`
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1)
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+const ViewMoreBtn = styled.div`
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+`
+
+const ViewMoreBtnS = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
     ${tw`
-        text-base font-bold text-black mt-1 mb-1 cursor-default
+    cursor-pointer p-2 text-xs md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400 border border-yellow-300 focus:outline-none active:from-yellow-500 font-bold
+    `}
+`
+
+const ProductName = styled.h3`
+    color: var(--light);
+    ${tw`
+        text-base 
+        font-bold 
+        
+        mt-1 mb-1 
+        cursor-default
     `};
 `;
 
@@ -121,6 +170,8 @@ const ProductColor = styled.div`
             border-gray-200
             border-4
             rounded-full mx-1
+            cursor-pointer
+            hover:border-gray-400
         `
     };
 `;
@@ -159,6 +210,7 @@ const ProductDescSpan = styled.span`
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    color: var(--light);
     ${tw`
         text-justify
         w-full
@@ -166,12 +218,13 @@ const ProductDescSpan = styled.span`
 `
 
 const RentButton = styled(Button)`
-    height: 30px;
+    height: 37px;
     ${tw`
         min-w-full
-        mt-5
+        pt-5
     `}
 `;
+
 
 export function Product(props: IProductProps) {
 

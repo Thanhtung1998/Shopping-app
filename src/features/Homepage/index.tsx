@@ -7,7 +7,7 @@ import { PolicyCards } from "./policyCards";
 import { TopProducts } from "./topProducts";
 import { TopSection } from "./topSection";
 import { ListProduct } from "./ListProduct";
-
+import { Banner } from "../../components/Banner";
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -35,18 +35,19 @@ export default function HomePage(props: IActiveModal) {
 
     return (
 
-
         <>
             <title>Home</title>
             {/* min-time-interval === 60000 */}
             <TopSection timeInterval={60000} auto={false} />
-            <Marginer direction="vertical" margin="5em" />
+            <Marginer direction="vertical" margin="0em" />
             <PolicyCards />
-            <Marginer direction="vertical" margin="5em" />
+            <Marginer direction="vertical" margin="2em" />
+            <Banner />
+            <Marginer direction="vertical" margin="2em" />
             <TopProducts setActiveModalOpen={setActiveModalOpen} />
-            <Marginer direction="vertical" margin="5em" />
+            <Marginer direction="vertical" margin="2em" />
             <ListProduct setActiveModalOpen={setActiveModalOpen} />
-            <Marginer direction="vertical" margin="5em" />
+            <Marginer direction="vertical" margin="2em" />
         </>
 
     );

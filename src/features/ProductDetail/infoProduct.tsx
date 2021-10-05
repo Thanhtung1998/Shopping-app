@@ -143,7 +143,7 @@ const QuantityModalProduct = styled.div`
         ${tw`
         text-base
         font-semibold
-        text-gray-500
+        // text-gray-500
         mr-2
         `}
     }
@@ -201,7 +201,7 @@ export function InfoProduct(props: InfoProduct) {
 
     const { ColorProduct, NewPrice, RateProduct } = props
 
-    console.log(RateProduct)
+    // console.log(RateProduct)
 
     const [city, setCityS] = useState("");
     const [district, setDistrictS] = useState("");
@@ -211,10 +211,10 @@ export function InfoProduct(props: InfoProduct) {
     const [Quantity, setQuantity] = useState(0);
     const [totalCost, setTotalCost] = useState(NewPrice);
     const [Size, setSize] = useState("");
+    const [ratingData, setRatingData] = useState(0)
+    const [totalCount, setTotalCount] = useState(0)
 
 
-
-    console.log(ColorProduct, city, district, ward)
 
     const handleRating = (rate: any) => {
 
@@ -231,19 +231,16 @@ export function InfoProduct(props: InfoProduct) {
 
         const rating = totalStar / totalCount
 
-        const dataout = {
+
+        return {
             rating: rating.toFixed(1),
             totalCount: totalCount,
         }
 
-        return dataout
-
     }
 
-    const ratingObject = handleRating(RateProduct)
+    // const ratingObject = 
 
-    const ratingData = Number.parseFloat(ratingObject.rating)
-    const totalCount = ratingObject.totalCount
 
     const handelDownquantity = () => {
         if (numberQuantity <= 1) {
@@ -269,6 +266,13 @@ export function InfoProduct(props: InfoProduct) {
         }
 
     }
+
+    useEffect(() => {
+        const ratingData = Number.parseFloat(handleRating(RateProduct).rating)
+        setRatingData(ratingData)
+        const totalCount = handleRating(RateProduct).totalCount
+        setTotalCount(totalCount)
+    }, [])
 
     return (
         <>
@@ -309,7 +313,13 @@ export function InfoProduct(props: InfoProduct) {
 
                 <BoxSizeModal>
                     <QuantityModalProduct><h2>Số lượng hiện có:</h2><span>{Quantity}</span></QuantityModalProduct>
-                    <SelectSizeProduct size={props.QuantityProductAndSize?.map((size) => size)} Size={Size} setSize={setSize} setQuantity={setQuantity} />
+                    <SelectSizeProduct
+                        size={props.QuantityProductAndSize?.map((size) => size)}
+                        Size={Size}
+                        setSize={setSize}
+                        setQuantity={setQuantity}
+                        darkMode={false}
+                    />
                 </BoxSizeModal>
             </div>
 
@@ -325,14 +335,16 @@ export function InfoProduct(props: InfoProduct) {
             </div>
 
             <ModalSelectLocation>
-                <ModalBoxSelectLocation>
+                <ModalBoxSelectLocation >
                     <DropDownLocation
+                        darkMode={false}
                         setCityS={setCityS}
                         setDistrictS={setDistrictS}
                         setWardS={setWardS}
                     />
                 </ModalBoxSelectLocation>
             </ModalSelectLocation>
+
         </>
     );
 }

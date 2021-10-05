@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import tw from 'twin.macro'
 import { ChevronDownIcon } from "@heroicons/react/solid"
+import "../../css/darkMode.css";
 
 
-interface ISizeProduct {
+interface SizeProductProps {
     size?: any[];
     Size?: string;
     setSize?: any;
     setQuantity?: any;
+    darkMode?: boolean;
 }
 
 
@@ -47,8 +49,7 @@ const BoxDropDown = styled.div`
     top: 50px;
     padding: 10px;
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
-    border-radius: 10px;
-    background: white;
+    border-radius: 10px;    
     z-index: 100;
 
     ${tw`
@@ -78,14 +79,20 @@ const BoxDropDownItem = styled.div`
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
     }
+
+    .modeTextLight{
+        color: var(--light);
+    }
     
-    
+    .modeText{
+        color: var(--dark);
+    }
    
 `
 
-export function SelectSizeProduct(props: ISizeProduct) {
+export function SelectSizeProduct(props: SizeProductProps) {
 
-    const { size, Size, setSize, setQuantity } = props;
+    const { size, Size, setSize, setQuantity, darkMode } = props;
 
     const [activeSelectSize, setActiveSelectSize] = useState(false)
 
@@ -112,16 +119,16 @@ export function SelectSizeProduct(props: ISizeProduct) {
 
     return (
 
-        <SelectSizeDropDownContainer>
+        <SelectSizeDropDownContainer className={!darkMode ? "lightMode" : "darkMode"}>
             <BoxSelect onClick={() => setActiveSelectSize(!activeSelectSize)}>
                 <BoxText>{Size ? Size : "Select Size"}</BoxText>
                 <ChevronDownIcon className="h-6" />
             </BoxSelect>
             {activeSelectSize && (
-                <BoxDropDown className="hidden-animation">
+                <BoxDropDown className={!darkMode ? "hidden-animation BgLightMode" : "hidden-animation BgDarkMode"}>
                     {SizePro && SizePro.map((size) => (
                         <BoxDropDownItem key={size} onClick={(e) => { setSize(size); setActiveSelectSize(false) }} >
-                            <span>{size}</span>
+                            <span className={!darkMode ? "modeText" : "modeTextLight"}>{size}</span>
                         </BoxDropDownItem>
                     ))}
                 </BoxDropDown>

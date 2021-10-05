@@ -9,7 +9,7 @@ const productApi = {
     },
 
     getSingleProduct: (params: any) => {
-        console.log(params)
+        // console.log(params)
         const url = '/products/' + `${params}`;
         return axiosClient.get(url);
     },

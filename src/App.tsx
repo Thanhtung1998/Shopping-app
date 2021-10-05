@@ -12,7 +12,6 @@ import { NotFound } from "./features/notFound";
 import { PageLayOut } from "./features/PageLayout";
 import { PrivateRouter } from "./features/PrivateRouter";
 import { Register } from "./features/Register";
-import { Services } from "./features/Services";
 // import { useQuery } from "@apollo/client"
 // import { Get_ALL_Product } from './services/productService/queries'
 import ProductService from './services/productService';
@@ -41,9 +40,21 @@ ${tw`
 `}
 `
 
+const MainLoading = styled.div`
+  height: 100vh;
+  width: 100vw;
+  ${tw`
+  flex
+  items-center
+  justify-center
+  `}
+`
+
+
 const HomePage = React.lazy(() => import("./features/Homepage"))
 const About = React.lazy(() => import("./features/About"))
 const ProductDetail = React.lazy(() => import("./features/ProductDetail"))
+const Categories = React.lazy(() => import("./features/Categories"))
 
 function App() {
 
@@ -111,11 +122,11 @@ function App() {
 
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   const product = await ProductService.getProducts().catch((err) => console.log(err));
-    //   // console.log(product);
-    // }
-    // fetchData();
+    const fetchData = async () => {
+      const product = await ProductService.getProducts().catch((err) => console.log(err));
+      // console.log(product);
+    }
+    fetchData();
     const FetchProduct = async () => {
       try {
         // const name = "Tung"
@@ -134,38 +145,36 @@ function App() {
 
   const [activeModalOpen, setActiveModalOpen] = useState(true);
 
-
-
   return (
     <AppContainer className={!activeModalOpen ? "activeModal" : "add"}>
 
-      <Suspense fallback={<div>Loading ....</div>}>
+      <Suspense fallback={<MainLoading>Loading ....</MainLoading>}>
 
         {/* {user ? <Redirect from="/" to="/home" /> : ""} */}
         <Switch>
           {/* <Route exact path="/home"> <HomePage setActiveModalOpen={setActiveModalOpen} activeModalOpen={activeModalOpen} setUser={setUser} /> </Route> */}
 
           <Route exact path="/">
-            <PageLayOut>
+            <PageLayOut  >
               <HomePage setActiveModalOpen={setActiveModalOpen} activeModalOpen={activeModalOpen} />
             </PageLayOut>
           </Route>
 
           <Route exact path="/product/:id">
-            <PageLayOut>
+            <PageLayOut >
               <ProductDetail />
             </PageLayOut>
           </Route>
 
-          <PrivateRouter exact path="/about" >
-            <PageLayOut>
+          <PrivateRouter exact path="/cars" >
+            <PageLayOut >
               <About />
             </PageLayOut>
           </PrivateRouter>
 
-          <PrivateRouter exact path="/services">
-            <PageLayOut>
-              <Services setActiveModalOpen={setActiveModalOpen} activeModalOpen={activeModalOpen} />
+          <PrivateRouter exact path="/categories">
+            <PageLayOut >
+              <Categories setActiveModalOpen={setActiveModalOpen} activeModalOpen={activeModalOpen} />
             </PageLayOut>
           </PrivateRouter>
           <Route exact path="/login">
@@ -174,9 +183,9 @@ function App() {
             }
           </Route>
           <Route exact path="/register">
-            <PageLayOut>
-              <Register />
-            </PageLayOut>
+            {/* <PageLayOut> */}
+            <Register />
+            {/* </PageLayOut> */}
           </Route>
 
           <Route>

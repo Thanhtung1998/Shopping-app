@@ -23,11 +23,11 @@ const PageContainer = styled.div`
 const MainContent = styled.div`
 // height: calc(100% - 58px);
 height: calc(100% - 58px);
+// background: var(--dark);
 min-height: 100vh;
 overflow: auto;
 top: 58px;
 ${tw`
-
 flex
 flex-col
 w-full
@@ -42,7 +42,7 @@ export function PageLayOut(props: any) {
     return (
         <div>
             <PageContainer>
-                <Navbar />
+                <Navbar/>
                 <MainContent>
                     {children}
                 </MainContent>

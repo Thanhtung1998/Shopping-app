@@ -52,6 +52,7 @@ const ModalAll = styled.div`
         items-center
         justify-center
     `}
+    color: var(--light);
 `
 
 const ModalContainer = styled.div`
@@ -75,7 +76,7 @@ const ModalContent = styled.div`
 
     height: 65%;
     width: 70%;
-    background: white;
+    background: var(--dark);
     z-index:500;
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     
@@ -133,11 +134,15 @@ const ModalCarouselProduct = styled.div`
 
 
 const ModalRightProduct = styled.div`
-    height: calc(100% - 50px);
+    height: calc(100% - 58px);
     ${tw`
     w-full
     lg:w-1/2
     `}
+
+    @media (max-width: ${SCREEN.sm}){
+        margin-top: 2rem;
+    }
 `
 
 const ModalContentRight = styled.div`
@@ -152,7 +157,6 @@ const ModalContentRight = styled.div`
 
 const ModalNameProduct = styled.span`
      ${tw`
-        text-gray-700
         font-bold
         text-base
      `}
@@ -182,7 +186,7 @@ const ModalProductHeaderText = styled.h2`
         justify-center
         items-center
         font-extrabold
-        text-gray-500
+        // text-gray-500
     `}
 
 `
@@ -206,65 +210,106 @@ const ModalImgThumbnail = styled.div`
          height: 100%;
          width: 100%;
          object-fit: cover;
+         border-radius: 50%;
      }
 `
 
 const BoxImg = styled.div`
-    width: 90%;
-    min-height: 27em;
-    max-height: 27em;
+    width: 100%;
+   
     box-shadow: 0 1.3px 17px -2px rgba(0, 0, 0, 0.4);
     ${tw`
         flex
         flex-col
+        justify-center
         items-center
         p-3
-        pb-4
         bg-white
         rounded-md
         m-1
         sm:m-3
-        md:m-6
+        // md:m-6
         overflow-hidden
     `};
 
-    @media (max-width: ${SCREEN.sm}){
-        min-height: 12.4em;
-        max-height: 12.4em;
+    @media (min-width: ${SCREEN['2xl']}){
+        min-height: 26.5em;
+        max-height: 26.5em;
     }
 
+    @media (max-width: ${SCREEN.xl}) and (max-height: ${SCREEN['2xl']}){
+        min-height: 24em;
+        max-height: 24em;
+    }
     
-    @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.lg}){
-        min-height: 20.4em;
-        max-height: 20.4em;
+    @media (min-width: ${SCREEN.lg}) and (max-width: ${SCREEN.xl}){
+        min-height: 17.5em;
+        max-height: 17.5em;
     }
 
-    @media (min-width: ${SCREEN.lg}) and (max-width: 1650px){
-        min-height: 24.4em;
-        max-height: 24.4em;
+
+    @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.lg}){
+        min-height: 25em;
+        max-height: 25em;
     }
+    
+    @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.md}){
+        min-height: 25em;
+        max-height: 25em;
+    }
+
+    @media (max-width: ${SCREEN.sm}){
+        min-height: 14em;
+        max-height: 14em;
+    }
+   
 
 `
 const ImgProduct = styled.div`
-    width: 100%;
-    height: 400px;
+    
+    @media (min-width: ${SCREEN['2xl']}){
+        width: 100%;
+        height: 25rem;
+    }
+
+    @media (min-width: ${SCREEN.xl}) and (max-width: ${SCREEN['2xl']}){
+        width: 100%;
+        height: 22.5rem;
+    }
+
+    @media (min-width: ${SCREEN.lg}) and (max-width: ${SCREEN.xl}){
+        width: 100%;
+        height: 16rem;
+    }
+    
+
+    @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.lg}){
+        width: 100%;
+        height: 23.5rem;
+    }
+    
+    @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.md}){
+        width: 100%;
+        height: 23.5rem;
+    }
 
     @media (max-width: ${SCREEN.sm}){
         width: 100%;
-        height: 100%;
+        height: 12.5rem;
     }
-
-
+ 
 `
 
 const ImgThumbnail = styled.div`
 
 width: 100%;
 height: 100%;
+
 img{
+   
     width: 100%;
     height: 100%;
-    // object-fit: cover;
+    object-fit: cover;
 }
 
 `
@@ -717,7 +762,12 @@ export function ProductModalQuickView(props: IProductQuickViewModal) {
                                     </BoxColorModal>
                                     <BoxSizeModal>
                                         <QuantityModalProduct><h2>Số lượng hiện có:</h2><span>{Quantity}</span></QuantityModalProduct>
-                                        <SelectSizeProduct size={productModal.QuantityProductAndSize?.map((size) => size)} Size={Size} setSize={setSize} setQuantity={setQuantity} />
+                                        <SelectSizeProduct
+                                            size={productModal.QuantityProductAndSize?.map((size) => size)}
+                                            Size={Size} setSize={setSize}
+                                            setQuantity={setQuantity}
+                                            darkMode={true}
+                                        />
                                     </BoxSizeModal>
                                 </ProductDetailModal>
 
@@ -733,13 +783,13 @@ export function ProductModalQuickView(props: IProductQuickViewModal) {
                                 <ModalSelectLocation>
                                     {/* <DropDownLocation setCityS={setCityS} setDistrictS={setDistrictS} setWardS={setWardS} /> */}
                                     <ModalBoxSelectLocation>
-                                        <SelectCityDropDown city={city} setCity={setCityS} />
+                                        <SelectCityDropDown city={city} setCity={setCityS} darkMode={true} />
                                     </ModalBoxSelectLocation>
                                     <ModalBoxSelectLocation>
-                                        <SelectDistrictDropDown city={city} district={district} setDistrict={setDistrictS} />
+                                        <SelectDistrictDropDown city={city} district={district} setDistrict={setDistrictS} darkMode={true} />
                                     </ModalBoxSelectLocation>
                                     <ModalBoxSelectLocation>
-                                        <SelectWardDropDown city={city} district={district} ward={ward} setWard={setWardS} />
+                                        <SelectWardDropDown city={city} district={district} ward={ward} setWard={setWardS} darkMode={true} />
                                     </ModalBoxSelectLocation>
                                 </ModalSelectLocation>
                                 <ButtonProductModal>
@@ -750,7 +800,8 @@ export function ProductModalQuickView(props: IProductQuickViewModal) {
                         </ModalRightProduct>
                     </ModalContent>
                     {isOpenAddBasket && (
-                        <ConfirmAddBasket id={_id}
+                        <ConfirmAddBasket
+                            id={_id}
                             animation={valueAnimation}
                             setValueAnimation={setValueAnimation}
                             nameproduct={productModal.name}

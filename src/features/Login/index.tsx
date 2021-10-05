@@ -21,6 +21,14 @@ import { authActions } from '../../redux/Slice/authUser/userSlice'
 import { useAppDispatch } from '../../app/hooks'
 import { LoginWithFireBase } from '../../components/loginWithFireBase';
 
+const LoginSection = styled.section`
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+`
+
+
+
 const LoginContainer = styled.div`
     ${tw`
         w-full
@@ -211,8 +219,15 @@ const Square = styled.div`
 toast.configure()
 export function Login() {
 
-    const loginFailed = () => toast.error("Tài khoản hoặc mật khẩu không đúng", { autoClose: 5000 });
-    const loginSuccess = () => toast.success("Đăng nhập thành công");
+    // const { dispatch } = useContext(AuthContext);
+
+    const dispatch = useAppDispatch();
+
+    // const history = useHistory();
+
+    const [error, setError] = useState("")
+    const [checkCss, setCheckCss] = useState(false)
+    // const [statusValue, setStatusValue] = useState(0)
 
     const initialValues = {
         Email: '',
@@ -224,19 +239,8 @@ export function Login() {
         Password: Yup.string().min(6, 'Password must be at least 6 characters').required("This field is required")
     })
 
-
-
-    // const { dispatch } = useContext(AuthContext);
-
-    const dispatch = useAppDispatch();
-
-
-
-    // const history = useHistory();
-
-    const [error, setError] = useState("")
-    // const [statusValue, setStatusValue] = useState(0)
-
+    const loginFailed = () => toast.error("Tài khoản hoặc mật khẩu không đúng", { autoClose: 5000 });
+    const loginSuccess = () => toast.success("Đăng nhập thành công");
 
 
     // console.log(error);
@@ -251,16 +255,16 @@ export function Login() {
             password: values.Password.trim(),
         }
 
-        if (params) {
-
-        }
+        // if (params) {
+        //     dispatch(authActions.loginStart(params))
+        // }
 
         // setTimeout(() => {
         //     actions.setSubmitting(false);
         // }, 2000)
 
 
-        console.log(params);
+        // console.log(params);
         try {
             const res = await axios.post('/user/login', params).then(function (response) {
                 return response;
@@ -272,16 +276,17 @@ export function Login() {
             if (res.status === 200) {
                 loginSuccess();
                 dispatch(authActions.loginStart(params))
-                // setStatusValue(200);
+                setCheckCss(false);
 
-                // await login(params, dispatch)
             } else {
                 loginFailed();
+                setCheckCss(true);
                 dispatch(authActions.loginStart(params))
-                const texterror = "Tên đăng nhập hoặc mật khẩu không đúng";
-                await setError(texterror);
+                const textError = "Tên đăng nhập hoặc mật khẩu không đúng";
+                await setError(textError);
                 setTimeout(() => {
                     actions.setSubmitting(false);
+                    setCheckCss(false);
                     setError("");
                 }, 5000)
             }
@@ -297,102 +302,105 @@ export function Login() {
     return (
         <>
             <title>Login</title>
-            <LoginContainer className="LoginAnimation">
-                <ToastContainer />
-                <section className="bg-login__animation">
-                    <div className="bg-login__animation-div"></div>
-                    <div className="bg-login__animation-div"></div>
-                    <div className="bg-login__animation-div"></div>
-                    <BackgroundImgPage className="ImgBackGround">
-                        <img src={BackgroundLogin} alt="" />
-                    </BackgroundImgPage>
-                    <LoginBox>
-                        <div className="bg-login__box Hidden">
-                            <Square></Square>
-                            <Square></Square>
-                            <Square></Square>
-                            <Square></Square>
-                            <Square></Square>
-                            <BoxLogin className="">
+            <LoginSection>
+                <LoginContainer className="LoginAnimation">
+                    <ToastContainer />
+                    <section className="bg-login__animation">
+                        <div className="bg-login__animation-div"></div>
+                        <div className="bg-login__animation-div"></div>
+                        <div className="bg-login__animation-div"></div>
+                        <BackgroundImgPage className="ImgBackGround">
+                            <img src={BackgroundLogin} alt="" />
+                        </BackgroundImgPage>
+                        <LoginBox>
+                            <div className="bg-login__box Hidden">
+                                <Square></Square>
+                                <Square></Square>
+                                <Square></Square>
+                                <Square></Square>
+                                <Square></Square>
+                                <BoxLogin className="">
 
-                                <h2>Login</h2>
-                                <Formik
-                                    initialValues={initialValues}
-                                    validationSchema={validationSchema}
-                                    onSubmit={(values, actions) => {
-                                        handelLogin(values, actions);
-                                        // actions.setStatus(400);
-                                        actions.setStatus("Login");
-
-
-                                    }}
-                                    enableReinitialize={false}
-
-                                    validateOnChange={true}
-                                    validateOnBlur={true}
-                                // validateOnMount={true}
-
-                                >
-                                    {formikProps => {
-                                        const { values, errors, } = formikProps;
+                                    <h2>Login</h2>
+                                    <Formik
+                                        initialValues={initialValues}
+                                        validationSchema={validationSchema}
+                                        onSubmit={(values, actions) => {
+                                            handelLogin(values, actions);
+                                            // actions.setStatus(400);
+                                            actions.setStatus("Login");
 
 
-                                        // console.log(formikProps.isSubmitting);
-                                        // console.log(errors);
+                                        }}
+                                        enableReinitialize={false}
+                                        validateOnChange={true}
+                                        validateOnBlur={true}
+                                    // validateOnMount={true}
 
-                                        // console.log(status);
-                                        return (
-                                            <Form  >
-                                                <FastField
-                                                    // setStatus={false}
-                                                    name="Email"
-                                                    type="email"
-                                                    component={InputFieldLogin}
-                                                    label="Email"
-                                                    placeholder="Email"
-                                                    icon={MailIcon}
-                                                    onChange={values.Email}
-                                                    invalid={errors.Email}
-                                                />
-                                                <FastField
-                                                    name="Password"
-                                                    type="password"
-                                                    component={InputFieldLogin}
-                                                    label="PassWord"
-                                                    placeholder="PassWord"
-                                                    icon={CodeIcon}
-                                                    invalid={errors.Password}
-                                                    onChange={values.Password}
-                                                />
+                                    >
+                                        {formikProps => {
+                                            const { values, errors, } = formikProps;
 
-                                                <div className="w-full">
-                                                    {error && (
-                                                        <div className="w-full mt-2 mb-2 flex flex-1 flex-wrap items-center" >
-                                                            <span className="w-full overflow-hidden error">{error}</span>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                                <FormGroup>
-                                                    <Button className="bg-red-400 w-full p-1 my-3 rounded-md text-gray-500 text-base font-semibold active:bg-red-600 btnBootstrap" type="submit" disabled={!formikProps.isValid}  >
-                                                        {formikProps.isSubmitting && <Spinner size="sm" className="bootstrapSpinner" />}
-                                                        Login
-                                                    </Button>
-                                                </FormGroup>
-                                            </Form>
-                                        )
-                                    }
-                                    }
-                                </Formik>
 
-                                <p>Don't have an account? <Link to="./register">Sign Up</Link></p>
+                                            // console.log(formikProps.isSubmitting);
+                                            // console.log(errors);
 
-                                <LoginWithFireBase > </LoginWithFireBase>
-                            </BoxLogin>
-                        </div>
-                    </LoginBox>
-                </section>
+                                            // console.log(status);
+                                            return (
+                                                <Form  >
+                                                    <FastField
+                                                        // setStatus={false}
+                                                        name="Email"
+                                                        type="email"
+                                                        component={InputFieldLogin}
+                                                        label="Email"
+                                                        placeholder="Email"
+                                                        icon={MailIcon}
+                                                        checkCss={checkCss}
+                                                        onChange={values.Email}
+                                                        invalid={errors.Email}
+                                                    />
+                                                    <FastField
+                                                        name="Password"
+                                                        type="password"
+                                                        component={InputFieldLogin}
+                                                        label="PassWord"
+                                                        placeholder="PassWord"
+                                                        checkCss={checkCss}
+                                                        icon={CodeIcon}
+                                                        invalid={errors.Password}
+                                                        onChange={values.Password}
+                                                    />
 
-            </LoginContainer>
+                                                    <div className="w-full">
+                                                        {error && (
+                                                            <div className="w-full mt-2 mb-2 flex flex-1 flex-wrap items-center" >
+                                                                <span className="w-full overflow-hidden error">{error}</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    <FormGroup>
+                                                        <Button className="bg-red-400 w-full p-1 my-3 rounded-md text-gray-500 text-base font-semibold active:bg-red-600 btnBootstrap" type="submit" disabled={!formikProps.isValid}  >
+                                                            {formikProps.isSubmitting && <Spinner size="sm" className="bootstrapSpinner" />}
+                                                            Login
+                                                        </Button>
+                                                    </FormGroup>
+                                                </Form>
+                                            )
+                                        }
+                                        }
+                                    </Formik>
+
+                                    <p>Don't have an account? <Link to="./register">Sign Up</Link></p>
+
+                                    <LoginWithFireBase > </LoginWithFireBase>
+                                </BoxLogin>
+                            </div>
+                        </LoginBox>
+                    </section>
+
+                </LoginContainer>
+            </LoginSection>
         </>
     )
 }

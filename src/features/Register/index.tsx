@@ -220,6 +220,11 @@ const Square = styled.div`
     
 `
 
+const RegisterSection = styled.section`
+    width: 100vw;
+    height: 100vh;
+`
+
 
 toast.configure()
 export function Register(props: any) {
@@ -297,111 +302,113 @@ export function Register(props: any) {
     return (
         <>
             <title>Register</title>
-            <RegisterContainer className="RegisterAnimation">
-                <ToastContainer />
-                <section className="bg-login__animation">
-                    <div className="bg-login__animation-div"></div>
-                    <div className="bg-login__animation-div"></div>
-                    <div className="bg-login__animation-div"></div>
-                    <RegisterBox >
-                        <div className="bg-login__box Hidden">
-                            <Square style={{}}></Square>
-                            <Square ></Square>
-                            <Square ></Square>
-                            <Square ></Square>
-                            <Square ></Square>
-                            <Square ></Square>
-                            <BoxRegister >
-                                <h2>Register</h2>
-                                <Formik
-                                    initialValues={initialValues}
-                                    validationSchema={validationSchema}
-                                    onSubmit={(values, actions) => {
-                                        console.log(values);
-                                        handleApi();
-                                        // actions.setStatus("Login");
-                                        setTimeout(() => {
-                                            // 
-                                            actions.setSubmitting(false);
-                                        }, 1500);
-                                    }}
-                                    enableReinitialize={false}
+            <RegisterSection>
+                <RegisterContainer className="RegisterAnimation">
+                    <ToastContainer />
+                    <section className="bg-login__animation">
+                        <div className="bg-login__animation-div"></div>
+                        <div className="bg-login__animation-div"></div>
+                        <div className="bg-login__animation-div"></div>
+                        <RegisterBox >
+                            <div className="bg-login__box Hidden">
+                                <Square style={{}}></Square>
+                                <Square ></Square>
+                                <Square ></Square>
+                                <Square ></Square>
+                                <Square ></Square>
+                                <Square ></Square>
+                                <BoxRegister >
+                                    <h2>Register</h2>
+                                    <Formik
+                                        initialValues={initialValues}
+                                        validationSchema={validationSchema}
+                                        onSubmit={(values, actions) => {
+                                            console.log(values);
+                                            handleApi();
+                                            // actions.setStatus("Login");
+                                            setTimeout(() => {
+                                                // 
+                                                actions.setSubmitting(false);
+                                            }, 1500);
+                                        }}
+                                        enableReinitialize={false}
 
-                                    validateOnChange={true}
-                                    validateOnBlur={true}
+                                        validateOnChange={true}
+                                        validateOnBlur={true}
 
-                                >
-                                    {formikProps => {
-                                        const { values, errors, touched, status } = formikProps;
+                                    >
+                                        {formikProps => {
+                                            const { values, errors, touched, status } = formikProps;
 
-                                        return (
-                                            <Form  >
-                                                <FastField
-                                                    // setStatus={false}
-                                                    name="Username"
-                                                    type="text"
-                                                    component={InputFieldRegister}
-                                                    label="Username"
-                                                    placeholder="Username"
-                                                    onChange={values.Email}
-                                                    invalid={errors.Email}
+                                            return (
+                                                <Form  >
+                                                    <FastField
+                                                        // setStatus={false}
+                                                        name="Username"
+                                                        type="text"
+                                                        component={InputFieldRegister}
+                                                        label="Username"
+                                                        placeholder="Username"
+                                                        onChange={values.Email}
+                                                        invalid={errors.Email}
 
-                                                />
-                                                <FastField
-                                                    // setStatus={false}
-                                                    name="Email"
-                                                    type="email"
-                                                    component={InputFieldRegister}
-                                                    label="Email"
-                                                    placeholder="Email"
-                                                    onChange={values.Email}
-                                                    invalid={errors.Email}
+                                                    />
+                                                    <FastField
+                                                        // setStatus={false}
+                                                        name="Email"
+                                                        type="email"
+                                                        component={InputFieldRegister}
+                                                        label="Email"
+                                                        placeholder="Email"
+                                                        onChange={values.Email}
+                                                        invalid={errors.Email}
 
-                                                />
-                                                <FastField
-                                                    name="Password"
-                                                    type="password"
-                                                    component={InputFieldRegister}
-                                                    label="PassWord"
-                                                    placeholder="PassWord"
+                                                    />
+                                                    <FastField
+                                                        name="Password"
+                                                        type="password"
+                                                        component={InputFieldRegister}
+                                                        label="PassWord"
+                                                        placeholder="PassWord"
 
-                                                    invalid={errors.Password}
-                                                    onChange={values.Password}
+                                                        invalid={errors.Password}
+                                                        onChange={values.Password}
 
-                                                />
-                                                <FastField
-                                                    // setStatus={false}
-                                                    name="ConfirmPassword"
-                                                    type="password"
-                                                    component={InputFieldRegister}
-                                                    label="ConfirmPassword"
-                                                    placeholder="ConfirmPassword"
-                                                    onChange={values.Email}
-                                                    invalid={errors.Email}
-                                                />
+                                                    />
+                                                    <FastField
+                                                        // setStatus={false}
+                                                        name="ConfirmPassword"
+                                                        type="password"
+                                                        component={InputFieldRegister}
+                                                        label="ConfirmPassword"
+                                                        placeholder="ConfirmPassword"
+                                                        onChange={values.Email}
+                                                        invalid={errors.Email}
+                                                    />
 
-                                                <FormGroup>
-                                                    <Button className="bg-red-400 w-full p-1 my-3 rounded-md text-gray-500 text-base font-semibold active:bg-red-600" type="submit" disabled={!formikProps.isValid}  >
-                                                        <Spinner size="sm" />
-                                                        Sign up
-                                                    </Button>
-                                                </FormGroup>
-                                            </Form>
-                                        )
-                                    }
-                                    }
-                                </Formik>
+                                                    <FormGroup>
+                                                        <Button className="bg-red-400 w-full p-1 my-3 rounded-md text-gray-500 text-base font-semibold active:bg-red-600" type="submit" disabled={!formikProps.isValid}  >
+                                                            <Spinner size="sm" />
+                                                            Sign up
+                                                        </Button>
+                                                    </FormGroup>
+                                                </Form>
+                                            )
+                                        }
+                                        }
+                                    </Formik>
 
-                                <p>I have an account? <Link to="./login">Sign In</Link></p>
+                                    <p>I have an account? <Link to="./login">Sign In</Link></p>
 
-                            </BoxRegister>
-                        </div>
-                    </RegisterBox>
-                    <BackgroundImgPage className="ImgBackGround">
-                        <img src={BackgroundRegister} alt="" />
-                    </BackgroundImgPage>
-                </section>
-            </RegisterContainer >
+                                </BoxRegister>
+                            </div>
+                        </RegisterBox>
+                        <BackgroundImgPage className="ImgBackGround">
+                            <img src={BackgroundRegister} alt="" />
+                        </BackgroundImgPage>
+                    </section>
+                </RegisterContainer >
+            </RegisterSection>
         </>
     )
 

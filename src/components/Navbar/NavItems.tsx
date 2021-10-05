@@ -5,7 +5,7 @@ import { slide as Menu } from 'react-burger-menu'
 import { useMediaQuery } from 'react-responsive'
 import { SCREEN } from '../responsive';
 import menuStyles from './menuStyles';
-import { HomeIcon, PhoneIcon, ServerIcon, ShoppingCartIcon } from '@heroicons/react/outline';
+import { HomeIcon, PhoneIcon, ShoppingCartIcon, AdjustmentsIcon } from '@heroicons/react/outline';
 import {
     // BrowserRouter as Router,
     Link, useHistory
@@ -13,6 +13,7 @@ import {
 // import { AuthContext } from '../../context/Authcontext/AuthContext';
 // import { logout } from "../../context/Authcontext/AuthActions";
 import '../../css/navbar.css'
+import ThemeToggle from "./ThemeToggle";
 
 const ListContainer = styled.ul`
     z-index: 3;
@@ -34,8 +35,6 @@ const NavItem = styled.li<{ menu?: any }>`
         text-white
         font-semibold
         text-gray-400
-        mr-1
-        md:mr-5
         cursor-pointer
         transition
         duration-300
@@ -55,10 +54,57 @@ const NavItem = styled.li<{ menu?: any }>`
     `}
 `;
 
+const AnimationBox = styled.div`
+    ${tw`
+        relative
+        // bg-red-500
+        // overflow-hidden
+    `}
+    top: 0px;
+    left: 0;
+    width:110px;
+    height: 58px;
+    transition: 0.5s linear;
+    transform-style: preserve-3d;
+
+    .div-animation,
+    .icon__navigation{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        position: absolute;
+        left: 0;
+        top: 0;
+        text-align: center;
+        transition: all 0.5s linear;
+    }
+
+    .icon__navigation{
+        transform: translateZ(29px);
+    }
+
+    .div-animation {
+        background-color: #343434;
+        color: #f3f3f3;
+        transform: rotateX(-90deg) translateZ(29px);
+    }   
+
+    :hover{
+        transform: rotateX(90deg);
+        transition: 0.5s linear;
+    }
+  
+
+`
+
 
 export function NavItems(props: any) {
 
-    const isMobie = useMediaQuery({ maxWidth: SCREEN.xl })
+    const { isDark, setIsDark } = props;
+
+    const isMobile = useMediaQuery({ maxWidth: SCREEN.sm })
 
     // const { state } = useContext(AuthContext);
     // const { dispatch } = useContext(AuthContext);
@@ -71,15 +117,19 @@ export function NavItems(props: any) {
     // console.log();
 
 
-    if (isMobie) {
+    if (isMobile) {
         return (
             <>
                 <Menu right styles={menuStyles}>
                     <ListContainer>
                         <NavItem ><Link to="/" className="flex w-full items-center text-lg"> <HomeIcon style={{ height: "18px" }} />Home</Link></NavItem>
-                        <NavItem ><Link to="/about" className="flex w-full items-center text-lg"><ShoppingCartIcon style={{ height: "18px" }} />Cars</Link></NavItem>
-                        <NavItem ><Link to="/services" className="flex w-full items-center text-lg"><ServerIcon style={{ height: "18px" }} />Services</Link></NavItem>
+                        <NavItem ><Link to="/cars" className="flex w-full items-center text-lg"><ShoppingCartIcon style={{ height: "18px" }} />Cars</Link></NavItem>
+                        <NavItem ><Link to="/categories" className="flex w-full items-center text-lg"><AdjustmentsIcon style={{ height: "18px" }} />Categories</Link></NavItem>
                         <NavItem ><Link to="/contact" className="flex w-full items-center text-lg"><PhoneIcon style={{ height: "18px" }} />Contact</Link></NavItem>
+                        <NavItem >
+                            <ThemeToggle icon className="active__icon" isDark={isDark} setIsDark={setIsDark} /> <a className="flex w-full items-center text-lg">Theme</a>
+
+                        </NavItem>
                     </ListContainer>
                 </Menu>
             </>
@@ -87,10 +137,47 @@ export function NavItems(props: any) {
     }
     return (
         <ListContainer>
-            <NavItem className={history.location.pathname === '/' ? "activeS" : ""} ><Link to="/" className="flex items-center"> <HomeIcon style={{ height: "16px" }} />Home</Link></NavItem>
-            <NavItem className={history.location.pathname === '/about' ? "activeS" : ""}><Link to="/about" className="flex items-center"><ShoppingCartIcon style={{ height: "16px" }} />Cars</Link></NavItem>
-            <NavItem className={history.location.pathname === '/services' ? "activeS" : ""}><Link to="/services" className="flex items-center"><ServerIcon style={{ height: "16px" }} />Services</Link></NavItem>
-            <NavItem className={history.location.pathname === '/contact' ? "activeS" : ""}><Link to="/contact" className="flex items-center"><PhoneIcon style={{ height: "16px" }} />Contact</Link></NavItem>
+            <NavItem className={history.location.pathname === '/' ? "activeS" : ""} >
+                <Link to="/" className="flex items-center">
+                    <AnimationBox>
+                        <div className="icon__navigation" >
+                            <HomeIcon style={{ height: "30px" }} />
+                        </div>
+                        <div className="div-animation">Home</div>
+
+                    </AnimationBox>
+                </Link>
+            </NavItem>
+            <NavItem className={history.location.pathname === '/cars' ? "activeS" : ""}>
+                <Link to="/cars" className="flex items-center">
+                    <AnimationBox>
+                        <div className="icon__navigation" >
+                            <ShoppingCartIcon style={{ height: "30px" }} />
+                        </div>
+                        <div className="div-animation">Cars</div>
+                    </AnimationBox>
+                </Link>
+            </NavItem>
+            <NavItem className={history.location.pathname === '/categories' ? "activeS" : ""}>
+                <Link to="/categories" className="flex items-center">
+                    <AnimationBox>
+                        <div className="icon__navigation" >
+                            <AdjustmentsIcon style={{ height: "30px" }} />
+                        </div>
+                        <div className="div-animation">Categories</div>
+                    </AnimationBox>
+                </Link>
+            </NavItem>
+            <NavItem className={history.location.pathname === '/contact' ? "activeS" : ""}>
+                <Link to="/contact" className="flex items-center">
+                    <AnimationBox>
+                        <div className="icon__navigation" >
+                            <PhoneIcon style={{ height: "30px" }} />
+                        </div>
+                        <div className="div-animation">Contact</div>
+                    </AnimationBox>
+                </Link>
+            </NavItem>
             {/* {user ? <NavItem } >{user.username}</NavItem> : <NavItem ><Link to="/login" className="flex items-center">Login</Link></NavItem>} */}
         </ListContainer>
     );
