@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import { selectFilteredProducts } from "../../redux/Slice/product/productSlice"
 
 import { ProductList } from "../product/productList"
-import { QuickView } from "../quickView"
+// import { QuickView } from "../quickView"
 
 
 export function FilteredProduct(props: any) {

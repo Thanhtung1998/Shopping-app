@@ -9,6 +9,8 @@ class ProductService {
             throw err;
         })
 
+        console.log(response)
+
         if (response && response.data) {
             return response.data as GetProduct_products[];
         }

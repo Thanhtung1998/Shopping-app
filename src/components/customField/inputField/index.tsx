@@ -8,8 +8,8 @@ import { Icon } from '../../Icon';
 // import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import '../../../css/input.css'
 import { ShowError } from './showError'
-import { isFulfilled } from '@reduxjs/toolkit';
 import axios from 'axios'
+
 
 InputFieldLogin.propTypes = {
     field: PropTypes.object.isRequired,
@@ -19,7 +19,6 @@ InputFieldLogin.propTypes = {
     placeholder: PropTypes.string,
     disabled: PropTypes.bool,
     icon: PropTypes.func,
-    checkCss: PropTypes.bool
 }
 
 InputFieldLogin.defaultProps = {
@@ -28,7 +27,6 @@ InputFieldLogin.defaultProps = {
     placeholder: "",
     disabled: false,
     icon: "",
-    checkCss: false,
 }
 
 const BoxInput = styled.div`
@@ -55,7 +53,7 @@ const BoxInput = styled.div`
             overflow-hidden
             bg-transparent
             focus:outline-none
-            text-gray-400
+            text-gray-600
         `}
     }
 
@@ -64,41 +62,18 @@ const BoxInput = styled.div`
 
 export function InputFieldLogin(props: any) {
 
-    const { field, form, type, label, placeholder, disabled, icon, checkCss } = props
+    const { field, form, type, label, placeholder, disabled, icon } = props
     const { value, name, onChange, onBlur } = field
-
-
 
 
     // Process form validation with Yup
     const { errors, touched } = form;
 
-    // console.log(form.status);
-
-    const [StatusLogin, setStatusLogin] = useState(false)
-
-    const handleStatus = async (values: any) => {
-
-        if (values) {
-            setStatusLogin(false);
-        } else {
-            setStatusLogin(true);
-            setTimeout(() => {
-                setStatusLogin(false);
-            }, 5000)
-        }
-    }
-
-    // console.log(form);
-
-    // console.log(form);
 
     useEffect(() => {
         let isCancelled = false;
+        // console.log(form.isSubmitting)
         if (form.isSubmitting) {
-
-            // console.log(values);
-            handleStatus(checkCss);
         }
         return () => {
             isCancelled = true
@@ -116,7 +91,7 @@ export function InputFieldLogin(props: any) {
     return (
         <FormGroup className="flex flex-1 flex-wrap">
             {label && (<Label className="w-full text-base mb-1 inline-block font-semibold text-gray-500 tracking-wide select-none" for={name} >{label}</Label>)}
-            <BoxInput className={!StatusLogin ? validateSubmit : "TypeError"}>
+            <BoxInput className={validateSubmit}>
                 {/* ` ${!touched[name]} ? ${} : ""` */}
                 <Icon Icon={icon} />
                 <Input

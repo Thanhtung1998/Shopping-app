@@ -49,7 +49,7 @@ export function RatingStar(props: RatingProps) {
 
     return (
         <>
-            
+
             <StarsOuter >
                 <StarsInner style={{ width: `${starPercentage}%` }} ></StarsInner>
             </StarsOuter>

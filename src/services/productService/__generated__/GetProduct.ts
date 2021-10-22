@@ -19,7 +19,7 @@ export interface Quantity {
 
 export interface GetProduct_products {
     __typename: "ProductDto";
-    id: string
+    _id: string
     name: string
     brand: string
     descProduct: string
@@ -29,6 +29,8 @@ export interface GetProduct_products {
     ImgUrlProduct: ImgProduct
     RateProduct: Rate
     QuantityProductAndSize: [Quantity]
+    commentId: string
+    Categories: string[]
 }
 
 export interface GetProducts {

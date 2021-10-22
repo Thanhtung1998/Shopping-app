@@ -52,6 +52,8 @@ const ButtonPagination = styled.button`
 
 const NumberContainer = styled.ul`
     line-styled: none;
+    list-style-type: none;
+    padding-inline-start: 0;
     ${tw`
     flex
     `}

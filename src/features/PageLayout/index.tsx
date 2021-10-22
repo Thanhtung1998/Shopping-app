@@ -34,6 +34,7 @@ w-full
 items-center
 relative
 overflow-x-hidden
+overflow-y-hidden
 `}
 `
 
@@ -42,7 +43,7 @@ export function PageLayOut(props: any) {
     return (
         <div>
             <PageContainer>
-                <Navbar/>
+                <Navbar />
                 <MainContent>
                     {children}
                 </MainContent>

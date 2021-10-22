@@ -46,7 +46,7 @@ export function Filter(props: any) {
     const last = null || "";
     const dispatch = useDispatch()
     const [activeCategory, setActiveCategory] = useState('all')
-    const [activeCompany, setActiveCompany] = useState('all')
+    const [activeCategories, setActiveCategories] = useState('all')
     const [activeColor, setActiveColor] = useState('all')
     const [lastChange, setLastChange] = useState(last)
     const [showClear, setShowClear] = useState(false)
@@ -60,7 +60,7 @@ export function Filter(props: any) {
 
     // Loc ra categories
     const brandList = all_products ? getUniqueValues(all_products, 'brand') : null
-    const nameList = all_products ? getUniqueValues(all_products, 'name') : null
+    // const nameList = all_products ? getUniqueValues(all_products, 'name') : null
 
     // all of them === flat()
     // let getColorArray: any = [];
@@ -83,6 +83,8 @@ export function Filter(props: any) {
     // }
 
     const colors = all_products ? getUniqueValues(all_products, 'ColorProduct') : null
+    const categories = all_products ? getUniqueValues(all_products, 'Categories') : null
+    // console.log(colors);
     // console.log(max);
 
     // console.log(colors);
@@ -95,8 +97,8 @@ export function Filter(props: any) {
                 filtered = items.filter(product => product[item] === activeCategory)
             } else if (item !== 'category' && item !== 'company' && activeColor !== 'all') {
                 // filtered = items.filter(product => product[item].includes(activeColor))
-            } else if (item !== 'colors' && item !== 'category' && activeCompany !== 'all') {
-                filtered = items.filter(product => product[item] === activeCompany)
+            } else if (item !== 'colors' && item !== 'category' && activeCategories !== 'all') {
+                filtered = items.filter(product => product[item] === activeCategories)
             }
             return null;
         })
@@ -108,45 +110,92 @@ export function Filter(props: any) {
         if (item === 'brand') {
             setActiveCategory(value)
             setLastChange('brand')
+
         }
-        if (item === 'name') {
-            setActiveCompany(value)
-            setLastChange('name')
+        if (item === 'Categories') {
+            setActiveCategories(value)
+            setLastChange('Categories')
+
+            // const filtered = (value !== 'all') ? all_products.filter((product: Array<any>) => product[item].includes(value)) : all_products
+
+            // console.log("Categories:", filtered)
+
+
+            // dispatch(updateFilters(filtered))
 
         }
         if (item === 'ColorProduct') {
             setActiveColor(value)
             // setLastChange('colors')
+            console.log(item)
             const filtered = (value !== 'all') ? all_products.filter((product: Array<any>) => product[item].includes(value)) : all_products
 
             dispatch(updateFilters(filtered))
         }
     }
 
+
+
     useEffect(() => {
-        const items: any = ['brand', 'name']
+        const items: any = ['brand', 'Categories']
         const hello: any = {
             brand: activeCategory,
-            name: activeCompany
+            Categories: activeCategories
         }
+
+
         if (all_products) {
             let filtered = all_products
-
+            let DataNew: any = []
+            // console.log(DataTest)
             if (hello[lastChange] !== 'all') {
-                filtered = all_products.filter((product: any) => product[lastChange] === hello[lastChange])
-            } else {
-                items.forEach((x: string) => {
-                    filtered = (x === lastChange && hello[x] !== 'all') ? filtered.filter((product: any) => product[x] === hello[x]) : filtered
-                })
+
+                // --------------------- after Code -------------------
+                let item: any = "Categories"
+                if (hello["brand"] === "all") {
+                    DataNew = all_products
+                    // console.log(1)
+                    if (hello["Categories"] !== "all") {
+                        filtered = DataNew.filter((product: Array<any>) => product[item].includes(hello["Categories"]));
+                        // console.log(1.1, filtered)
+                    }
+                } if (hello["brand"] !== "all") {
+                    // console.log(2)
+                    DataNew = all_products.filter((product: any) => product["brand"] === hello["brand"])
+                    if (hello["Categories"] !== "all") {
+                        filtered = DataNew.filter((product: Array<any>) => product[item].includes(hello["Categories"]));
+                        // console.log(2.1, filtered)
+                    } if (hello["Categories"] === "all") {
+                        filtered = DataNew;
+                        // console.log(2.2, DataNew)
+                    }
+                }
+
+
+
 
             }
-            items.forEach((x: string) => {
+
+            else {
+                items.forEach((x: string) => {
+                    filtered = (x === lastChange && hello[x] !== 'all') ? filtered.filter((product: any) => product[x] === hello[x]) : filtered
+
+                })
+            }
+
+            items.forEach((x: any) => {
                 // console.log(x)
-                if (hello[x] !== 'all') {
-                    filtered = (x !== lastChange) ? filtered.filter((product: any) => product[x] === hello[x]) : filtered
+                // let i: any = lastChange
+                if (hello[x] !== "all") {
+                    filtered = (x !== lastChange) ? filtered.filter((product: Array<any>) => product[x].includes(hello[x])) : filtered
                 }
+                // console.log(filtered)
             })
+
+
+
             // console.log(hello["category"]);
+
             dispatch(updateFilters(filtered))
 
         }
@@ -155,7 +204,7 @@ export function Filter(props: any) {
 
         }
 
-    }, [all_products, activeCategory, activeCompany, lastChange, dispatch])
+    }, [all_products, activeCategory, activeCategories, lastChange, dispatch])
 
     useEffect(() => {
         if (!all_products) return false || undefined
@@ -169,7 +218,7 @@ export function Filter(props: any) {
         dispatch(clearFilters())
         setShowClear(false)
         setActiveCategory('all')
-        setActiveCompany('all')
+        setActiveCategories('all')
         setActiveColor('all')
         setPrice(priceMax)
     }
@@ -203,13 +252,13 @@ export function Filter(props: any) {
                 <HrSeparate />
                 <div className="mb-4">
                     <h2 className="font-bold text-lg text-gray-600">
-                        NameList
+                        Categories
                     </h2>
                     <div className="flex flex-col my-5">
-                        {nameList && nameList.map(value => (
+                        {categories && categories.map(value => (
                             <label key={value} className="flex items-center justify-start" >
-                                <input className="mb-2 mr-4" type="checkbox" value={value} name={`${value}`} onClick={() => filterCategory(value, 'name')} checked={value === activeCompany} onChange={() => setActiveCompany(value)} />
-                                <span key={value} className={`${value === activeCompany && styles.active_filter} text-gray-500 cursor-pointer mb-2 text-base font-semibold`}> {value}</span>
+                                <input className="mb-2 mr-4" type="checkbox" value={value} name={`${value}`} onClick={() => filterCategory(value, 'Categories')} checked={value === activeCategories} onChange={() => setActiveCategories(value)} />
+                                <span key={value} className={`${value === activeCategories && styles.active_filter} text-gray-500 cursor-pointer mb-2 text-base font-semibold`}> {value}</span>
                             </label>
                         ))}
                     </div>
@@ -251,7 +300,11 @@ export function Filter(props: any) {
                     </h2>
                     <div className="flex justify-around my-5">
                         {colors && colors.map((value: any) => (
-                            <div onClick={() => filterCategory(value, 'ColorProduct')} key={value} className={`w-7 h-7 cursor-pointer border-4  shadow-sm ${value === activeColor ? 'border-red-500' : 'border-gray-500'} rounded-full mx-1`} style={value === "all" ? { background: "conic-gradient(#FF0000 0deg 120deg,  #008000 120deg 240deg, #FFA500 240deg 360deg)" } : { background: value.split('all') }} >
+                            <div
+                                onClick={() => filterCategory(value, 'ColorProduct')}
+                                key={value}
+                                className={`w-7 h-7 cursor-pointer border-4  shadow-sm ${value === activeColor ? 'border-red-500' : 'border-gray-500'} rounded-full mx-1`}
+                                style={value === "all" ? { background: "conic-gradient(#FF0000 0deg 120deg,  #008000 120deg 240deg, #FFA500 240deg 360deg)" } : { background: value.split('all') }} >
                             </div>
                         ))}
                     </div>

@@ -1,4 +1,3 @@
-// import { useContext } from 'react'
 import styled, { css } from 'styled-components';
 import tw from "twin.macro"
 import { slide as Menu } from 'react-burger-menu'
@@ -13,14 +12,17 @@ import {
 // import { AuthContext } from '../../context/Authcontext/AuthContext';
 // import { logout } from "../../context/Authcontext/AuthActions";
 import '../../css/navbar.css'
-import ThemeToggle from "./ThemeToggle";
+
 
 const ListContainer = styled.ul`
     z-index: 3;
     ${tw`
     list-none
     flex
+    // bg-white
+    outline-none
     `};
+    
 
 `;
 
@@ -102,7 +104,7 @@ const AnimationBox = styled.div`
 
 export function NavItems(props: any) {
 
-    const { isDark, setIsDark } = props;
+    const history = useHistory();
 
     const isMobile = useMediaQuery({ maxWidth: SCREEN.sm })
 
@@ -111,75 +113,69 @@ export function NavItems(props: any) {
 
     // const user = state.user;
 
-    const history = useHistory();
-
-
     // console.log();
 
-
-    if (isMobile) {
-        return (
-            <>
-                <Menu right styles={menuStyles}>
-                    <ListContainer>
-                        <NavItem ><Link to="/" className="flex w-full items-center text-lg"> <HomeIcon style={{ height: "18px" }} />Home</Link></NavItem>
-                        <NavItem ><Link to="/cars" className="flex w-full items-center text-lg"><ShoppingCartIcon style={{ height: "18px" }} />Cars</Link></NavItem>
-                        <NavItem ><Link to="/categories" className="flex w-full items-center text-lg"><AdjustmentsIcon style={{ height: "18px" }} />Categories</Link></NavItem>
-                        <NavItem ><Link to="/contact" className="flex w-full items-center text-lg"><PhoneIcon style={{ height: "18px" }} />Contact</Link></NavItem>
-                        <NavItem >
-                            <ThemeToggle icon className="active__icon" isDark={isDark} setIsDark={setIsDark} /> <a className="flex w-full items-center text-lg">Theme</a>
-
-                        </NavItem>
-                    </ListContainer>
-                </Menu>
-            </>
-        );
-    }
     return (
-        <ListContainer>
-            <NavItem className={history.location.pathname === '/' ? "activeS" : ""} >
-                <Link to="/" className="flex items-center">
-                    <AnimationBox>
-                        <div className="icon__navigation" >
-                            <HomeIcon style={{ height: "30px" }} />
-                        </div>
-                        <div className="div-animation">Home</div>
+        <>
+            {!isMobile && (
+                <ListContainer>
+                    <NavItem className={history.location.pathname === '/' ? "activeS" : ""} >
+                        <Link to="/" className="flex items-center">
+                            <AnimationBox>
+                                <div className="icon__navigation" >
+                                    <HomeIcon style={{ height: "30px" }} />
+                                </div>
+                                <div className="div-animation">Home</div>
 
-                    </AnimationBox>
-                </Link>
-            </NavItem>
-            <NavItem className={history.location.pathname === '/cars' ? "activeS" : ""}>
-                <Link to="/cars" className="flex items-center">
-                    <AnimationBox>
-                        <div className="icon__navigation" >
-                            <ShoppingCartIcon style={{ height: "30px" }} />
-                        </div>
-                        <div className="div-animation">Cars</div>
-                    </AnimationBox>
-                </Link>
-            </NavItem>
-            <NavItem className={history.location.pathname === '/categories' ? "activeS" : ""}>
-                <Link to="/categories" className="flex items-center">
-                    <AnimationBox>
-                        <div className="icon__navigation" >
-                            <AdjustmentsIcon style={{ height: "30px" }} />
-                        </div>
-                        <div className="div-animation">Categories</div>
-                    </AnimationBox>
-                </Link>
-            </NavItem>
-            <NavItem className={history.location.pathname === '/contact' ? "activeS" : ""}>
-                <Link to="/contact" className="flex items-center">
-                    <AnimationBox>
-                        <div className="icon__navigation" >
-                            <PhoneIcon style={{ height: "30px" }} />
-                        </div>
-                        <div className="div-animation">Contact</div>
-                    </AnimationBox>
-                </Link>
-            </NavItem>
-            {/* {user ? <NavItem } >{user.username}</NavItem> : <NavItem ><Link to="/login" className="flex items-center">Login</Link></NavItem>} */}
-        </ListContainer>
+                            </AnimationBox>
+                        </Link>
+                    </NavItem>
+                    <NavItem className={history.location.pathname === '/cars' ? "activeS" : ""}>
+                        <Link to="/cars" className="flex items-center">
+                            <AnimationBox>
+                                <div className="icon__navigation" >
+                                    <ShoppingCartIcon style={{ height: "30px" }} />
+                                </div>
+                                <div className="div-animation">Cars</div>
+                            </AnimationBox>
+                        </Link>
+                    </NavItem>
+                    <NavItem className={history.location.pathname === '/categories' ? "activeS" : ""}>
+                        <Link to="/categories" className="flex items-center">
+                            <AnimationBox>
+                                <div className="icon__navigation" >
+                                    <AdjustmentsIcon style={{ height: "30px" }} />
+                                </div>
+                                <div className="div-animation">Categories</div>
+                            </AnimationBox>
+                        </Link>
+                    </NavItem>
+                    <NavItem className={history.location.pathname === '/contact' ? "activeS" : ""}>
+                        <Link to="/contact" className="flex items-center">
+                            <AnimationBox>
+                                <div className="icon__navigation" >
+                                    <PhoneIcon style={{ height: "30px" }} />
+                                </div>
+                                <div className="div-animation">Contact</div>
+                            </AnimationBox>
+                        </Link>
+                    </NavItem>
+                    {/* {user ? <NavItem } >{user.username}</NavItem> : <NavItem ><Link to="/login" className="flex items-center">Login</Link></NavItem>} */}
+                </ListContainer>
+            )}
+            {isMobile && (
+                <>
+                    <Menu right styles={menuStyles}>
+                        <ListContainer>
+                            <NavItem ><Link to="/" className="flex w-full items-center text-lg"> <HomeIcon style={{ height: "18px" }} />Home</Link></NavItem>
+                            <NavItem ><Link to="/cars" className="flex w-full items-center text-lg"><ShoppingCartIcon style={{ height: "18px" }} />Cars</Link></NavItem>
+                            <NavItem ><Link to="/categories" className="flex w-full items-center text-lg"><AdjustmentsIcon style={{ height: "18px" }} />Categories</Link></NavItem>
+                            <NavItem ><Link to="/contact" className="flex w-full items-center text-lg"><PhoneIcon style={{ height: "18px" }} />Contact</Link></NavItem>
+                        </ListContainer>
+                    </Menu>
+                </>
+            )}
+        </>
     );
 
 }

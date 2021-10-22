@@ -15,6 +15,7 @@ const NavUserContainer = styled.div`
     z-index: 3;
     height: 100%;
     width: 100%;
+    
     ${tw`
     // relative
     `}
@@ -28,13 +29,6 @@ const NavUserContainer = styled.div`
         overflow-hidden
         cursor-pointer
         `}
-    }
-
-    @media (max-width: ${SCREEN.sm}) {
-        img{
-            height: 40px;
-            width: 40px;
-        }
     }
 
 `
@@ -65,12 +59,6 @@ img{
         h-full
         w-full
     `}
-
-    @media (max-width: ${SCREEN.sm}) {
-        width: 40px;
-        height: 40px;
-    }
-   
     display: block;
 }
 

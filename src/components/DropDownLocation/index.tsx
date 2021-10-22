@@ -84,7 +84,6 @@ interface ISelectLocation {
     setCityS: any;
     setDistrictS: any;
     setWardS: any;
-    darkMode: any;
 
 }
 
@@ -93,7 +92,7 @@ export function DropDownLocation(props: ISelectLocation) {
 
     // console.log(props);
 
-    const { setCityS, setDistrictS, setWardS, darkMode } = props;
+    const { setCityS, setDistrictS, setWardS } = props;
 
     const [city, setCity] = useState("")
     const [district, setDistrict] = useState("")
@@ -177,7 +176,6 @@ export function DropDownLocation(props: ISelectLocation) {
                         defaultText={"Select City"}
                         setValue={setCity}
                         dataArray={nameCity}
-                        darkMode={darkMode}
                     />
                 </SelectCity>
 
@@ -191,7 +189,6 @@ export function DropDownLocation(props: ISelectLocation) {
                         defaultText={"Select District"}
                         setValue={setDistrict}
                         dataArray={nameDistrict}
-                        darkMode={darkMode}
                     />
                 </SelectDistrict>
 
@@ -205,7 +202,6 @@ export function DropDownLocation(props: ISelectLocation) {
                         defaultText={"Select Ward"}
                         setValue={setWard}
                         dataArray={nameWard}
-                        darkMode={darkMode}
                     />
                 </SelectStreet>
             </SelectDropDownContainer>

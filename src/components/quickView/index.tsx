@@ -22,6 +22,9 @@ export function QuickView(props: IProductQuicKView) {
     // console.log(product[0].id);
     const Pro: any[] = [];
     const [products, setProducts] = useState(Pro);
+
+    // console.log(product);
+
     const handleData = () => {
         for (let i = 0; i < product.length; i++) {
             const List: any[] = []

@@ -7,7 +7,8 @@ const LogoContainer = styled.div`
 ${tw`
     flex
     items-center
-    md: ml-4
+    md:ml-2 
+    ml-4
 `};
 `;
 

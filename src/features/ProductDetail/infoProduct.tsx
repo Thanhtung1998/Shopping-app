@@ -318,7 +318,6 @@ export function InfoProduct(props: InfoProduct) {
                         Size={Size}
                         setSize={setSize}
                         setQuantity={setQuantity}
-                        darkMode={false}
                     />
                 </BoxSizeModal>
             </div>
@@ -337,7 +336,6 @@ export function InfoProduct(props: InfoProduct) {
             <ModalSelectLocation>
                 <ModalBoxSelectLocation >
                     <DropDownLocation
-                        darkMode={false}
                         setCityS={setCityS}
                         setDistrictS={setDistrictS}
                         setWardS={setWardS}

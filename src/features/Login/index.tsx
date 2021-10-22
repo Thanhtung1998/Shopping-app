@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import BackgroundLogin from '../../assets/backgroundpicture/bglogin.jpeg';
 import { login } from '../../context/Authcontext/apiAuth';
 // import { useHistory } from 'react-router-dom'
-import { AuthContext } from '../../context/Authcontext/AuthContext';
+// import { AuthContext } from '../../context/Authcontext/AuthContext';
 import { InputFieldLogin } from '../../components/customField/inputField';
 import "../../css/animation.css";
 import "../../css/cssBootstrap.css";
@@ -75,6 +75,14 @@ const BoxLogin = styled.div`
       w-full
     `}
 
+    & > .errorType--Login > form > div > div.TypeSuccess {
+        border: red 1px solid !important;
+        background-image : url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(.375em + .1875rem) center;
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+    }
+
     h2{ 
         color: #607d8b;
         font-weight: 600;
@@ -99,6 +107,8 @@ const BoxLogin = styled.div`
         text-decoration: underline;
         cursor: pointer;
     }
+
+    
 
 `
 
@@ -226,7 +236,7 @@ export function Login() {
     // const history = useHistory();
 
     const [error, setError] = useState("")
-    const [checkCss, setCheckCss] = useState(false)
+    const [LoginCss, setLoginCss] = useState(false)
     // const [statusValue, setStatusValue] = useState(0)
 
     const initialValues = {
@@ -240,7 +250,7 @@ export function Login() {
     })
 
     const loginFailed = () => toast.error("Tài khoản hoặc mật khẩu không đúng", { autoClose: 5000 });
-    const loginSuccess = () => toast.success("Đăng nhập thành công");
+    // const loginSuccess = () => toast.success("Đăng nhập thành công");
 
 
     // console.log(error);
@@ -274,21 +284,21 @@ export function Login() {
             });
 
             if (res.status === 200) {
-                loginSuccess();
+                // loginSuccess();
+                setLoginCss(false);
                 dispatch(authActions.loginStart(params))
-                setCheckCss(false);
-
             } else {
                 loginFailed();
-                setCheckCss(true);
+                setLoginCss(true);
                 dispatch(authActions.loginStart(params))
                 const textError = "Tên đăng nhập hoặc mật khẩu không đúng";
                 await setError(textError);
                 setTimeout(() => {
+                    setLoginCss(false);
                     actions.setSubmitting(false);
-                    setCheckCss(false);
                     setError("");
                 }, 5000)
+
             }
 
         } catch (error) {
@@ -319,81 +329,78 @@ export function Login() {
                                 <Square></Square>
                                 <Square></Square>
                                 <Square></Square>
-                                <BoxLogin className="">
+                                <BoxLogin>
+                                    <div className={LoginCss ? "errorType--Login" : ""}>
+                                        <h2>Login</h2>
+                                        <Formik
+                                            initialValues={initialValues}
+                                            validationSchema={validationSchema}
+                                            onSubmit={(values, actions) => {
+                                                handelLogin(values, actions);
+                                                actions.setStatus("Login");
+                                            }}
+                                            enableReinitialize={false}
+                                            validateOnChange={true}
+                                            validateOnBlur={true}
+                                        // validateOnMount={true}
 
-                                    <h2>Login</h2>
-                                    <Formik
-                                        initialValues={initialValues}
-                                        validationSchema={validationSchema}
-                                        onSubmit={(values, actions) => {
-                                            handelLogin(values, actions);
-                                            // actions.setStatus(400);
-                                            actions.setStatus("Login");
-
-
-                                        }}
-                                        enableReinitialize={false}
-                                        validateOnChange={true}
-                                        validateOnBlur={true}
-                                    // validateOnMount={true}
-
-                                    >
-                                        {formikProps => {
-                                            const { values, errors, } = formikProps;
+                                        >
+                                            {formikProps => {
+                                                const { values, errors, } = formikProps;
 
 
-                                            // console.log(formikProps.isSubmitting);
-                                            // console.log(errors);
+                                                // console.log(formikProps.isSubmitting);
+                                                // console.log(errors);
 
-                                            // console.log(status);
-                                            return (
-                                                <Form  >
-                                                    <FastField
-                                                        // setStatus={false}
-                                                        name="Email"
-                                                        type="email"
-                                                        component={InputFieldLogin}
-                                                        label="Email"
-                                                        placeholder="Email"
-                                                        icon={MailIcon}
-                                                        checkCss={checkCss}
-                                                        onChange={values.Email}
-                                                        invalid={errors.Email}
-                                                    />
-                                                    <FastField
-                                                        name="Password"
-                                                        type="password"
-                                                        component={InputFieldLogin}
-                                                        label="PassWord"
-                                                        placeholder="PassWord"
-                                                        checkCss={checkCss}
-                                                        icon={CodeIcon}
-                                                        invalid={errors.Password}
-                                                        onChange={values.Password}
-                                                    />
+                                                // console.log(status);
+                                                return (
+                                                    <Form  >
+                                                        <FastField
+                                                            // setStatus={false}
+                                                            name="Email"
+                                                            type="email"
+                                                            component={InputFieldLogin}
+                                                            label="Email"
+                                                            placeholder="Email"
+                                                            icon={MailIcon}
+                                                            onChange={values.Email}
+                                                            invalid={errors.Email}
+                                                        />
+                                                        <FastField
+                                                            name="Password"
+                                                            type="password"
+                                                            component={InputFieldLogin}
+                                                            label="PassWord"
+                                                            placeholder="PassWord"
+                                                            icon={CodeIcon}
 
-                                                    <div className="w-full">
-                                                        {error && (
-                                                            <div className="w-full mt-2 mb-2 flex flex-1 flex-wrap items-center" >
-                                                                <span className="w-full overflow-hidden error">{error}</span>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                    <FormGroup>
-                                                        <Button className="bg-red-400 w-full p-1 my-3 rounded-md text-gray-500 text-base font-semibold active:bg-red-600 btnBootstrap" type="submit" disabled={!formikProps.isValid}  >
-                                                            {formikProps.isSubmitting && <Spinner size="sm" className="bootstrapSpinner" />}
-                                                            Login
-                                                        </Button>
-                                                    </FormGroup>
-                                                </Form>
-                                            )
-                                        }
-                                        }
-                                    </Formik>
+                                                            invalid={errors.Password}
+                                                            onChange={values.Password}
+                                                        />
 
-                                    <p>Don't have an account? <Link to="./register">Sign Up</Link></p>
+                                                        <div className="w-full">
+                                                            {error && (
+                                                                <div className="w-full mt-2 mb-2 flex flex-1 flex-wrap items-center" >
+                                                                    <span className="w-full overflow-hidden error">{error}</span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <FormGroup>
+                                                            <Button className="bg-red-400 w-full p-1 my-3 rounded-md text-gray-500 text-base font-semibold active:bg-red-600 btnBootstrap" type="submit" disabled={!formikProps.isValid}  >
+                                                                {formikProps.isSubmitting && <Spinner size="sm" className="bootstrapSpinner" />}
+                                                                Login
+                                                            </Button>
+                                                        </FormGroup>
+                                                    </Form>
+                                                )
+                                            }
+                                            }
+                                        </Formik>
 
-                                    <LoginWithFireBase > </LoginWithFireBase>
+                                        <p>Don't have an account? <Link to="./register">Sign Up</Link></p>
+
+                                        <LoginWithFireBase > </LoginWithFireBase>
+                                    </div>
                                 </BoxLogin>
                             </div>
                         </LoginBox>

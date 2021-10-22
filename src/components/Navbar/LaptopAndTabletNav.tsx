@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { HomeIcon, PhoneIcon, ShoppingCartIcon, AdjustmentsIcon } from '@heroicons/react/outline';
 import ThemeToggle from "./ThemeToggle";
 import { useState } from "react";
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { Link, useHistory, useRouteMatch } from 'react-router-dom'
 import { SCREEN } from '../responsive'
 
 interface ThemeToggleProps {
@@ -13,12 +13,12 @@ interface ThemeToggleProps {
 const MobileNavDiv = styled.div`
   display: none;
 
-  @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.lg}) {
+  @media (min-width: 300px) and (max-width: ${SCREEN.lg}) {
     display: flex;
     position: fixed;
     bottom: 0;
     right: 0;
-    color: var(--dark);
+    color: var(--secondary-text);
     z-index: 99;
 
     .items {
@@ -28,8 +28,8 @@ const MobileNavDiv = styled.div`
       transform: translateX(3rem);
       flex-direction: column;
       gap: 0.5rem;
-      background: var(--dark);
-      color: var(--light);
+      background-color: var(--comment-background);
+      color: var(--secondary-text);
       padding: 1rem 1.5rem 1rem 0.75rem;
       border-radius: 1rem 0 0 1rem;
       box-shadow: 0.5rem 0.5rem 1rem #0005;
@@ -50,7 +50,7 @@ const MobileNavDiv = styled.div`
           background: #88a2;
         }
         &.active {
-          color: var(--red);
+          color: var(--blue);
         }
         svg {
           margin-right: 1rem;
@@ -63,7 +63,7 @@ const MobileNavDiv = styled.div`
       width: 3rem;
       height: 3rem;
       border-radius: 99px;
-      background: var(--dark);
+      background-color: var(--comment-background);
       box-shadow: 0 0.5rem 1rem #0002;
       position: fixed;
       right: 1.5rem;
@@ -79,7 +79,7 @@ const MobileNavDiv = styled.div`
         position: relative;
         height: 2px;
         width: 1.5rem;
-        background: var(--light);
+        background: var(--secondary-text);
         border-radius: 3px;
         transition: all 0.2s;
 
@@ -89,7 +89,7 @@ const MobileNavDiv = styled.div`
           content: "";
           height: 2px;
           width: 1.5rem;
-          background: var(--light);
+          background: var(--secondary-text);
           border-radius: 3px;
           transition: all 0.2s;
         }
@@ -109,10 +109,10 @@ const MobileNavDiv = styled.div`
         transform: translateX(0);
       }
       .toggle {
-        background: var(--red);
+        background: var(--notification-badge);
 
         span {
-          background: var(--red);
+          background: var(--notification-badge);
           &::before {
             background: #fff;
             transform: translate(0) rotate(45deg);
@@ -149,26 +149,46 @@ export function LaptopAndTabletNav(props: ThemeToggleProps) {
       </div>
       <div className="items">
         <div
-          onClick={() => history.push("/")}
+          // onClick={() => history.push("/")}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
           className={`item ${router.path === "/" ? "active" : ""}`}
         >
-          <HomeIcon /> Home
+          <Link to="/" className="flex items-center"><HomeIcon /> Home </Link>
         </div>
         <div
-          onClick={() => history.push("/cars")}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+          // onClick={() => history.push("/cars")}
           className={`item ${router.path === "/cars" ? "active" : ""}`}
         >
-          <ShoppingCartIcon /> Cars
+          <Link to="/cars" className="flex items-center"><ShoppingCartIcon /> Cars</Link>
         </div>
-        <div onClick={() => history.push("/categories")}
+        <div
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+          // onClick={() => history.push("/categories")}
           className={`item ${router.path === "/categories" ? "active" : ""}`}
         >
-          <AdjustmentsIcon /> Categories
+          <Link to="/categories" className="flex items-center"><AdjustmentsIcon /> Categories</Link>
         </div>
-        <div className="item">
-          <PhoneIcon /> Contact
+        <div
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+          className="item">
+          <Link to="/" className="flex items-center"><PhoneIcon /> Contact</Link>
         </div>
-        <ThemeToggle icon text className="item" isDark={isDark} setIsDark={setIsDark} />
+        <div
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+          className="w-full h-full">
+          <ThemeToggle icon text className="item" isDark={isDark} setIsDark={setIsDark} />
+        </div>
       </div>
     </MobileNavDiv>
   );

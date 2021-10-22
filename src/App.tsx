@@ -124,7 +124,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const product = await ProductService.getProducts().catch((err) => console.log(err));
-      // console.log(product);
+      console.log(product);
     }
     fetchData();
     const FetchProduct = async () => {

@@ -7,7 +7,8 @@ export interface Product {
     NewPrice?: number;
     ColorProduct?: (string)[];
     descProduct?: string;
-    DetailProduct?: object;
+    RateProduct?: object[];
     QuantityProductAndSize?: (any)[];
-
+    Categories?: string[];
+    commentId?: string;
 }

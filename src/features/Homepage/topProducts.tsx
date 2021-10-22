@@ -41,8 +41,8 @@ const TopProductsContainer = styled.div`
     flex-col
     items-center
     justify-around
-    pr-4
-    pl-4
+    pr-3
+    pl-3
     md:pl-0
     md:pr-0
     mb-10
@@ -146,6 +146,7 @@ export function TopProducts(props: IActiveModalOpen) {
     // console.log(props.activeModalOpen)
 
     function handleOpenQuickView(open: boolean, id: string) {
+        // console.log(id)
         setQuickView(open)
         setCurrentID(id)
     }
@@ -289,7 +290,9 @@ export function TopProducts(props: IActiveModalOpen) {
 
             </TopProductsContainer>
 
-            {isQuickView && (<QuickView setActiveModalOpen={props.setActiveModalOpen} isopen={isQuickView} setCurrent={setCurrent} product={product} ids={currentID} onClose={() => setQuickView(false)}></QuickView>)}
+            {isQuickView && (
+                <QuickView setActiveModalOpen={props.setActiveModalOpen} isopen={isQuickView} setCurrent={setCurrent} product={product} ids={currentID} onClose={() => setQuickView(false)}></QuickView>)}
+
         </>
     )
 }

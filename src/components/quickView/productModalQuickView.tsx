@@ -52,7 +52,7 @@ const ModalAll = styled.div`
         items-center
         justify-center
     `}
-    color: var(--light);
+    color: var(--secondary-text);
 `
 
 const ModalContainer = styled.div`
@@ -76,7 +76,7 @@ const ModalContent = styled.div`
 
     height: 65%;
     width: 70%;
-    background: var(--dark);
+    background-color: var(--surface-background);
     z-index:500;
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     
@@ -216,7 +216,7 @@ const ModalImgThumbnail = styled.div`
 
 const BoxImg = styled.div`
     width: 100%;
-   
+    background-color: var(--comment-background);
     box-shadow: 0 1.3px 17px -2px rgba(0, 0, 0, 0.4);
     ${tw`
         flex
@@ -224,7 +224,6 @@ const BoxImg = styled.div`
         justify-center
         items-center
         p-3
-        bg-white
         rounded-md
         m-1
         sm:m-3
@@ -494,6 +493,8 @@ export function ProductModalQuickView(props: IProductQuickViewModal) {
         onClose,
         setActiveModalOpen
     } = props;
+
+    // console.log(setActiveModalOpen)
 
     const InitialProductValue = {
         name: name,
@@ -766,7 +767,6 @@ export function ProductModalQuickView(props: IProductQuickViewModal) {
                                             size={productModal.QuantityProductAndSize?.map((size) => size)}
                                             Size={Size} setSize={setSize}
                                             setQuantity={setQuantity}
-                                            darkMode={true}
                                         />
                                     </BoxSizeModal>
                                 </ProductDetailModal>
@@ -783,13 +783,13 @@ export function ProductModalQuickView(props: IProductQuickViewModal) {
                                 <ModalSelectLocation>
                                     {/* <DropDownLocation setCityS={setCityS} setDistrictS={setDistrictS} setWardS={setWardS} /> */}
                                     <ModalBoxSelectLocation>
-                                        <SelectCityDropDown city={city} setCity={setCityS} darkMode={true} />
+                                        <SelectCityDropDown city={city} setCity={setCityS} />
                                     </ModalBoxSelectLocation>
                                     <ModalBoxSelectLocation>
-                                        <SelectDistrictDropDown city={city} district={district} setDistrict={setDistrictS} darkMode={true} />
+                                        <SelectDistrictDropDown city={city} district={district} setDistrict={setDistrictS} />
                                     </ModalBoxSelectLocation>
                                     <ModalBoxSelectLocation>
-                                        <SelectWardDropDown city={city} district={district} ward={ward} setWard={setWardS} darkMode={true} />
+                                        <SelectWardDropDown city={city} district={district} ward={ward} setWard={setWardS} />
                                     </ModalBoxSelectLocation>
                                 </ModalSelectLocation>
                                 <ButtonProductModal>

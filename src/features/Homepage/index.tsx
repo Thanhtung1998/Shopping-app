@@ -8,7 +8,7 @@ import { TopProducts } from "./topProducts";
 import { TopSection } from "./topSection";
 import { ListProduct } from "./ListProduct";
 import { Banner } from "../../components/Banner";
-
+import { BannerLong } from '../../components/Banner/bannerLong'
 // Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from "../../app/store";
@@ -45,6 +45,8 @@ export default function HomePage(props: IActiveModal) {
             <Banner />
             <Marginer direction="vertical" margin="2em" />
             <TopProducts setActiveModalOpen={setActiveModalOpen} />
+            <Marginer direction="vertical" margin="2em" />
+            <BannerLong />
             <Marginer direction="vertical" margin="2em" />
             <ListProduct setActiveModalOpen={setActiveModalOpen} />
             <Marginer direction="vertical" margin="2em" />

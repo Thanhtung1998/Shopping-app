@@ -3,13 +3,12 @@ import styled from 'styled-components'
 import tw from 'twin.macro'
 import { ChevronDownIcon } from "@heroicons/react/solid"
 import '../../css/animation.css'
-import '../../css/darkMode.css'
+
 
 export interface SelectDataProps {
     text?: string;
     defaultText?: string;
     setValue?: any;
-    darkMode?: boolean;
     dataArray?: string[];
     dataRequired?: string;
 }
@@ -27,7 +26,7 @@ const BoxSelect = styled.div`
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     border-radius: 10px;
     cursor: pointer;
-
+    background-color: var(--comment-background);
     ${tw`
     flex
     items-center
@@ -49,7 +48,7 @@ const BoxDropDown = styled.div`
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     border-radius: 10px;
     z-index: 100;
-
+    background-color: var(--comment-background);
     ${tw`
         overflow-hidden
         overflow-y-auto
@@ -90,7 +89,7 @@ const BoxDropDownItem = styled.div`
 
 export function SelectDropDown(props: SelectDataProps) {
 
-    const { text, defaultText, setValue, darkMode, dataArray, dataRequired } = props
+    const { text, defaultText, setValue, dataArray, dataRequired } = props
     // const [city, setCity] = useState("")
     const [isActiveSelectCity, setIsActiveSelectCity] = useState(false)
 
@@ -110,16 +109,16 @@ export function SelectDropDown(props: SelectDataProps) {
     }, [dataArray])
 
     return (
-        <SelectDropDownContainer className={!darkMode ? "lightMode" : "darkMode"}>
+        <SelectDropDownContainer>
             <BoxSelect onClick={(e) => setIsActiveSelectCity(!isActiveSelectCity)}>
                 <BoxText>{text ? text : defaultText}</BoxText>
                 <ChevronDownIcon className="h-6" />
             </BoxSelect>
             {isActiveSelectCity && dataRequired && (
-                <BoxDropDown className={!darkMode ? "hidden-animation BgLightMode" : "hidden-animation BgDarkMode"}>
+                <BoxDropDown >
                     {arrayData && dataRequired && arrayData.map((data) => (
                         <BoxDropDownItem key={data} onClick={(e) => { setValue(data); setIsActiveSelectCity(false) }} >
-                            <span className={!darkMode ? "modeText" : ""}>{data}</span>
+                            <span>{data}</span>
                         </BoxDropDownItem>
                     ))}
                 </BoxDropDown>

@@ -149,8 +149,9 @@ animation: hidden ease 1s;
     height: 100%;
     width: 100%;
     /* overflow: hidden; */
-    background: linear-gradient(to bottom, #f1f4f9,#dff1ff);
+    background: linear-gradient(to bottom, #f1f4f9,#24afff);
 }
+
 
 section .bg-login__animation-div{
     position: absolute;

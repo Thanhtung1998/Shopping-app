@@ -38,18 +38,18 @@ font-extrabold
 `
 
 const ListGrid = styled.div`
+    width: 90%;
     ${tw`
         mt-6
-        w-full
-        items-center
+        md:w-full
         grid
-        gap-x-8 gap-y-4
         grid-cols-1
-        md:grid-cols-2
+        gap-y-4 
+        md:grid-cols-2 md:gap-5
         lg:gap-x-0 
         lg:gap-y-0
-        lg:grid-cols-3
-        xl:grid-cols-4
+        lg:grid-cols-3 lg:gap-2
+        xl:grid-cols-4 xl:gap-4
     `}
 
 `
@@ -158,9 +158,10 @@ export function ListProduct(props: IActiveModal) {
 
             try {
                 const response = await productApi.getPagination(filters);
-                console.log("Respone Base Url: ", response);
+                // console.log("Respone Base Url: ", response);
                 if (response) {
                     setProduct(response.data.product);
+                    // console.log(response.data.product);
                     // setDataProduct(res);
                     // console.log(response.data.data.pagination);
                     // console.log(response.data.pagination);
@@ -175,7 +176,7 @@ export function ListProduct(props: IActiveModal) {
                 setProduct(res1.data.data.product);
                 setPagination(res1.data.data.pagination);
                 setLoading(false);
-                console.log("Data Call Proxy", res1.data);
+                // console.log("Data Call Proxy", res1.data);
 
             }
 

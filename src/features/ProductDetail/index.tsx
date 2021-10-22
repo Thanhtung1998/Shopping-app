@@ -9,6 +9,8 @@ import productApi from '../../api/productApi';
 import { PictureProduct } from './pictureProduct';
 import { InfoProduct } from './infoProduct'
 import commentApi from '../../api/commentApi';
+import { CommentInputProduct } from '../../components/CmtHistoryProduct/CmtProductInputBox'
+import topProductApi from '../../api/topProductApi';
 
 
 const MainContent = styled.div`
@@ -165,13 +167,18 @@ const MarginBottom = styled.div`
 `
 
 
+
+
 export default function ProductDetail(props: any) {
 
     const typeProduct: any = {};
-    const anyType: any = 0
+    const anyNumberType: any = null;
+    const typeComment: any = {};
     const [product, setProduct] = useState(typeProduct)
     const [isLoading, setLoading] = useState(false)
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [commentState, setCommentState] = useState(typeComment);
+    const [idProductComment, setIdProductComment] = useState("")
     const params: any = useParams();
     const id = params.id
 
@@ -179,11 +186,19 @@ export default function ProductDetail(props: any) {
         try {
             setLoading(true)
             const product = await productApi.getSingleProduct(id);
-            setProduct(product);
-            setLoading(false);
+            if (product.data !== null) {
+                // console.log(product)
+                setProduct(product);
+                setLoading(false);
+            } else {
+                const product = await topProductApi.getSingleProduct(id);
+                setProduct(product);
+                setLoading(false);
+            }
+
         }
         catch (error: any) {
-            throw new Error(error)
+            console.log(error);
         }
 
     }
@@ -191,14 +206,21 @@ export default function ProductDetail(props: any) {
     const FetchComment = async () => {
         try {
             const comment = await commentApi.getAllComment();
-            console.log(comment)
-            const comment2 = await commentApi.getCommentByProductId(id);
-            console.log(comment2)
+            // console.log(comment)
+            const comment2: any = await commentApi.getCommentByProductId(id);
+            if (comment2[0].productId === id) {
+                setCommentState(comment2[0])
+                setIdProductComment(comment2[0].productId)
+            }
+
+            // console.log(comment2)
         } catch (error: any) {
             console.log(error)
             // throw new Error(error)
         }
     }
+
+
 
     useEffect(() => {
         FetchProduct();
@@ -220,13 +242,22 @@ export default function ProductDetail(props: any) {
                     <Information>
                         <LeftContent>
                             <PictureProduct picture={product.ImgUrlProduct} />
+
                         </LeftContent>
                         <RightContent>
                             <InfoProduct {...product} _id={product._id} />
                         </RightContent>
+                        <LeftContent>
+                            <CommentInputProduct idProduct={id} stateComment={commentState} />
+                        </LeftContent>
+                        <RightContent>
+
+                        </RightContent>
                     </Information>
                 )}
+
             </Content>
+
         </MainContent>
     )
 }

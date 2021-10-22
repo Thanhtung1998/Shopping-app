@@ -9,4 +9,6 @@ export interface IProduct {
     descProduct?: string;
     RateProduct?: (object)[];
     QuantityProductAndSize?: (any)[];
+    Categories?: (string)[];
+    commentId?: string;
 }

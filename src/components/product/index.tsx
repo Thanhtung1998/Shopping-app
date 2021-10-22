@@ -7,37 +7,61 @@ import { QuickView } from '../quickView'
 
 
 interface IProductProps extends IProduct {
-    id?: string;
+    _id?: string;
     setQuickView?: any;
     setActiveModalOpen?: any;
     setId?: any;
     onOpenChange?: any;
 }
 
-
 const ProductContainer = styled.div`
-    width: 18em;
-    min-height: 27em;
-    max-height: 27em;
+    width: 20.375rem;
+    min-height: 30em;
+    max-height: 30em;
     box-shadow: 0 1.3px 17px -2px rgba(0, 0, 0, 0.4);
-    background: var(--dark);
+    background-color: var(--surface-background);
     ${tw`
         flex
         flex-col
         items-center
-        p-3
-       
+        p-5
         rounded-md
-        m-1
+        m-2
         sm:m-3
         md:m-6
-
     `};
+
+
 `;
+
+const BrandContent = styled.div`
+
+    ${tw`
+    w-full
+    relative
+    pt-3
+    `}
+    span{
+        text-transform: capitalize;
+        color: var(--secondary-text);
+        ${tw`
+        absolute
+        z-10
+        -top-3
+        -right-1
+        text-sm  
+        italic 
+        text-gray-400
+        `}
+       
+    }
+
+`
 
 const ProductThumbnailPicture = styled.div`
     width: 100%;
     height: 200px;
+   
 `
 
 const ProductThumbnail = styled.div`
@@ -48,54 +72,15 @@ const ProductThumbnail = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        ${tw`
+        rounded-md
+        `}
     }
     ${tw``};
 `;
 
-const ProductViewMore = styled.div`
-    width: 100%;
-    height: 100%;
-    position: relative;
-    img{
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.8;
-    }
-`
-
-const ViewMoreBox = styled.div`
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1)
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-
-const ViewMoreBtn = styled.div`
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
- 
-`
-
-const ViewMoreBtnS = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-    ${tw`
-    cursor-pointer p-2 text-xs md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400 border border-yellow-300 focus:outline-none active:from-yellow-500 font-bold
-    `}
-`
-
 const ProductName = styled.h3`
-    color: var(--light);
+    color: var(--secondary-text);
     ${tw`
         text-base 
         font-bold 
@@ -176,17 +161,31 @@ const ProductColor = styled.div`
     };
 `;
 
-const Seperator = styled.div`
+const SeparatorBefore = styled.div`
     min-height: 1px;
     min-width: 100%;
     
+   
     ${tw`
         flex
         bg-gray-300
-        mt-2
-        
+        mt-2 
         `
     };
+   
+`;
+
+const SeparatorAfter = styled.div`
+    min-height: 1px;
+    min-width: 100%;
+    
+   
+    ${tw`
+        flex
+        bg-gray-300
+        `
+    };
+   
 `;
 
 const ProductDesc = styled.div`
@@ -210,7 +209,7 @@ const ProductDescSpan = styled.span`
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    color: var(--light);
+    color: var(--secondary-text);
     ${tw`
         text-justify
         w-full
@@ -219,16 +218,16 @@ const ProductDescSpan = styled.span`
 
 const RentButton = styled(Button)`
     height: 37px;
+    margin-top:auto;
     ${tw`
         min-w-full
         pt-5
     `}
 `;
 
-
 export function Product(props: IProductProps) {
 
-    const { id, name, ImgUrlProduct, OldPrice, NewPrice, ColorProduct, descProduct, setQuickView, onOpenChange } = props;
+    const { _id, brand, name, ImgUrlProduct, OldPrice, NewPrice, ColorProduct, descProduct, setQuickView, onOpenChange } = props;
 
     // console.log(ImgUrlProduct.img);
 
@@ -250,7 +249,7 @@ export function Product(props: IProductProps) {
         //     console.log("I love You")
         // }
         // setActiveModalOpen(false);
-        // console.log(id);
+        console.log(id);
         if (onOpenChange) {
             onOpenChange(open, id)
         }
@@ -261,6 +260,10 @@ export function Product(props: IProductProps) {
     return (
         <>
             <ProductContainer>
+
+                <BrandContent>
+                    <span>{brand}</span>
+                </BrandContent>
                 <ProductThumbnailPicture>
                     <ProductThumbnail>
                         <img src={ImgUrlProduct.imgfirst} alt="" />
@@ -271,7 +274,7 @@ export function Product(props: IProductProps) {
                     <NewPriceValue>{NewPrice}<SmallText>vnđ</SmallText></NewPriceValue>
                     <OldPriceValue>{OldPrice}<SmallText>vnđ</SmallText></OldPriceValue>
                 </PricesContainer>
-                <Seperator />
+                <SeparatorBefore />
 
                 <ProductDetailsContainer>
                     <ProductDetail>
@@ -279,14 +282,16 @@ export function Product(props: IProductProps) {
                             <ProductColor key={Math.random()} style={{ background: color }}></ProductColor>
                         ))}
                     </ProductDetail>
+
                 </ProductDetailsContainer>
+
+                <SeparatorAfter />
+
                 <ProductDesc>
                     <ProductDescSpan>{descProduct}</ProductDescSpan>
                 </ProductDesc>
-                <RentButton icons={true} text="Buy Now" onClick={() => handleQuickChange(true, id)} />
+                <RentButton icons={true} text="Buy Now" onClick={() => handleQuickChange(true, _id)} />
             </ProductContainer>
-
-
         </>
     );
 }

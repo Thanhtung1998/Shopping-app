@@ -84,7 +84,7 @@ ${tw`
 `;
 
 const Slogan = styled.h1`
-    color: var(--dark);
+    color: var(--secondary-text);
     ${tw`
     font-bold
     text-2xl
@@ -111,7 +111,7 @@ const Description = styled.span`
         -webkit-line-clamp: 3;
     }
    
-    color: var(--dark);
+    color: var(--secondary-text);
     ${tw`
         text-xs
         lg: text-sm

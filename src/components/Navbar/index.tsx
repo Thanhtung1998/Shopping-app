@@ -53,7 +53,7 @@ const HeaderSection = styled.header`
     position: absolute;
     width: 100%;
     height: 100%;
-    background: var(--light);
+    background-color: var(--surface-background);
     border-radius: 99px;
     display: flex;
     align-items: center;
@@ -187,7 +187,7 @@ const HeaderSection = styled.header`
     transform: translate(-50%, 100%);
     left: 50%;
     margin: auto;
-    background: var(--light);
+    background-color: var(--comment-background);
     padding: 0.5rem;
     border-radius: 99px;
     display: flex;
@@ -215,7 +215,7 @@ const HeaderSection = styled.header`
       font-size: 1.4rem;
       flex: 1;
       padding: 0 1.5rem;
-      color: var(--dark);
+      color:var(--secondary-icon);
       outline: none;
     
       &::placeholder {
@@ -250,6 +250,7 @@ const HeaderSection = styled.header`
       height: 1.25rem;
       margin-right: 0.75rem;
       flex: 0 0 1.25rem;
+      color: var(--secondary-icon);
     }
   }
 
@@ -347,7 +348,7 @@ const HeaderSection = styled.header`
 }
 
   &.scrolled:not(.inputFocus) {
-    background: var(--light);
+    background-color: var(--surface-background);
     color: var(--dark);
     border-bottom: 2px solid var(--gray);
 
@@ -413,12 +414,49 @@ const HeaderSection = styled.header`
     }
 
     form {
-      background: var(--light);
+      background-color: var(--surface-background);
       width: 100%;
       box-shadow: 0 1rem 1.5rem -0.5rem #0001;
     }
   }
 `;
+
+
+const Profile = styled.div`
+
+
+div.profile {
+  justify-content: flex-end;
+  white-space: nowrap;
+  svg {
+    height: 1.15rem;
+  }
+  a,
+  .themeToggle {
+    margin-right: 0.4rem;
+  }
+  .userIcon {
+    background: #2e2e48;
+    border-radius: 99px;
+    height: 30px;
+    width: 30px;
+    color: #fafafc;
+  }
+  .user {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    background: #fafafc;
+    border-radius: 99px;
+    padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+  }
+  .menu {
+    color: #2e2e48;
+    margin-right: 0.5rem;
+  }
+}
+
+`
 
 export function Navbar(props: any) {
 
@@ -454,10 +492,22 @@ export function Navbar(props: any) {
         <>
           <div className="mobile-css">
             <Logo />
-            <div className="flex items-center justify-center mr-12">
+            <div className="flex items-center justify-center mr-6">
               <SearchIcon style={{ width: "30px", marginRight: "10px" }} onClick={() => console.log("hello")} />
-              <NavUser activeUser={activeUser} setActiveUser={setActiveUser} />
-              <NavItems isDark={isDark} setIsDark={setIsDark} />
+
+
+              <Profile className="flex items-center justify-center">
+                <div className="profile cursor-pointer">
+                  <div onClick={() => setActiveUser(!activeUser)} className="user">
+                    <Menu className="menu" />
+                    <div className="userIcon">
+                      <NavUser activeUser={activeUser} setActiveUser={setActiveUser} />
+                    </div>
+                  </div>
+                </div>
+              </Profile>
+
+              {/* <NavItems /> */}
             </div>
 
           </div>
@@ -492,13 +542,15 @@ export function Navbar(props: any) {
 
           <LaptopAndTabletNav isDark={isDark} setIsDark={setIsDark} />
 
-          <div className="flex items-center justify-center">
+          {/* <ThemeToggle icon className="active__icon" isDark={isDark} setIsDark={setIsDark} /> */}
 
+          <div className="flex items-center justify-center mr-2">
             {!isLaptop && (
               <>
                 <NavItems />
               </>
             )}
+
             <div className="profile cursor-pointer">
               <ThemeToggle icon isDark={isDark} setIsDark={setIsDark} className="active__icon" />
               <div onClick={() => setActiveUser(!activeUser)} className="user">
