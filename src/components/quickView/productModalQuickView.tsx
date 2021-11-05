@@ -81,18 +81,7 @@ const ModalContent = styled.div`
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     
     ${tw`
-    relative
-    // mb-5
-    rounded-2xl
-    flex
-    flex-wrap
-    items-center
-    top-0
-    bottom-0
-    right-0
-    left-0
-    overflow-hidden
-    overflow-y-auto
+        rounded-lg
     `}
 
     @media (max-width: ${SCREEN.xl}){
@@ -125,21 +114,37 @@ const ModalContent = styled.div`
 
 `
 
+const ModalBodyContent = styled.div`
+    height: calc(100% - 58px);
+    ${tw`
+    relative
+    // mb-5
+    // rounded-2xl
+    flex
+    flex-row
+    md:flex-col
+    flex-wrap
+    // items-center
+    // justify-around
+    top-0
+    bottom-0
+    right-0
+    left-0
+    overflow-hidden
+    overflow-y-auto
+    `}
+`
+
 const ModalLeftProduct = styled.div`
-    height: calc(100% - 50px);
     ${tw`
         w-full
         md:w-1/2
+        md:h-full   
         // mb-5
     `}
 
     @media (max-width: ${SCREEN.md}){
-        width:100%;
-        height: 38rem;  
-    }
-
-    @media (max-width: ${SCREEN.sm}){
-        height:24rem;  
+        width:100%; 
     }
 
 `
@@ -153,11 +158,15 @@ const ModalCarouselProduct = styled.div`
 `
 
 
-const ModalRightProduct = styled.div`
-    height: calc(100% - 58px);
+const ModalRightProduct = styled.div`  
     ${tw`
     w-full
     md:w-1/2
+    h-full
+    flex
+    flex-col    
+    items-center
+    justify-center
     `}
 
     @media (max-width: ${SCREEN.md}){
@@ -720,9 +729,10 @@ export function ProductModalQuickView(props: IProductQuickViewModal) {
                             </ModalProductHeaderText>
                             <ModalClose> <XIcon className="h-6 cursor-pointer" onClick={handelCloseActiveModal} /></ModalClose>
                         </ModalProductTitle>
-                        <ModalLeftProduct>
-                            <ModalCarouselProduct>
-                                {/* <Carousel
+                        <ModalBodyContent>
+                            <ModalLeftProduct>
+                                <ModalCarouselProduct>
+                                    {/* <Carousel
                                     value={currentslides}
                                     slides={slides}
                                     onChange={setCurrentSlides}
@@ -738,104 +748,105 @@ export function ProductModalQuickView(props: IProductQuickViewModal) {
                                 />
                                 <Dots value={currentslides} onChange={setCurrentSlides} thumbnails={thumbnails} /> */}
 
-                                <Swiper
-                                    // navigation={true}
-                                    // effect={"coverflow"}
-                                    // centeredSlides={true}
-                                    tag="section"
-                                    // wrapperTag="ul"
-                                    // navigation
-                                    pagination
-                                    slidesPerView={1}
-                                    // loop={true}
-                                    // pagination={{
-                                    //     clickable: true
-                                    // }}
-                                    thumbs={{ swiper: thumbsSwiper }}
-                                    className="mySwiper w-full"
-                                >
+                                    <Swiper
+                                        // navigation={true}
+                                        // effect={"coverflow"}
+                                        // centeredSlides={true}
+                                        tag="section"
+                                        // wrapperTag="ul"
+                                        // navigation
+                                        pagination
+                                        slidesPerView={1}
+                                        // loop={true}
+                                        // pagination={{
+                                        //     clickable: true
+                                        // }}
+                                        thumbs={{ swiper: thumbsSwiper }}
+                                        className="mySwiper w-full"
+                                    >
 
-                                    {slides && slides.map(slide => (
-                                        <SwiperSlide key={Math.random()} className="">
-                                            {slide}
-                                        </SwiperSlide>
-                                    ))}
-
-                                </Swiper>
-                                <div className="w-full flex items-center justify-center">
-                                    <div className="w-1/2 flex items-center justify-center">
-                                        <Swiper
-                                            onSwiper={(value: any) => setThumbsSwiper(value)}
-                                            // onSwiper={{swiper: setThumbsSwiper}}
-                                            id="thumbs"
-
-                                            spaceBetween={3}
-                                            slidesPerView={size <= 3 ? 3 : size}
-                                            className="w-full overflow-x-hidden flex items-center justify-center p-4"
-                                        >
-                                            <div className="Check" >{thumbnails}</div>
-                                        </Swiper>
-                                    </div>
-                                </div>
-                            </ModalCarouselProduct>
-
-
-                        </ModalLeftProduct>
-                        <ModalRightProduct>
-                            <ModalContentRight>
-                                <ModalNameProduct>
-                                    <span>Product name:&nbsp;</span>
-                                    {productModal.name}
-                                </ModalNameProduct>
-                                <ModalDescProduct>
-                                    <span className="font-semibold">Description:&nbsp;</span>
-                                    <span>
-                                        {productModal.descProduct}
-                                    </span>
-                                </ModalDescProduct>
-                                <ProductDetailModal>
-                                    <BoxColorModal>
-                                        {productModal.ColorProduct && productModal.ColorProduct?.map((color) => (
-                                            <ProductColorModal onClick={() => setSelectColor(color)} key={Math.random()} style={{ background: color }}></ProductColorModal>
+                                        {slides && slides.map(slide => (
+                                            <SwiperSlide key={Math.random()} className="">
+                                                {slide}
+                                            </SwiperSlide>
                                         ))}
-                                    </BoxColorModal>
-                                    <BoxSizeModal>
-                                        <QuantityModalProduct><h2>Số lượng hiện có:</h2><span>{Quantity}</span></QuantityModalProduct>
-                                        <SelectSizeProduct
-                                            size={productModal.QuantityProductAndSize?.map((size) => size)}
-                                            Size={Size} setSize={setSize}
-                                            setQuantity={setQuantity}
-                                        />
-                                    </BoxSizeModal>
-                                </ProductDetailModal>
 
-                                <ProductPrice
-                                    NewPrice={productModal.NewPrice}
-                                    OldPrice={productModal.OldPrice}
-                                    handelDownquantity={handelDownquantity}
-                                    handelUpquantity={handelUpquantity}
-                                    numberQuantity={numberQuantity}
-                                    totalCost={totalCost}
-                                />
+                                    </Swiper>
+                                    <div className="w-full flex items-center justify-center">
+                                        <div className="w-1/2 flex items-center justify-center">
+                                            <Swiper
+                                                onSwiper={(value: any) => setThumbsSwiper(value)}
+                                                // onSwiper={{swiper: setThumbsSwiper}}
+                                                id="thumbs"
 
-                                <ModalSelectLocation>
-                                    {/* <DropDownLocation setCityS={setCityS} setDistrictS={setDistrictS} setWardS={setWardS} /> */}
-                                    <ModalBoxSelectLocation>
-                                        <SelectCityDropDown city={city} setCity={setCityS} />
-                                    </ModalBoxSelectLocation>
-                                    <ModalBoxSelectLocation>
-                                        <SelectDistrictDropDown city={city} district={district} setDistrict={setDistrictS} />
-                                    </ModalBoxSelectLocation>
-                                    <ModalBoxSelectLocation>
-                                        <SelectWardDropDown city={city} district={district} ward={ward} setWard={setWardS} />
-                                    </ModalBoxSelectLocation>
-                                </ModalSelectLocation>
-                                <ButtonProductModal>
-                                    <ButtonAddBasket icons={true} text="Add Basket" onClick={() => handelOpenAddBasket(true)} />
-                                    <ButtonProductDetail onClick={() => history.push('/product/' + _id)} >View Detail Product</ButtonProductDetail>
-                                </ButtonProductModal>
-                            </ModalContentRight>
-                        </ModalRightProduct>
+                                                spaceBetween={3}
+                                                slidesPerView={size <= 3 ? 3 : size}
+                                                className="w-full overflow-x-hidden flex items-center justify-center p-4"
+                                            >
+                                                <div className="Check" >{thumbnails}</div>
+                                            </Swiper>
+                                        </div>
+                                    </div>
+                                </ModalCarouselProduct>
+
+
+                            </ModalLeftProduct>
+                            <ModalRightProduct>
+                                <ModalContentRight>
+                                    <ModalNameProduct>
+                                        <span>Product name:&nbsp;</span>
+                                        {productModal.name}
+                                    </ModalNameProduct>
+                                    <ModalDescProduct>
+                                        <span className="font-semibold">Description:&nbsp;</span>
+                                        <span>
+                                            {productModal.descProduct}
+                                        </span>
+                                    </ModalDescProduct>
+                                    <ProductDetailModal>
+                                        <BoxColorModal>
+                                            {productModal.ColorProduct && productModal.ColorProduct?.map((color) => (
+                                                <ProductColorModal onClick={() => setSelectColor(color)} key={Math.random()} style={{ background: color }}></ProductColorModal>
+                                            ))}
+                                        </BoxColorModal>
+                                        <BoxSizeModal>
+                                            <QuantityModalProduct><h2>Số lượng hiện có:</h2><span>{Quantity}</span></QuantityModalProduct>
+                                            <SelectSizeProduct
+                                                size={productModal.QuantityProductAndSize?.map((size) => size)}
+                                                Size={Size} setSize={setSize}
+                                                setQuantity={setQuantity}
+                                            />
+                                        </BoxSizeModal>
+                                    </ProductDetailModal>
+
+                                    <ProductPrice
+                                        NewPrice={productModal.NewPrice}
+                                        OldPrice={productModal.OldPrice}
+                                        handelDownquantity={handelDownquantity}
+                                        handelUpquantity={handelUpquantity}
+                                        numberQuantity={numberQuantity}
+                                        totalCost={totalCost}
+                                    />
+
+                                    <ModalSelectLocation>
+                                        {/* <DropDownLocation setCityS={setCityS} setDistrictS={setDistrictS} setWardS={setWardS} /> */}
+                                        <ModalBoxSelectLocation>
+                                            <SelectCityDropDown city={city} setCity={setCityS} />
+                                        </ModalBoxSelectLocation>
+                                        <ModalBoxSelectLocation>
+                                            <SelectDistrictDropDown city={city} district={district} setDistrict={setDistrictS} />
+                                        </ModalBoxSelectLocation>
+                                        <ModalBoxSelectLocation>
+                                            <SelectWardDropDown city={city} district={district} ward={ward} setWard={setWardS} />
+                                        </ModalBoxSelectLocation>
+                                    </ModalSelectLocation>
+                                    <ButtonProductModal>
+                                        <ButtonAddBasket icons={true} text="Add Basket" onClick={() => handelOpenAddBasket(true)} />
+                                        <ButtonProductDetail onClick={() => history.push('/product/' + _id)} >View Detail Product</ButtonProductDetail>
+                                    </ButtonProductModal>
+                                </ModalContentRight>
+                            </ModalRightProduct>
+                        </ModalBodyContent>
                     </ModalContent>
                     {isOpenAddBasket && (
                         <ConfirmAddBasket
