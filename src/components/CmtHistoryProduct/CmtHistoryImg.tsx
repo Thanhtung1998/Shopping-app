@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState, memo } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { FeelCmtHistory } from './FeelCmtHistory';
@@ -84,24 +85,95 @@ const TagACmtImg = styled.a`
     text-decoration: none;
 `
 
+const PaddingBottom = styled.div`
+    max-width: 100%;
+`
+const NoNameTagDiv = styled.div`
+font-family: inherit;
+    box-sizing: border-box;
+    border-bottom-left-radius: 18px;
+    border-top-right-radius: 18px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    border-bottom-right-radius: 18px;
+    bottom: 0;
+    pointer-events: none;
+    border-top-left-radius: 18px;
+    border-top-color: var(--media-inner-border);
+    border-bottom-style: solid;
+    border-left-color: var(--media-inner-border);
+    border-bottom-color: var(--media-inner-border);
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: var(--media-inner-border);
+    border-bottom-width: 1px;
+
+`
 
 export function CmtHistoryImg(props: ImgProps) {
+
+    const initialState: any = 0;
+    const [valuePadding, setValuePadding] = useState(initialState);
+    const [valueWidth, setValueWidth] = useState(initialState);
+    const [widthImg, setWidthImg] = useState(initialState);
+    const [heightImg, setHeightImg] = useState(initialState);
+
+    // process width height here
+
+    useEffect(() => {
+        const handleCalculatorWidthHeight = () => {
+            const Element = document.getElementById("process-img-padding");
+            const src = Element?.getAttribute("src");
+
+            console.log(src);
+        }
+
+        handleCalculatorWidthHeight();
+    }, [])
+
+    // .........................
+
+    useEffect(() => {
+        const handleProcessPadding = () => {
+            const padding = document.getElementById("process-img-padding");
+            const height: any = padding?.getAttribute("height")
+            const width: any = padding?.getAttribute("width")
+
+            if (width && height) {
+                const valueCalculator = (height / width) * 100
+                const valuePadding = valueCalculator.toFixed(4);
+                setValueWidth(width);
+                setValuePadding(valuePadding);
+                // console.log(height, width, valuePadding)
+            }
+        }
+
+        handleProcessPadding();
+
+    }, [])
+
+
     return (
         <MainCmtImg >
-            <PositionCmtImg >
-                <BodyCmtImg >
+            <PositionCmtImg>
+                <BodyCmtImg>
                     <ContentCmtImg>
                         <BoxCmtImg>
                             <TagACmtImg href="#" role="link" tabIndex={0}>
-                                <img height="161" width="260" alt={""}
+                                <img id="process-img-padding" height="210" width="210" alt={""}
                                     referrerPolicy="origin-when-cross-origin"
-                                    src="https://scontent-sin6-2.xx.fbcdn.net/v/t1.6435-9/s261x260/245719601_4793142164029626_9126215554815777652_n.png?_nc_cat=105&amp;ccb=1-5&amp;_nc_sid=dbeb18&amp;_nc_ohc=5TC8n_CFhN4AX-RY2dc&amp;_nc_ht=scontent-sin6-2.xx&amp;oh=e82bbd8bbb46ae034f425d8d33905d93&amp;oe=618CA83F" />
+                                    src="https://scontent.fsgn13-2.fna.fbcdn.net/v/t1.6435-9/s851x315/251873649_10159658167580406_7989396738847531312_n.jpg?_nc_cat=108&amp;ccb=1-5&amp;_nc_sid=dbeb18&amp;_nc_ohc=3xJLR7hhbJQAX9FHkL3&amp;_nc_ht=scontent.fsgn13-2.fna&amp;oh=d0c5c83d9b11fa9c77d275a3331eb32c&amp;oe=61A8069D" />
                             </TagACmtImg>
                         </BoxCmtImg>
-                        <div className="d2edcug0" style={{ paddingBottom: "61.9231%", width: "260px" }}></div>
-                        <div
-                            className="t51s4qs2 bv6zxntz qc3rp1z7 rj06g9kl e72ty7fz qlfml3jp inkptoze qmr60zad goun2846 ccm00jje s44p3ltw mk2mc5f4 frvqaej8 ed0hlay0 afxsp9o4 jcgfde61 rq0escxv hzruof5a i09qtzwb n7fi1qx3 pmk7jnqg j9ispegn kr520xx4">
-                        </div>
+                        <PaddingBottom style={{ paddingBottom: `${valuePadding}%`, width: `${valueWidth}px` }}></PaddingBottom>
+                        <NoNameTagDiv>
+                        </NoNameTagDiv>
                     </ContentCmtImg>
                 </BodyCmtImg>
                 <FeelCmtHistory />
@@ -109,3 +181,5 @@ export function CmtHistoryImg(props: ImgProps) {
         </MainCmtImg>
     );
 }
+
+memo(CmtHistoryImg)

@@ -6,6 +6,7 @@ import '../../css/animation.css'
 import Map from '../../assets/fake-data/mapVietNam'
 
 
+
 const SelectCityDropDownContainer = styled.div`
     ${tw`
     w-full
@@ -31,6 +32,12 @@ const BoxSelect = styled.div`
 
 const BoxText = styled.h2`
     user-select:none;
+    ${tw`
+    text-xs
+    font-medium
+    md:text-sm
+    lg:text-base
+    `}
 `
 
 const BoxDropDown = styled.div`
@@ -136,7 +143,7 @@ export function SelectDistrictDropDown(props: IDistrict) {
 
     return (
         <SelectCityDropDownContainer >
-            <BoxSelect onClick={(e) => setIsActiveSelectCity(!isActiveSelectCity)}>
+            <BoxSelect onClick={(e) => city && setIsActiveSelectCity(!isActiveSelectCity)}>
                 <BoxText>{district ? district : "Select District"}</BoxText>
                 <ChevronDownIcon className="h-6" />
             </BoxSelect>

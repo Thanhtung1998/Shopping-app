@@ -9,11 +9,11 @@ import productApi from '../../api/productApi';
 import { PictureProduct } from './pictureProduct';
 import { InfoProduct } from './infoProduct'
 import commentApi from '../../api/commentApi';
-import { CommentInputProduct } from '../../components/CmtHistoryProduct/CmtProductInputBox'
+import { MainCmtProduct } from '../../components/CmtHistoryProduct'
 import topProductApi from '../../api/topProductApi';
 
 
-const MainContent = styled.div`
+const SectionProductDetail = styled.section`
     min-height: 100vh;
     ${tw`
         flex
@@ -25,7 +25,7 @@ const MainContent = styled.div`
     `}
 
 `
-const Content = styled.div`
+const MainContent = styled.div`
     ${tw`
         w-full
         h-full
@@ -128,7 +128,7 @@ const Information = styled.div`
         flex 
         // flex-col 
         md:flex-row
-        items-center
+        // items-center
         justify-center
         flex-wrap
     `}
@@ -207,10 +207,10 @@ export default function ProductDetail(props: any) {
         try {
             const comment = await commentApi.getAllComment();
             // console.log(comment)
-            const comment2: any = await commentApi.getCommentByProductId(id);
-            if (comment2[0].productId === id) {
-                setCommentState(comment2[0])
-                setIdProductComment(comment2[0].productId)
+            const commentById: any = await commentApi.getCommentByProductId(id);
+            if (commentById[0].productId === id) {
+                setCommentState(commentById[0])
+                setIdProductComment(commentById[0].productId)
             }
 
             // console.log(comment2)
@@ -229,9 +229,9 @@ export default function ProductDetail(props: any) {
 
 
     return (
-        <MainContent>
+        <SectionProductDetail>
             <MarginTop></MarginTop>
-            <Content>
+            <MainContent>
                 <HeaderContent><span> Product </span> <span> {product.name} </span> <span className="hidden md:flex"> {product._id} </span>   </HeaderContent>
                 {isLoading && (
                     <LoadingContainer>
@@ -242,13 +242,12 @@ export default function ProductDetail(props: any) {
                     <Information>
                         <LeftContent>
                             <PictureProduct picture={product.ImgUrlProduct} />
-
                         </LeftContent>
                         <RightContent>
                             <InfoProduct {...product} _id={product._id} />
                         </RightContent>
                         <LeftContent>
-                            <CommentInputProduct idProduct={id} stateComment={commentState} />
+                            <MainCmtProduct idProduct={id} stateComment={commentState} />
                         </LeftContent>
                         <RightContent>
 
@@ -256,9 +255,9 @@ export default function ProductDetail(props: any) {
                     </Information>
                 )}
 
-            </Content>
+            </MainContent>
 
-        </MainContent>
+        </SectionProductDetail>
     )
 }
 

@@ -74,7 +74,7 @@ const ModalContainer = styled.div`
 
 const ModalContent = styled.div`
 
-    height: 65%;
+    height: 83%;
     width: 70%;
     background-color: var(--surface-background);
     z-index:500;
@@ -97,7 +97,24 @@ const ModalContent = styled.div`
 
     @media (max-width: ${SCREEN.xl}){
         width: 100%;
-        height: 70%;
+        height: 77%;
+    }
+
+   
+
+    @media (min-width: ${SCREEN.xl}) and (max-width: ${SCREEN['2xl']}){
+        // width: 100%;
+        height: 67%;
+    }
+
+    @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.xl}){
+        // width: 100%;
+        height: 71%;
+    }
+
+    @media (max-width: ${SCREEN.md}){
+        height: 73%;
+        width: 73%;
     }
 
     @media (max-width: ${SCREEN.sm}){
@@ -106,20 +123,23 @@ const ModalContent = styled.div`
         height: 100%;
     }
 
-
-
 `
 
 const ModalLeftProduct = styled.div`
     height: calc(100% - 50px);
     ${tw`
         w-full
-        lg:w-1/2
+        md:w-1/2
         // mb-5
     `}
 
+    @media (max-width: ${SCREEN.md}){
+        width:100%;
+        height: 38rem;  
+    }
+
     @media (max-width: ${SCREEN.sm}){
-        height:270px;  
+        height:24rem;  
     }
 
 `
@@ -137,8 +157,12 @@ const ModalRightProduct = styled.div`
     height: calc(100% - 58px);
     ${tw`
     w-full
-    lg:w-1/2
+    md:w-1/2
     `}
+
+    @media (max-width: ${SCREEN.md}){
+        width:100%;  
+    }
 
     @media (max-width: ${SCREEN.sm}){
         margin-top: 2rem;
@@ -233,68 +257,78 @@ const BoxImg = styled.div`
 
     @media (min-width: ${SCREEN['2xl']}){
         min-height: 26.5em;
-        max-height: 26.5em;
+        // max-height: 26.5em;
     }
 
     @media (max-width: ${SCREEN.xl}) and (max-height: ${SCREEN['2xl']}){
         min-height: 24em;
-        max-height: 24em;
+        // max-height: 24em;
     }
     
     @media (min-width: ${SCREEN.lg}) and (max-width: ${SCREEN.xl}){
         min-height: 17.5em;
-        max-height: 17.5em;
+        // max-height: 17.5em;
     }
 
 
     @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.lg}){
         min-height: 25em;
-        max-height: 25em;
+        // max-height: 25em;
     }
     
     @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.md}){
         min-height: 25em;
-        max-height: 25em;
+        // max-height: 25em;
     }
 
     @media (max-width: ${SCREEN.sm}){
         min-height: 14em;
-        max-height: 14em;
+        // max-height: 14em;
     }
    
 
 `
 const ImgProduct = styled.div`
+
+        display:flex;
+        align-items: center;
+        justify-content:center;
     
     @media (min-width: ${SCREEN['2xl']}){
         width: 100%;
-        height: 25rem;
+        min-height: 25rem;
+        overflow: hidden;
     }
 
     @media (min-width: ${SCREEN.xl}) and (max-width: ${SCREEN['2xl']}){
         width: 100%;
-        height: 22.5rem;
+        min-height: 22.5rem;
+        overflow: hidden;
     }
 
     @media (min-width: ${SCREEN.lg}) and (max-width: ${SCREEN.xl}){
         width: 100%;
-        height: 16rem;
+        min-height: 16rem;
+        overflow: hidden;
     }
     
 
     @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.lg}){
         width: 100%;
-        height: 23.5rem;
+        min-height: 23.5rem;
+        overflow: hidden;
     }
     
     @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.md}){
         width: 100%;
-        height: 23.5rem;
+        min-height: 23.5rem;
+        overflow: hidden;
     }
 
     @media (max-width: ${SCREEN.sm}){
         width: 100%;
-        height: 12.5rem;
+        min-height: 12.5rem;
+        overflow: hidden;
     }
  
 `
@@ -305,18 +339,20 @@ width: 100%;
 height: 100%;
 
 img{
-   
+    
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center center;
+
 }
 
 `
 
 const ModalDescProduct = styled.div`
-    height: 100px;
-    font-size: 20px;
-    line-height: 25px;
+    height: 80px;
+    font-size: 15px;
+    line-height: 20px;
     white-space: pre-wrap;
     span{
         display: block;
@@ -455,17 +491,17 @@ const ModalSelectLocation = styled.div`
      flex
      flex-wrap
      items-center
-     justify-center
+     justify-around
      mb-3
+    //  space-x-1
     `}
 `
 
 const ModalBoxSelectLocation = styled.div`
-    width: 30%;
+    width: 33%;
     ${tw`
     flex
     items-center
-    mr-1
     `}
 
     @media (max-width: ${SCREEN.sm}){
@@ -748,9 +784,11 @@ export function ProductModalQuickView(props: IProductQuickViewModal) {
                         <ModalRightProduct>
                             <ModalContentRight>
                                 <ModalNameProduct>
+                                    <span>Product name:&nbsp;</span>
                                     {productModal.name}
                                 </ModalNameProduct>
                                 <ModalDescProduct>
+                                    <span className="font-semibold">Description:&nbsp;</span>
                                     <span>
                                         {productModal.descProduct}
                                     </span>

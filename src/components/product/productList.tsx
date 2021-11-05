@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { IProduct } from "../../typings/product"
@@ -8,7 +8,7 @@ import {
     EyeIcon,
 } from '@heroicons/react/outline'
 
-
+import useResize from '../../hooks/useResize'
 
 
 interface IProductProps extends IProduct {
@@ -24,7 +24,7 @@ interface IProductProps extends IProduct {
 const ProductContainer = styled.div`
     width: 100%;
     min-height: 30em;
-    max-height: 30em;
+    // max-height: 30em;
     box-shadow: 0 1.3px 17px -2px rgba(0, 0, 0, 0.4);
     background-color: var(--surface-background);
     ${tw`
@@ -66,15 +66,16 @@ const BrandContent = styled.div`
 
 const ProductThumbnailPicture = styled.div`
     width: 100%;
-    height: 200px;
-   
+    display: block;
 `
-
 const ProductThumbnail = styled.div`
     width: 100%;
     height: 100%;
+    overflow: hidden;
     position: relative;
+    display: block;
     img{
+        display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -277,6 +278,22 @@ export function ProductList(props: IProductProps) {
 
     // const [IdCurrent, setIdCurrent] = useState("")
 
+    const [width, height] = useResize();
+
+    // console.log(width, height)
+
+    useEffect(() => {
+        const elements: any = document.querySelectorAll("#thumbnails--product");
+        // console.log(elements)
+        elements.forEach((element: any, index: any) => {
+            const rectElement = element?.getBoundingClientRect()
+            // console.log(rectElement?.width)  
+            if (rectElement && element) {
+                element.style.height = `${rectElement?.width / 1.1}px`
+            }
+        })
+
+    }, [width, height])
 
     const { name, brand, ImgUrlProduct, OldPrice, NewPrice, ColorProduct, descProduct, onOpenChange, setActiveModalOpen } = props;
 
@@ -317,9 +334,9 @@ export function ProductList(props: IProductProps) {
                 <BrandContent>
                     <span>{brand}</span>
                 </BrandContent>
-                <ProductThumbnailPicture>
+                <ProductThumbnailPicture id="thumbnails--product">
                     <ProductThumbnail className="images-animation">
-                        <img className="images__product" src={ImgUrlProduct.imgfirst} alt="" />
+                        <img className="images__product" srcSet={`${ImgUrlProduct.imgfirst} 2x`} alt="" sizes={"(min-width: 0rem) 100vw"} />
                         <ProductViewMore className="images__product">
                             <img className="viewMore-img" src={ImgUrlProduct.imgsecond} alt="" />
                             <ViewMoreBox>
@@ -361,4 +378,4 @@ export function ProductList(props: IProductProps) {
     );
 }
 
-
+memo(ProductList)

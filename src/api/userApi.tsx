@@ -38,10 +38,16 @@ const userApi = {
             // console.log(token)
 
             resolve({
-                id: currentUser?.uid,
-                name: currentUser?.displayName,
-                email: currentUser?.email,
-                photoURL: currentUser?.photoURL,
+                user: {
+                    id: currentUser?.uid,
+                    displayName: currentUser?.displayName,
+                    email: currentUser?.email,
+                    photoURL: currentUser?.photoURL,
+                    desc: "",
+                    phoneNumber: "+84000000000",
+                    city: "",
+                    from: "",
+                },
                 accessToken: token,
             })
 

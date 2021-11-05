@@ -105,18 +105,19 @@ const InputBoxPadding = styled.div`
 `
 
 const LabelInputSearch = styled.label`
-    font-family: inherit;
+
     box-sizing: border-box;
     position: relative;
     width: 100%;
     display: block;
     min-width: 40px;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 12px;
     color: #606770;
     cursor: default;
     font-weight: 600;
     vertical-align: middle;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-family: inherit;
 `
 
 const BoxIconSearch = styled.div`
@@ -319,7 +320,7 @@ export default function CmtGifBox(props: CmtGifBoxProps) {
 
     const initialState: any[] = [];
 
-    const inputRef: any = useRef(null);
+    const inputSearchGifRef: any = useRef(null);
 
     const [dataGif, setDataGif] = useState(initialState);
     const [lengthTotal, setLengthTotal] = useState(0);
@@ -338,7 +339,7 @@ export default function CmtGifBox(props: CmtGifBoxProps) {
     const handleChange = () => {
         // console.log("value: ")
         // console.log(inputRef.current.value); 
-        setValueInput(inputRef.current.value);
+        setValueInput(inputSearchGifRef.current.value);
     };
 
     useEffect(() => {
@@ -420,8 +421,17 @@ export default function CmtGifBox(props: CmtGifBoxProps) {
             }
         }
         handleData();
-    }, [])
+    }, [isOpenGif])
 
+
+    useEffect(() => {
+        if (isOpenGif === true) {
+            inputSearchGifRef?.current.focus({
+                preventScroll: true
+                // loai bo hanh vi mac dinh cua trinh duyet
+            });
+        }
+    }, [isOpenGif]);
     console.log()
 
 
@@ -438,9 +448,9 @@ export default function CmtGifBox(props: CmtGifBoxProps) {
                                         <MainContent>
                                             <BodyContent >
                                                 <InputBox >
-                                                    <InputBoxPadding className="cxgpxx05 hv4rvrfc sj5x9vvc dati1w0a">
+                                                    <InputBoxPadding >
                                                         <LabelInputSearch >
-                                                            <BoxIconSearch className="ijkhr0an pnx7fd3z sgqwj88q hzruof5a pmk7jnqg ax37mqq2 c0p38np4">
+                                                            <BoxIconSearch >
                                                                 <i
                                                                     data-visualcompletion="css-img" className="hu5pjgll cwsop09l"
                                                                     style={{ backgroundImage: 'url("https://static.xx.fbcdn.net/rsrc.php/v3/yW/r/ttTXZ6XJuCZ.png")', backgroundPosition: "-102px -149px", backgroundSize: "auto", width: "16px", height: "16px", backgroundRepeat: "no-repeat", display: "inline-block" }}>
@@ -448,11 +458,12 @@ export default function CmtGifBox(props: CmtGifBoxProps) {
                                                                 </i>
                                                             </BoxIconSearch>
                                                             <InputSearchGif
-                                                                ref={inputRef}
+                                                                id="search-gif-input"
+                                                                ref={inputSearchGifRef}
                                                                 dir="ltr"
                                                                 aria-expanded="false"
                                                                 aria-label="Tìm kiếm file GIF"
-                                                                autoFocus={true}
+                                                                // autoFocus={isOpenGif ? true : false}
                                                                 autoComplete="off"
                                                                 placeholder="Tìm kiếm"
                                                                 role="combobox"

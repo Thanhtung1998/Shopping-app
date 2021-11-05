@@ -36,6 +36,12 @@ const BoxSelect = styled.div`
 
 const BoxText = styled.h2`
     user-select:none;
+    ${tw`
+    text-xs
+    font-medium
+    md:text-sm
+    lg:text-base
+    `}
 `
 
 const BoxDropDown = styled.div`
@@ -47,7 +53,7 @@ const BoxDropDown = styled.div`
     padding: 10px;
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     border-radius: 10px;
-    z-index: 100;
+    z-index: 300;
     background-color: var(--comment-background);
     ${tw`
         overflow-hidden
@@ -91,7 +97,7 @@ export function SelectDropDown(props: SelectDataProps) {
 
     const { text, defaultText, setValue, dataArray, dataRequired } = props
     // const [city, setCity] = useState("")
-    const [isActiveSelectCity, setIsActiveSelectCity] = useState(false)
+    const [isActiveSelect, setIsActiveSelect] = useState(false)
 
     // console.log(isActiveSelectCity);
 
@@ -110,14 +116,14 @@ export function SelectDropDown(props: SelectDataProps) {
 
     return (
         <SelectDropDownContainer>
-            <BoxSelect onClick={(e) => setIsActiveSelectCity(!isActiveSelectCity)}>
+            <BoxSelect onClick={(e) => dataRequired && setIsActiveSelect(!isActiveSelect)}>
                 <BoxText>{text ? text : defaultText}</BoxText>
                 <ChevronDownIcon className="h-6" />
             </BoxSelect>
-            {isActiveSelectCity && dataRequired && (
+            {isActiveSelect && dataRequired && (
                 <BoxDropDown >
                     {arrayData && dataRequired && arrayData.map((data) => (
-                        <BoxDropDownItem key={data} onClick={(e) => { setValue(data); setIsActiveSelectCity(false) }} >
+                        <BoxDropDownItem key={data} onClick={(e) => { setValue(data); setIsActiveSelect(false) }} >
                             <span>{data}</span>
                         </BoxDropDownItem>
                     ))}

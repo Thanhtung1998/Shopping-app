@@ -19,8 +19,8 @@ const CategoriesContent = styled.div`
 `
 
 const Content = styled.div`
+margin-top: 30px;
 ${tw`
-    
     w-full
     max-w-screen-2xl
     flex

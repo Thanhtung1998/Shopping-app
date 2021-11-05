@@ -508,20 +508,6 @@ export function CmtFeelIcon(props: CmtFeelIconProps) {
 
     }
 
-
-
-    useEffect(() => {
-        const handleClickEmoji = () => {
-            const MainFeel = document.querySelectorAll(".main__div--feel--icon");
-            console.log(MainFeel)
-        }
-
-        handleClickEmoji();
-    }, [])
-
-
-
-
     const getRelativePos = (element: any) => {
         // bounding Area Scroll
         // console.log(element);
@@ -688,6 +674,44 @@ export function CmtFeelIcon(props: CmtFeelIconProps) {
         })
 
 
+
+    }, [openFeelCmt, isCallData])
+
+    useEffect(() => {
+
+        const handleClickEmoji = () => {
+            const MainFeel = document.querySelectorAll("div.main__div--feel--icon");
+            if (MainFeel) {
+                MainFeel?.forEach((element: any, index: any) => {
+                    const ElementChild = element.querySelectorAll("div._5zfs")
+                    ElementChild.forEach((element: any, index: any) => {
+                        element.addEventListener("click", () => {
+                            // console.log(index + 1);
+                            setOpenFeelCmt(false);
+                        })
+                    })
+                })
+                // console.log(MainFeel)
+            }
+        }
+
+        if (openFeelCmt && isCallData) {
+            handleClickEmoji();
+        }
+
+
+        return () => {
+
+            const MainFeel = document.querySelectorAll("div.main__div--feel--icon");
+            MainFeel.forEach((element: any, index: any) => {
+                // console.log(element);
+                const ElementChild = element.querySelectorAll("div._5zfs")
+                ElementChild.forEach((element: any, index: any) => {
+                    element.removeEventListener("click", () => {
+                    })
+                })
+            })
+        }
 
     }, [openFeelCmt, isCallData])
 

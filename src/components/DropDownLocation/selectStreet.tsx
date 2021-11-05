@@ -11,7 +11,7 @@ const SelectCityDropDownContainer = styled.div`
     ${tw`
     w-full
     relative
-    overflow-hidden
+    // overflow-hidden
     `}
 `
 
@@ -32,6 +32,12 @@ const BoxSelect = styled.div`
 
 const BoxText = styled.h2`
     user-select:none;
+    ${tw`
+    text-xs
+    font-medium
+    md:text-sm
+    lg:text-base
+    `}
 `
 
 const BoxDropDown = styled.div`
@@ -64,9 +70,9 @@ const BoxDropDownItem = styled.div`
         overflow-hidden
         cursor-pointer
     `};
-    user-select:none;
-    height: 1.75rem;
-    transition: all 0.2s;
+        user-select:none;
+        height: 1.75rem;
+        transition: all 0.2s;
     span{
         color: var(--light);
         display: block;
@@ -74,12 +80,6 @@ const BoxDropDownItem = styled.div`
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 1;
     }
-    
-    .modeText{
-        color: var(--dark);
-    }
-    
-    
    
 `
 
@@ -101,7 +101,7 @@ export function SelectWardDropDown(props: IStreet) {
     const [nameStreet, setNameStreet] = useState([""])
 
     // console.log(district);
-
+    // console.log(isActiveSelectCity);
     useEffect(() => {
         const handleStreet = () => {
 
@@ -135,7 +135,7 @@ export function SelectWardDropDown(props: IStreet) {
 
     return (
         <SelectCityDropDownContainer >
-            <BoxSelect onClick={(e) => setIsActiveSelectCity(!isActiveSelectCity)}>
+            <BoxSelect onClick={(e) => city && district && setIsActiveSelectCity(!isActiveSelectCity)}>
                 <BoxText>{ward ? ward : "Select Ward"}</BoxText>
                 <ChevronDownIcon className="h-6" />
             </BoxSelect>

@@ -277,16 +277,16 @@ export function InfoProduct(props: InfoProduct) {
     return (
         <>
             <NameProduct>
-                <span>Name Product: </span>
+                <span>Product name:&nbsp;</span>
                 <span>{props.name}</span>
             </NameProduct>
             <SpanProduct>
-                <span>Id Product: </span>
+                <span>Id product:&nbsp;</span>
                 <span>{props._id}</span>
             </SpanProduct>
             <SpanProduct>
-                <span>Brand: </span>
-                <span>{props.brand}</span>
+                <span>Brand:&nbsp;</span>
+                <span className="italic">{props.brand}</span>
             </SpanProduct>
 
             <SpanProduct className="Sp">

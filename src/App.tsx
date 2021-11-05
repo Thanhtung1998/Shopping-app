@@ -55,6 +55,7 @@ const HomePage = React.lazy(() => import("./features/Homepage"))
 const About = React.lazy(() => import("./features/About"))
 const ProductDetail = React.lazy(() => import("./features/ProductDetail"))
 const Categories = React.lazy(() => import("./features/Categories"))
+const ProfileUser = React.lazy(() => import("./features/ProfileUser"))
 
 function App() {
 
@@ -87,9 +88,6 @@ function App() {
   // const [productList, setProductList] = useState([])
 
   //handle firebase auth changed
-
-
-
 
   useEffect(() => {
 
@@ -177,6 +175,18 @@ function App() {
               <Categories setActiveModalOpen={setActiveModalOpen} activeModalOpen={activeModalOpen} />
             </PageLayOut>
           </PrivateRouter>
+
+          {/* User Page */}
+
+          <PrivateRouter path="/userProfile">
+            <PageLayOut >
+              <ProfileUser>
+
+              </ProfileUser>
+            </PageLayOut>
+          </PrivateRouter>
+
+
           <Route exact path="/login">
             {
               state.user.user ? <Redirect to="/" /> : <Login />

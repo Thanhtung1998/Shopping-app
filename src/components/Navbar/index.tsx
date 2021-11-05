@@ -15,6 +15,7 @@ import { LaptopAndTabletNav } from './LaptopAndTabletNav'
 const NavbarContainer = styled.div`
     min-height: 58px;
     z-index: 1000;
+    
     ${tw`
     w-full
     flex
@@ -33,6 +34,7 @@ const NavbarContainer = styled.div`
         flex
         items-center
         justify-between
+        
     `}
     z-index: 1000;
     }
@@ -46,7 +48,6 @@ const HeaderSection = styled.header`
     w-full
   `}
   height: 58px;
-  z-index: 10;
   transition: background 0.2s, border-bottom 0.2s;
 
   .overlay {
@@ -264,7 +265,7 @@ const HeaderSection = styled.header`
     -moz-appearance: textfield;
   }
 
-  @media (max-width: 36rem) {
+  @media (max-width: ${SCREEN.sm}) {
     .profile,
     .logo,
     nav,
@@ -300,12 +301,18 @@ const HeaderSection = styled.header`
     }
   }
 
-  @media (min-width: 36rem) and (max-width: 62.5rem) {
+  @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.lg}) {
     nav {
       display: none;
     }
     .headerInner {
       grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: ${SCREEN.sm}){
+    div.profile.user{
+      display: none;
     }
   }
 
@@ -318,9 +325,9 @@ const HeaderSection = styled.header`
         display: flex;
         align-items: center;
         justify-items: center;
-        width: 40%;
+        // width: 40%;
         height: 58px;
-        transform: translate(-50%, 0%);
+        transform: translate(-50%, 100%);
        
         & > input {
             width:80%;
@@ -344,7 +351,6 @@ const HeaderSection = styled.header`
         z-index: 10;
       }
     } 
-
 }
 
   &.scrolled:not(.inputFocus) {
@@ -365,6 +371,7 @@ const HeaderSection = styled.header`
       color: var(--red);
     }
     .user {
+      // z-index: 10;
       box-shadow: 0 0 0 2px var(--gray);
     }
     form {
@@ -393,15 +400,15 @@ const HeaderSection = styled.header`
     @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.lg}) {
         .profile {
           opacity: 1;
-          pointer-events: none;
+          // pointer-events: none;
         }
         form {
           // display: none;
-          left: 0;
-          margin: auto;
-          right: 0;
-          transform: translate(0 , -1%) scale(0.83);
-          width: 50%;
+          // left: 0;
+          // margin: auto;
+          // right: 0;
+          transform: translate(-50% , 1%) scale(0.83);
+          width: 480px;
         }
     }
   }
@@ -489,36 +496,31 @@ export function Navbar(props: any) {
     <NavbarContainer>
 
       {isMobile && (
-        <>
-          <div className="mobile-css">
-            <Logo />
-            <div className="flex items-center justify-center mr-6">
-              <SearchIcon style={{ width: "30px", marginRight: "10px" }} onClick={() => console.log("hello")} />
-
-
-              <Profile className="flex items-center justify-center">
-                <div className="profile cursor-pointer">
-                  <div onClick={() => setActiveUser(!activeUser)} className="user">
-                    <Menu className="menu" />
-                    <div className="userIcon">
-                      <NavUser activeUser={activeUser} setActiveUser={setActiveUser} />
-                    </div>
+        <div className="mobile-css">
+          <Logo />
+          <div className="flex items-center justify-center mr-6">
+            <SearchIcon style={{ width: "25px", marginRight: "10px", color: "gray" }} onClick={() => console.log("hello")} />
+            <Profile className="flex items-center justify-center">
+              <div className="profile cursor-pointer">
+                <div onClick={() => setActiveUser(!activeUser)} className="user">
+                  <Menu className="menu" />
+                  <div className="userIcon">
+                    <NavUser activeUser={activeUser} setActiveUser={setActiveUser} />
                   </div>
                 </div>
-              </Profile>
+              </div>
+            </Profile>
 
-              {/* <NavItems /> */}
-            </div>
-
+            {/* <NavItems /> */}
           </div>
-        </>
 
+        </div>
       )}
-      <HeaderSection ref={headerRef} className={scrolled && !isMobile && !isTablet ? "scrolled" : ""}>
+      <HeaderSection ref={headerRef} className={scrolled ? "scrolled" : ""}>
 
         <div className="headerInner">
 
-          <div className="logo">
+          <div onClick={() => console.log("logo")} className="logo">
             <Logo></Logo>
           </div>
 
@@ -544,14 +546,13 @@ export function Navbar(props: any) {
 
           {/* <ThemeToggle icon className="active__icon" isDark={isDark} setIsDark={setIsDark} /> */}
 
-          <div className="flex items-center justify-center mr-2">
+          <div className="flex items-center justify-center mr-2 z-10">
             {!isLaptop && (
               <>
                 <NavItems />
               </>
             )}
-
-            <div className="profile cursor-pointer">
+            <div onClick={() => console.log('hello')} className="profile cursor-pointer z-10">
               <ThemeToggle icon isDark={isDark} setIsDark={setIsDark} className="active__icon" />
               <div onClick={() => setActiveUser(!activeUser)} className="user">
                 <Menu className="menu" />

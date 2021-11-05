@@ -64,10 +64,12 @@ const AnimationBox = styled.div`
     `}
     top: 0px;
     left: 0;
-    width:110px;
+    width:90px;
     height: 58px;
     transition: 0.5s linear;
     transform-style: preserve-3d;
+
+ 
 
     .div-animation,
     .icon__navigation{
@@ -88,8 +90,9 @@ const AnimationBox = styled.div`
     }
 
     .div-animation {
-        background-color: #343434;
-        color: #f3f3f3;
+        // background-color: #343434;
+        font-size: 15px;
+        // color: #f3f3f3;
         transform: rotateX(-90deg) translateZ(29px);
     }   
 
@@ -97,10 +100,16 @@ const AnimationBox = styled.div`
         transform: rotateX(90deg);
         transition: 0.5s linear;
     }
+
+    @media (min-width: ${SCREEN.lg}) and (max-width: ${SCREEN.xl}){
+        width: 60px;
+        .div-animation{
+            font-size: 13px;
+        }
+    }
   
 
 `
-
 
 export function NavItems(props: any) {
 
@@ -123,10 +132,9 @@ export function NavItems(props: any) {
                         <Link to="/" className="flex items-center">
                             <AnimationBox>
                                 <div className="icon__navigation" >
-                                    <HomeIcon style={{ height: "30px" }} />
+                                    <HomeIcon style={{ height: "25px" }} />
                                 </div>
                                 <div className="div-animation">Home</div>
-
                             </AnimationBox>
                         </Link>
                     </NavItem>
@@ -134,7 +142,7 @@ export function NavItems(props: any) {
                         <Link to="/cars" className="flex items-center">
                             <AnimationBox>
                                 <div className="icon__navigation" >
-                                    <ShoppingCartIcon style={{ height: "30px" }} />
+                                    <ShoppingCartIcon style={{ height: "25px" }} />
                                 </div>
                                 <div className="div-animation">Cars</div>
                             </AnimationBox>
@@ -144,7 +152,7 @@ export function NavItems(props: any) {
                         <Link to="/categories" className="flex items-center">
                             <AnimationBox>
                                 <div className="icon__navigation" >
-                                    <AdjustmentsIcon style={{ height: "30px" }} />
+                                    <AdjustmentsIcon style={{ height: "25px" }} />
                                 </div>
                                 <div className="div-animation">Categories</div>
                             </AnimationBox>
@@ -154,7 +162,7 @@ export function NavItems(props: any) {
                         <Link to="/contact" className="flex items-center">
                             <AnimationBox>
                                 <div className="icon__navigation" >
-                                    <PhoneIcon style={{ height: "30px" }} />
+                                    <PhoneIcon style={{ height: "25px" }} />
                                 </div>
                                 <div className="div-animation">Contact</div>
                             </AnimationBox>

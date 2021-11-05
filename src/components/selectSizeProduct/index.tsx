@@ -38,6 +38,12 @@ const BoxSelect = styled.div`
 
 const BoxText = styled.h2`
     user-select:none;
+    ${tw`
+    text-xs
+    font-medium
+    md:text-sm
+    lg:text-base
+    `}
 `
 
 const BoxDropDown = styled.div`

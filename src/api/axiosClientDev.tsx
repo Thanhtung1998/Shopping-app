@@ -26,6 +26,10 @@ const API_PRODUCT = process.env.REACT_APP_API_PRODUCTION
 const axiosClientDev = axios.create({
     baseURL: API,
     headers: {
+        // 'Access-Control-Allow-Headers': '*',
+        // "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Headers": "*",
+        // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         'content-type': 'application/json',
     },
     paramsSerializer: params => queryString.stringify(params),

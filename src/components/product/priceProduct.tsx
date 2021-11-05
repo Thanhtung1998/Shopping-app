@@ -131,6 +131,7 @@ const ProductPriceAndQuantityLeft = styled.div`
 `
 
 const ProductPriceandQuantityRight = styled.div`
+    
     ${tw`
     h-full
     flex
@@ -147,7 +148,7 @@ const ProductPriceandQuantityRight = styled.div`
 `
 
 const ProductTotalPrice = styled.div`
-
+    background-color: var(--comment-background);
     height: 50px;
     padding: 10px;
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
@@ -216,7 +217,6 @@ export function ProductPrice(props: ProductPrice) {
                     </ProductQuantity>
                 </ProductPriceAndQuantityLeft>
                 <ProductPriceandQuantityRight>
-                    <span>TotalCost:</span>
                     <ProductTotalPrice><span>{`${numberQuantity} x ${NewPrice} = ${totalCost}`}</span></ProductTotalPrice>
                 </ProductPriceandQuantityRight>
             </ProductProductPriceAndQuantity>

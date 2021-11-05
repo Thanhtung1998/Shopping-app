@@ -9,7 +9,7 @@ export const getUniqueValues = (data: any, type: any) => {
     unique = unique.flat()
   }
 
-  const values: any = new Set(unique) // Set Mảng hoặc Chuỗi cả phần tử là duy nhất
+  const values: any = new Set(unique) // Set Mảng hoặc Chuỗi cac phần tử là duy nhất
   // console.log(values);
 
   return ['all', ...values] // Spread loại bỏ {} hoặc []

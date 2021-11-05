@@ -43,6 +43,8 @@ const BoxUserDropDown = styled.div`
     absolute
     top-12
     `}
+    left: -150px;
+
 `
 
 const BoxUl = styled.ul`
@@ -93,7 +95,9 @@ export function NavUser(props: any) {
                     {activeUser &&
                         (<BoxUserDropDown>
                             <BoxUl>
-                                <li className="cursor-pointer h-10 flex items-center text-lg font-medium justify-center hover:bg-blue-300 ">Information User</li>
+                                <li className="cursor-pointer h-10 flex items-center text-lg font-medium justify-center hover:bg-blue-300 ">
+                                    <Link to="/userProfile">Information User</Link>
+                                </li>
                                 <li onClick={() => {
                                     dispatch(authActions.logout());
                                 }} /*onClick={() => dispatch(logout())}*/ className="cursor-pointer h-10 flex items-center text-lg font-medium justify-center hover:bg-blue-300 ">Log out</li>

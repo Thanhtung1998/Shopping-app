@@ -12,7 +12,8 @@ export interface CmtHistoryProps {
 }
 
 const CmtHistorySection = styled.section`
-background-color: var(--surface-background);
+// background-color: var(--surface-background);
+   background-color: transparent;
 ${tw`
   w-full
 `}
@@ -595,10 +596,11 @@ export function CmtHistory(props: CmtHistoryProps) {
   const { stateComment, idProduct } = props;
   const [ListComments, setListComments] = useState(typeDataArray)
 
+  // console.log(stateComment)
 
 
   const FetchComment = async () => {
-    console.log(stateComment);
+    // console.log(stateComment);
     const data = stateComment.commentProduct
     setListComments(data)
   }
