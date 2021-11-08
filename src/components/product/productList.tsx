@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo, useEffect, useRef } from 'react'
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { IProduct } from "../../typings/product"
@@ -279,21 +279,8 @@ export function ProductList(props: IProductProps) {
     // const [IdCurrent, setIdCurrent] = useState("")
 
     const [width, height] = useResize();
-
+    const boxImgRef = useRef(null);
     // console.log(width, height)
-
-    useEffect(() => {
-        const elements: any = document.querySelectorAll("#thumbnails--product");
-        // console.log(elements)
-        elements.forEach((element: any, index: any) => {
-            const rectElement = element?.getBoundingClientRect()
-            // console.log(rectElement?.width)  
-            if (rectElement && element) {
-                element.style.height = `${rectElement?.width / 1.1}px`
-            }
-        })
-
-    }, [width, height])
 
     const { name, brand, ImgUrlProduct, OldPrice, NewPrice, ColorProduct, descProduct, onOpenChange, setActiveModalOpen } = props;
 
@@ -307,18 +294,40 @@ export function ProductList(props: IProductProps) {
 
     // console.log(id);
 
-    function handleQuickChange(open: boolean, id: string | undefined) {
+    const handleQuickChange = (e: any, open: boolean, id: string | undefined) => {
         // if (onOpenChange) {
         //     onOpenChange(open);
         //     console.log("I love You")
         // }
         // setActiveModalOpen(false);
 
+        e.preventDefault();
+
+        // console.log("render")
+
         if (onOpenChange) {
             onOpenChange(open, id)
         }
     }
 
+
+    useEffect(() => {
+        const elements: any = document.querySelectorAll("#thumbnails--product");
+        // console.log(elements)
+
+        if (width && height) {
+            elements.forEach((element: any, index: any) => {
+                const rectElement = element?.getBoundingClientRect()
+                // console.log(rectElement?.width)  
+                if (rectElement && element) {
+                    element.style.height = `${rectElement?.width}px`
+                }
+            })
+
+            // console.log("re-render")
+        }
+
+    }, [width, height])
 
 
     // useEffect(() => {
@@ -327,22 +336,21 @@ export function ProductList(props: IProductProps) {
     //     }
     // }, [id])
 
-
     return (
         <>
             <ProductContainer>
                 <BrandContent>
                     <span>{brand}</span>
                 </BrandContent>
-                <ProductThumbnailPicture id="thumbnails--product">
+                <ProductThumbnailPicture ref={boxImgRef} id="thumbnails--product">
                     <ProductThumbnail className="images-animation">
-                        <img className="images__product" srcSet={`${ImgUrlProduct.imgfirst} 2x`} alt="" sizes={"(min-width: 0rem) 100vw"} />
+                        <img className="images__product" srcSet={`${ImgUrlProduct.imgfirst}`} alt="" sizes={"(min-width: 0rem) 100vw"} />
                         <ProductViewMore className="images__product">
-                            <img className="viewMore-img" src={ImgUrlProduct.imgsecond} alt="" />
+                            <img className="viewMore-img" srcSet={`${ImgUrlProduct.imgsecond} 2x`} alt="" />
                             <ViewMoreBox>
                                 <ViewMoreBtn>
-                                    <ViewMoreBtnS onClick={() => {
-                                        handleQuickChange(true, _id);
+                                    <ViewMoreBtnS onClick={(e: any) => {
+                                        handleQuickChange(e, true, _id);
                                     }}>
                                         <span>Quick View</span>
                                         <EyeIcon className="h-6 ml-1" />

@@ -93,7 +93,7 @@ const ModalContent = styled.div`
 
     @media (min-width: ${SCREEN.xl}) and (max-width: ${SCREEN['2xl']}){
         // width: 100%;
-        height: 67%;
+        height: 79%;
     }
 
     @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.xl}){
@@ -102,7 +102,8 @@ const ModalContent = styled.div`
     }
 
     @media (max-width: ${SCREEN.md}){
-        height: 73%;
+        height: 75%;
+        margin-top:120px;
         width: 73%;
     }
 
@@ -122,7 +123,7 @@ const ModalBodyContent = styled.div`
     // rounded-2xl
     flex
     flex-row
-    md:flex-col
+    lg:flex-col
     flex-wrap
     // items-center
     // justify-around
@@ -139,7 +140,7 @@ const ModalLeftProduct = styled.div`
     ${tw`
         w-full
         md:w-1/2
-        md:h-full   
+        lg:h-full   
         // mb-5
     `}
 
@@ -264,35 +265,37 @@ const BoxImg = styled.div`
         overflow-hidden
     `};
 
-    @media (min-width: ${SCREEN['2xl']}){
-        min-height: 26.5em;
-        // max-height: 26.5em;
+   
+
+    @media (min-width: ${SCREEN.xl}) and (max-height: ${SCREEN['2xl']}){
+        min-height: 24em;
+        max-height: 29em;
     }
 
-    @media (max-width: ${SCREEN.xl}) and (max-height: ${SCREEN['2xl']}){
-        min-height: 24em;
-        // max-height: 24em;
+    @media (min-width: ${SCREEN['2xl']}){
+        min-height: 26.5em;
+        max-height: 40em;
     }
     
     @media (min-width: ${SCREEN.lg}) and (max-width: ${SCREEN.xl}){
         min-height: 17.5em;
-        // max-height: 17.5em;
+        max-height: 30em;
     }
 
 
     @media (min-width: ${SCREEN.md}) and (max-width: ${SCREEN.lg}){
         min-height: 25em;
-        // max-height: 25em;
+        max-height: 30em;
     }
     
     @media (min-width: ${SCREEN.sm}) and (max-width: ${SCREEN.md}){
         min-height: 25em;
-        // max-height: 25em;
+        max-height: 32em;
     }
 
     @media (max-width: ${SCREEN.sm}){
         min-height: 14em;
-        // max-height: 14em;
+        max-height: 27em;
     }
    
 

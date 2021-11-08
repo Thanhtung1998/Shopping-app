@@ -180,9 +180,7 @@ function App() {
 
           <PrivateRouter path="/userProfile">
             <PageLayOut >
-              <ProfileUser>
-
-              </ProfileUser>
+              <ProfileUser />
             </PageLayOut>
           </PrivateRouter>
 

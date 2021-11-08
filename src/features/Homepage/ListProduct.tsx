@@ -180,9 +180,6 @@ export function ListProduct(props: IActiveModal) {
 
             }
 
-
-
-
             // After using organization Api  
         }
 
@@ -213,7 +210,7 @@ export function ListProduct(props: IActiveModal) {
     //     NewPrice: 900000,
     //     ImgUrlProduct: { "imgfirst": "https://cdn.fitin.vn/cms-ecom/thumbs/1200x1200/images/2020/05/06/gia-treo-quan-ao-a-hanger-1fl-den-0001-1588757060.jpg" },
     // }
-    function handleOpenQuickView(open: boolean, id: string) {
+    const handleOpenQuickView = (open: boolean, id: string) => {
         setQuickView(open)
         setCurrentID(id)
         // console.log(id)

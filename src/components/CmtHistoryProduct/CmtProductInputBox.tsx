@@ -82,7 +82,7 @@ form{
         margin-top: 5px;
         float: right;
         font-size: 12px;
-        color: var(--dark) ;
+        color: var(--secondary-text) ;
     }
 
     &> div >button.btn--comment{
@@ -735,8 +735,6 @@ export function CommentInputProduct(props: CommentProps) {
         const pAttribute: any = document.getElementById("pCmt");
         const spanTag = document.createElement("span");
 
-
-
         div.onkeydown = (e: any) => {
             var key = e.keyCode;
 
@@ -745,6 +743,8 @@ export function CommentInputProduct(props: CommentProps) {
                 return;
             }
         }
+
+        // console.log(inputRef.children.innerText);
 
         div.onkeydown = (e: any) => {
             setDefaultHtml(`<p id="pCmt"><span data-outline-text="true"><br/></span></p>`);
@@ -763,6 +763,7 @@ export function CommentInputProduct(props: CommentProps) {
             if (pAttribute) {
                 // pAttribute.appendChild(spanTag);
                 if (CheckValueInput(Text)) {
+                    // console.log("render co")
                     pAttribute.setAttribute('dir', "ltr");
                 } else {
 
@@ -776,6 +777,7 @@ export function CommentInputProduct(props: CommentProps) {
             setDefaultHtml('<p id="pCmt"></br></p>');
             setOnChangeCss(false);
         }
+
     }
 
     // Set User Custom

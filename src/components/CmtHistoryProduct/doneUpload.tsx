@@ -213,11 +213,9 @@ export function DoneUploadImg(props: DoneUploadImgProps) {
             setUrlFilePost(file);
             // console.log(objectURL)
 
-            // console.log("rerender component")
+            console.log("rerender component")
         }
     }, [file])
-
-    // console.log(user)
 
     return (
         <>

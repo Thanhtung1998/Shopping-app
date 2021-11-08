@@ -54,9 +54,17 @@ const BoxAddBasket = styled.div`
         flex
         items-center
         justify-end
+        overflow-y-auto
+        overflow-x-hidden
     `}
 
-  
+    ::-webkit-scrollbar{
+        display:none;
+    }
+
+    ::-webkit--scrollbar-thumb{
+        display:none;
+    }
 
 `
 
@@ -76,16 +84,16 @@ const BoxAddClickClose = styled.div`
 `
 
 const BoxAddBasketContainer = styled.div`
-    height: 100vh;
-    width: 100vw;
-    background: var(--dark);
     z-index: 1;
     top: 58px;
-    right: 0;
-    left: 0;
+    right: 0px;
+    // left: 0;
+    background-color: var(--surface-background);
     box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     ${tw`
-        relative
+        w-full
+        // h-full
+        absolute
         flex
         flex-col
     `}
@@ -95,15 +103,15 @@ const BoxAddBasketContainer = styled.div`
     }
 
     @media (min-width: ${SCREEN.lg}){
-        width: 40vw;
+        width: 35vw;
     }
 
     @media (min-width: ${SCREEN.xl}){
-        width: 30vw;
+        width: 27vw;
     }
 
     @media (min-width: ${SCREEN["2xl"]}){
-        width: 20vw;
+        width: 23vw;
     }
     
 
@@ -144,14 +152,27 @@ const BoxAddBasketClose = styled.div`
 `
 
 const BoxImgProductAddBasket = styled.div`
-    height: 250px;
+   
     ${tw`
+        h-full
         w-full
         p-3
+        flex
+        items-center
+        justify-center
+        overflow-hidden
+        rounded-md
     `}
     img{
-        width:  100%;
         height: 100%;
+        object-fit: cover;
+        ${tw`
+            overflow-hidden
+            w-2/3
+            md:w-3/4
+            xl:w-full
+            rounded-md
+        `}
         border-radius: 4px;
         box-shadow: 0 1.3px 17px -2px rgb(0 0 0 / 40%);
     }
@@ -179,7 +200,7 @@ const NameProductAddBasket = styled.div`
         margin-right: 4px;
 
         ${tw`
-            text-xs
+            text-base
             font-bold
             xl:text-base
             xl:font-semibold 
@@ -209,7 +230,7 @@ const IdProductAddBasket = styled.div`
     span{
         color: gray;
     ${tw`
-        text-xs
+        text-base
         font-bold
         xl:text-base
         xl:font-semibold 
@@ -238,7 +259,7 @@ const DescriptionProductAddBasket = styled.div`
     span{
     color: gray;
     ${tw`
-        text-xs
+        text-base
         font-bold
         xl:text-base
         xl:font-semibold 
@@ -309,7 +330,7 @@ const SelectColorAddBasket = styled.div`
     span{
         color: gray;
         ${tw`
-        text-xs
+        text-base
         font-bold
         xl:text-base
         xl:font-semibold 
@@ -550,6 +571,7 @@ export function ConfirmAddBasket(props: IConfirmAddBasket) {
                         <Form>
 
                             <BoxAddBasketContainer className={open ? "addBasket-animation" : "Test"}>
+
                                 <BoxAddBasketHeader>
                                     <BoxAddBasketTitle>
                                         Confirm Product until add
@@ -565,15 +587,15 @@ export function ConfirmAddBasket(props: IConfirmAddBasket) {
                                 <BoxInformationProductAddBasket>
 
                                     <IdProductAddBasket>
-                                        <span>ID Product:</span> <h2>{id}</h2>
+                                        <span>ID Product:&nbsp;</span> <h2>{id}</h2>
                                     </IdProductAddBasket>
 
                                     <NameProductAddBasket>
-                                        <span>Name Product: </span> <h2>{nameproduct}</h2>
+                                        <span>Name Product:&nbsp;</span> <h2>{nameproduct}</h2>
                                     </NameProductAddBasket>
 
                                     <DescriptionProductAddBasket>
-                                        <span>Information Product: </span> <h2>{description}</h2>
+                                        <span>Information Product:&nbsp;</span> <h2>{description}</h2>
                                     </DescriptionProductAddBasket>
                                     <BoxPropertyProduct>
                                         <BoxColorSelectAddBasket>
@@ -600,7 +622,7 @@ export function ConfirmAddBasket(props: IConfirmAddBasket) {
                                     <BoxLocationDeliver>
                                         {city && (city && district) && (city && district && ward) ?
                                             <>
-                                                <h2 className="text-xs font-bold xl:text-base xl:font-semibold ">Please fill in more information </h2>
+                                                <h2 className="text-base font-bold xl:text-xl xl:font-semibold mb-1 ">Please fill in more information </h2>
                                                 <BoxAnimationInput>
                                                     <BoxInput required>
                                                     </BoxInput>
@@ -609,7 +631,7 @@ export function ConfirmAddBasket(props: IConfirmAddBasket) {
                                             </>
                                             :
                                             <>
-                                                <h2 className="text-xs font-bold xl:text-base xl:font-semibold ">Please fill in more information </h2>
+                                                <h2 className="text-base font-bold xl:text-xl xl:font-semibold mb-1">Please fill in more information </h2>
                                                 <SelectCityDropDown city={city} setCity={props.setCityS} />
                                                 <Marginer direction="vertical" margin="1em" />
                                                 <SelectDistrictDropDown city={city} district={district} setDistrict={props.setDistrictS} />
