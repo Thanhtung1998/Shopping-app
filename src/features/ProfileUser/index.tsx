@@ -11,7 +11,9 @@ import { ChartHistoryBuy } from './ChartHistoryBuy';
 import { ChartLineBuyMonth } from './ChartLineBuyMonth';
 import { HistoryBuy } from './HistoryBuy';
 import { ModalEditProfile } from './ModalEditProfile';
-
+import { ModalViewHistoryBuy } from './viewModalHistoryBuy';
+import DataUserBuy from '../../api/dataUserBuy'
+import DataHistoryBuy from "../../api/dataHistoryBuy";
 
 export interface ProfileUserProps {
 }
@@ -435,54 +437,79 @@ width: 30%;
 `
 
 export default function ProfileUser(props: ProfileUserProps) {
-    const initialUser: any = {}
+    const initialUser: any = {};
+    const initialArray: any = [];
+    const initialString: any = "";
     const [userData, setUserData] = useState(initialUser);
     const [Desc1, setDesc1] = useState("");
     const [Desc2, setDesc2] = useState("");
     const state = useSelector((state: RootStateOrAny) => state);
     const [isOpenModalEdit, setIsOpenModalEdit] = useState(false);
     const [chartType, setChartType] = useState("Bar");
+    const [listDataHistoryBuy, setListDataHistoryBuy] = useState(initialArray)
+    const [isOpenViewHistoryBuy, setIsOpenViewHistoryBuy] = useState(false);
+    const [idProduct, setIsProduct] = useState(initialString);
 
     const chartList = ["Bar", "Line", "Doughnut"]
 
-    const dataBuyFake = [
-        {
-            id: 1,
-            nameProduct: "Quan 1",
-            pictureProduct: "https://i.pinimg.com/564x/cf/16/89/cf16897b11230f0aae89f7dc8f43575f.jpg",
-            priceProduct: 1000000,
-        },
-        {
-            id: 2,
-            nameProduct: "Quan 1",
-            pictureProduct: "https://i.pinimg.com/564x/ff/e8/f5/ffe8f529656726adf8987f86e615e4ed.jpg",
-            priceProduct: 1000000,
-        },
-        {
-            id: 3,
-            nameProduct: "Quan 2",
-            pictureProduct: "https://i.pinimg.com/564x/c4/b4/f2/c4b4f216b876d4aebadbe151ba14c743.jpg",
-            priceProduct: 1000000,
-        },
-        {
-            id: 4,
-            nameProduct: "Quan 2",
-            pictureProduct: "https://i.pinimg.com/564x/30/86/a3/3086a3b3a67ecae149b3791e71210c16.jpg",
-            priceProduct: 1000000,
-        },
-        {
-            id: 5,
-            nameProduct: "Quan 2",
-            pictureProduct: "https://i.pinimg.com/564x/65/0e/f8/650ef8e52c28aa44eaf1ddc0cc088085.jpg",
-            priceProduct: 1000000,
-        },
-        {
-            id: 6,
-            nameProduct: "Quan 2",
-            pictureProduct: "https://i.pinimg.com/564x/3e/1b/13/3e1b136753abe0fbdce4fbdcc390a224.jpg",
-            priceProduct: 1000000,
-        },
-    ]
+    // const dataBuyFake = [
+    //     {
+    //         id: 1,
+    //         nameProduct: "Quan 1",
+    //         pictureProduct: "https://i.pinimg.com/564x/cf/16/89/cf16897b11230f0aae89f7dc8f43575f.jpg",
+    //         priceProduct: 1000000,
+    //     },
+    //     {
+    //         id: 2,
+    //         nameProduct: "Quan 1",
+    //         pictureProduct: "https://i.pinimg.com/564x/ff/e8/f5/ffe8f529656726adf8987f86e615e4ed.jpg",
+    //         priceProduct: 1000000,
+    //     },
+    //     {
+    //         id: 3,
+    //         nameProduct: "Quan 2",
+    //         pictureProduct: "https://i.pinimg.com/564x/c4/b4/f2/c4b4f216b876d4aebadbe151ba14c743.jpg",
+    //         priceProduct: 1000000,
+    //     },
+    //     {
+    //         id: 4,
+    //         nameProduct: "Quan 2",
+    //         pictureProduct: "https://i.pinimg.com/564x/30/86/a3/3086a3b3a67ecae149b3791e71210c16.jpg",
+    //         priceProduct: 1000000,
+    //     },
+    //     {
+    //         id: 5,
+    //         nameProduct: "Quan 2",
+    //         pictureProduct: "https://i.pinimg.com/564x/65/0e/f8/650ef8e52c28aa44eaf1ddc0cc088085.jpg",
+    //         priceProduct: 1000000,
+    //     },
+    //     {
+    //         id: 6,
+    //         nameProduct: "Quan 2",
+    //         pictureProduct: "https://i.pinimg.com/564x/3e/1b/13/3e1b136753abe0fbdce4fbdcc390a224.jpg",
+    //         priceProduct: 1000000,
+    //     },
+    // ]
+
+    useEffect(() => {
+        // const fetchDataUserBuy = async () => {
+        //     const response = await DataUserBuy.getAllUserBuy();
+        //     console.log(response.data);
+        // }
+        // console.log(userData)
+        if (userData._id) {
+            const fetchSingeData = async () => {
+                const response: any = await DataUserBuy.getBuyId(userData._id);
+                if (response.data) {
+                    const resHistoryBuy: any = await DataHistoryBuy.getAllDataBuy(response.data.id);
+                    // console.log(resHistoryBuy)
+                    setListDataHistoryBuy(resHistoryBuy.data)
+                }
+            }
+            fetchSingeData()
+        }
+        // fetchDataUserBuy()
+    }, [userData._id])
 
     const handleClose = () => {
         setIsOpenModalEdit(false);
@@ -522,6 +549,15 @@ export default function ProfileUser(props: ProfileUserProps) {
     }, [userData])
 
     // console.log(userData)
+
+    const handleOpenView = (open: any, id: any) => {
+        setIsOpenViewHistoryBuy(open)
+        setIsProduct(id)
+    }
+
+    const handleCloseHistory = () => {
+        setIsOpenViewHistoryBuy(false)
+    }
 
     return (
         <SectionProfileUser>
@@ -596,7 +632,7 @@ export default function ProfileUser(props: ProfileUserProps) {
                                     <ChartHistoryBuy />
                                 </ChartHistory>
                                 <HistoryList>
-                                    <HistoryBuy data={dataBuyFake} />
+                                    <HistoryBuy data={listDataHistoryBuy} handleOpenView={handleOpenView} />
                                 </HistoryList>
                                 <ChartLineHistory>
                                     <div className="w-full flex justify-end mb-4">
@@ -622,6 +658,11 @@ export default function ProfileUser(props: ProfileUserProps) {
             {isOpenModalEdit && (
                 <ModalEditProfile onClose={handleClose} />
             )}
+            {isOpenViewHistoryBuy && (
+                <ModalViewHistoryBuy id={idProduct} onClose={handleCloseHistory} />
+            )
+            }
+
         </SectionProfileUser>
     );
 }

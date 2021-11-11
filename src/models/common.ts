@@ -13,3 +13,15 @@ export interface ProductData<T> {    //T is Generics
     };
 
 }
+
+export interface dataUserBuyList<T> {
+    data: {
+        UserBuyList: T[];
+    }
+}
+
+export interface dataHistoryBuyList<T> {
+    data: {
+        ProductList: T[];
+    }
+}

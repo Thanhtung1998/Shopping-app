@@ -122,7 +122,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const product = await ProductService.getProducts().catch((err) => console.log(err));
-      console.log(product);
+      // console.log(product);
     }
     fetchData();
     const FetchProduct = async () => {
@@ -170,11 +170,11 @@ function App() {
             </PageLayOut>
           </PrivateRouter>
 
-          <PrivateRouter exact path="/categories">
+          <Route exact path="/categories">
             <PageLayOut >
               <Categories setActiveModalOpen={setActiveModalOpen} activeModalOpen={activeModalOpen} />
             </PageLayOut>
-          </PrivateRouter>
+          </Route>
 
           {/* User Page */}
 

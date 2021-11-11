@@ -2,9 +2,11 @@ import * as React from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro'
 import { PencilAltIcon } from "@heroicons/react/outline"
+import MoonLoader from 'react-spinners/MoonLoader'
 
 export interface HistoryBuyProps {
     data: any;
+    handleOpenView: any;
 }
 
 const HistoryBuySection = styled.section`
@@ -17,6 +19,9 @@ const BoxHistoryBuy = styled.div`
     font-family: inherit;
     height: 30rem;
     ${tw`
+        relative
+        top-0
+        left-0
         w-full
         flex
         flex-col
@@ -168,6 +173,21 @@ const TimeHistoryBuy = styled.div`
     justify-center
     `}
     color: var(--secondary-text);
+
+    span:nth-child(3){
+        ${tw`
+            block
+            xl:hidden
+        `}
+    }
+
+    span:nth-child(2){
+        ${tw`
+            hidden
+            xl:block
+        `}
+    }
+
     span{
         overflow: hidden;
         display: -webkit-box;
@@ -212,9 +232,27 @@ const LocationShipHistory = styled.div`
     }
 `
 
+const LoadingContainer = styled.div`
+    ${tw`
+    w-full
+    h-full
+    flex
+    items-center
+    justify-center
+    absolute
+    top-0
+    left-0
+    `}
+`
+
 export function HistoryBuy(props: HistoryBuyProps) {
 
-    const { data } = props;
+    const { data, handleOpenView } = props;
+
+    console.log(data)
+
+    const isEmpty = data.length === 0 ? true : false;
+    const isLoading = data.length === 0 ? true : false;
 
     return (
         <HistoryBuySection>
@@ -222,42 +260,64 @@ export function HistoryBuy(props: HistoryBuyProps) {
                 <HeaderHistoryBuy>
                     <h2>History Buy</h2>
                 </HeaderHistoryBuy>
-                <TagHistoryUl>
-                    {data && data.map((item: any) => (
-                        <TagLiHistoryItem key={Math.random()}>
-                            <MainHistoryItem>
-                                <LeftHistoryItem>
-                                    <BoxImgProduct>
-                                        <img srcSet={`${item.pictureProduct} 2x`} alt="" aria-label="Images Product History Buy" tabIndex={0} />
-                                    </BoxImgProduct>
-                                    <div className="flex items-center justify-around space-x-2">
-                                        <ProductInformation>
-                                            <span className="nameProduct">
-                                                {item.nameProduct}
-                                            </span>
-                                            <div>
-                                                <span className="priceProduct">
-                                                    {item.priceProduct}
+                {isEmpty && (
+                    <div className="h-full w-full items-center justify-center">
+                        <h2 className="w-full mt-5 flex items-center justify-center text-base lg:text-lg font-bold">Empty Data Products
+                        </h2>
+                        {isLoading && (
+                            <LoadingContainer>
+                                <MoonLoader loading size={30} />
+                            </LoadingContainer>
+                        )}
+                    </div>
+                )}
+                {!isEmpty && (
+                    <TagHistoryUl>
+                        {data && data.map((item: any) => (
+                            <TagLiHistoryItem key={Math.random()}>
+                                <MainHistoryItem>
+                                    <LeftHistoryItem>
+                                        <BoxImgProduct>
+                                            <img srcSet={`${item.ImgProduct} 2x`} alt="Picture Product" aria-label="Images Product History Buy" tabIndex={0} />
+                                        </BoxImgProduct>
+                                        <div className="flex items-center justify-around space-x-2">
+                                            <ProductInformation>
+                                                <span className="nameProduct">
+                                                    {item.nameProduct}
                                                 </span>
-                                                <span className="currencyUnit">vnđ</span>
-                                            </div>
-                                        </ProductInformation>
-                                        <TimeHistoryBuy className="cursor-pointer">
-                                            {/* convert time */}
-                                            <LocationShipHistory>
-                                                <span>Phú Diễn - Hà Nội</span>
-                                            </LocationShipHistory>
-                                            <span className="text-xs xl:text-base font-semibold">11/10/2021</span>
-                                        </TimeHistoryBuy>
-                                    </div>
-                                </LeftHistoryItem>
-                                <RightHistoryItem>
-                                    <PencilAltIcon className="xl:h-7 h-5 text-gray-400 hover:text-blue-400 cursor-pointer" />
-                                </RightHistoryItem>
-                            </MainHistoryItem>
-                        </TagLiHistoryItem>
-                    ))}
-                </TagHistoryUl>
+                                                <div>
+                                                    <span className="priceProduct">
+                                                        {item.priceProduct}
+                                                    </span>
+                                                    <span className="currencyUnit">vnđ</span>
+                                                </div>
+                                            </ProductInformation>
+                                            <TimeHistoryBuy className="cursor-pointer">
+                                                {/* convert time */}
+                                                <LocationShipHistory>
+                                                    <span>{item.address}</span>
+                                                </LocationShipHistory>
+                                                <span className="text-xs xl:text-base font-semibold">{
+                                                    new Date(item.timestamps._seconds * 1000).toDateString() + ' at ' + new Date(item.timestamps._seconds * 1000).toLocaleTimeString()
+                                                }</span>
+                                                <span className="text-xs xl:text-base font-semibold">
+                                                    {
+                                                        new Date(item.timestamps._seconds * 1000 + item.timestamps._nanoseconds / 1000000,
+                                                        ).toLocaleString()
+                                                    }
+                                                </span>
+
+                                            </TimeHistoryBuy>
+                                        </div>
+                                    </LeftHistoryItem>
+                                    <RightHistoryItem>
+                                        <PencilAltIcon onClick={() => handleOpenView(true, item.id)} className="xl:h-7 h-5 text-gray-400 hover:text-blue-400 cursor-pointer" />
+                                    </RightHistoryItem>
+                                </MainHistoryItem>
+                            </TagLiHistoryItem>
+                        ))}
+                    </TagHistoryUl>
+                )}
             </BoxHistoryBuy>
         </HistoryBuySection>
     );
