@@ -23,7 +23,7 @@ interface IProductProps extends IProduct {
 
 const ProductContainer = styled.div`
     width: 100%;
-    min-height: 30em;
+    min-height: 35em;
     // max-height: 30em;
     box-shadow: 0 1.3px 17px -2px rgba(0, 0, 0, 0.4);
     background-color: var(--surface-background);
@@ -34,10 +34,9 @@ const ProductContainer = styled.div`
         // justify-center
         p-5
         rounded-md
-        m-1
-        sm:m-3
-        md:m-5
-
+        mx-2
+        sm:mx-1
+        md:mx-2
     `};
 `;
 
@@ -129,10 +128,16 @@ const ViewMoreBtnS = styled.div`
 
 const ProductName = styled.h3`
     color: var(--secondary-text);
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-transform: uppercase;
     ${tw`
+        text-center
         text-base 
         font-bold 
-        
+        overflow-hidden
         mt-1 mb-1 
         cursor-default
     `};
